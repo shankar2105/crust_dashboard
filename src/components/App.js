@@ -13,7 +13,7 @@ import NatType from "../pages/NatType";
 import ConnectionAttempts from "../pages/ConnectionAttempts";
 import Protocol from "../pages/Protocol";
 import { hoursInMilliseconds, daysInMilliseconds } from '../redux/utils';
-import { fetchLogs, filterByRange, filterByConnectionResult } from '../redux/dispatcher/logs_action';
+import { fetchLogs, filterByRange } from '../redux/dispatcher/logs_action';
 
 const { Header, Sider, Content } = Layout;
 const { RangePicker } = DatePicker;
@@ -186,8 +186,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     fetchLogs,
-    filterByRange,
-    filterByConnectionResult
+    filterByRange
   }, dispatch);
 };
 
