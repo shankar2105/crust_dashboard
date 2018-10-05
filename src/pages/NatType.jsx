@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { Row, Col, Card, Tabs } from "antd";
 
 import Tables from "../components/Tables";
-import Charts from "../components/Charts";
-import { ChartGenerator } from "../components/TabComp"
 import DropdownOptions from "../components/SubComponents/DropDownRender";
 import RenderPieChart from "../components/SubComponents/PieChartRender"
 import ButtonGroup from "../components/ButtonGroup";
-import data, { LineChartArray } from "../assets/data";
+import data, { AreaChartArray } from "../assets/data";
+import AreaChart from "../components/AreaChart";
 
 const TabPane = Tabs.TabPane;
 function callback(key) {
@@ -60,13 +59,13 @@ class NatType extends Component {
                 </Row>
                 <Row gutter={24} style={{ margin: "24px 8px" }}>
                     <Col className="gutter-row" span={24}>
-                        <Card
+                        <Card title="Connection Success Rate"
                             style={{
                                 background: "#fff",
                                 borderRadius: 5,
                                 minHeight: 500
                             }}>
-                            <ChartGenerator type={"tabbedLineChart"} tabName1={"Success Rate"} tabName2={"Failure Rate"} data1={LineChartArray}/>
+                            <AreaChart data={AreaChartArray}/>
                         </Card>
                     </Col>
                 </Row>

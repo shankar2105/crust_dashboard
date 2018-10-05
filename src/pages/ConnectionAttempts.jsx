@@ -3,7 +3,6 @@ import { Row, Col, Card } from "antd";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Tables from "../components/Tables";
 import TabComp from "../components/TabComp";
 import "./Dashboard.css";
 import ButtonGroup from "../components/ButtonGroup";
@@ -11,7 +10,7 @@ import { filterByConnectionResult } from '../redux/dispatcher/logs_action';
 
 import data from "../assets/data";
 import { LineChartArray } from "../assets/data"
-
+//import "./pages.css"
 class ConnectionAttempts extends Component {
 
   prepareChartData() {
@@ -64,10 +63,11 @@ class ConnectionAttempts extends Component {
   render() {
     return (
       <div className="gutter-example">
-      <span>
-          <h1 style={{ padding: "10px 0px 0px 30px", display: "inline" }}>Connection Attempts </h1>
-          <span style={{ float: "right", padding: "10px 20px 0px 0px"}}>
-            Connection result: <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}  
+      <span className="page-heading">
+      <h1 style={{ padding: "5px 0px 0px 40px", display: "inline", float:"left"}}>Connection Attempts </h1>
+          <span style={{ float: "right", padding: "10px 20px 0px 0px" }}>
+            <h3 style={{ float: "left",padding: "5px 30px 0px 0px"}}>  Connection result:</h3>
+            <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}  
             changeFilter={this.props.filterByConnectionResult}/>
           </span>
         </span>
@@ -80,20 +80,8 @@ class ConnectionAttempts extends Component {
                 minHeight: 100
               }}
             >
-            <TabComp chartData={this.prepareChartData()}/>
+            <TabComp chartData={this.prepareChartData()} tableData={this.props.store.filteredConnectionResults}/>
           </Card>
-          </Col>
-        </Row>
-        <Row gutter={24} style={{ margin: "24px 8px" }}>
-          <Col className="gutter-row" span={24}>
-            <Card title="Connection Result: "
-              style={{
-                background: "#fff",
-                minHeight: 280
-              }}
-            >
-              <Tables dataSource={this.props.store.filteredConnectionResults}/>
-            </Card>
           </Col>
         </Row>
       </div>

@@ -1,0 +1,13 @@
+.direct {
+    border-left: #eee 2px solid;
+}
+
+.utp {
+    border-right: #eee 2px solid;
+}
+
+hr {
+    margin: 10px -16px;
+    border-top: #eee 1px solid;
+}
+
