@@ -19,9 +19,10 @@ class NatType extends Component {
             <div className="gutter-example">
                 {/* <h1 style={{ padding: "10px 0px 0px 30px" }}>Nat Type</h1> */}
                 <span>
-                    <h1 style={{ padding: "10px 0px 0px 30px", display: "inline" }}>NAT TYPE </h1>
+                    <h1 style={{ padding: "5px 0px 0px 40px", display: "inline" }}>NAT TYPE </h1>
                     <span style={{ float: "right", padding: "10px 20px 0px 0px" }}>
-                        Connection result: <ButtonGroup />
+                        <h3 style={{ float: "left", padding: "5px 30px 0px 0px" }}>  Connection result:</h3>
+                        <ButtonGroup />
                     </span>
                 </span>
                 <Row gutter={24} style={{ margin: "24px 8px" }}>
@@ -65,7 +66,7 @@ class NatType extends Component {
                                 borderRadius: 5,
                                 minHeight: 500
                             }}>
-                            <AreaChart data={AreaChartArray}/>
+                            <AreaChart data={AreaChartArray} />
                         </Card>
                     </Col>
                 </Row>

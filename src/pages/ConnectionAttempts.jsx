@@ -64,9 +64,9 @@ class ConnectionAttempts extends Component {
     return (
       <div className="gutter-example">
       <span className="page-heading">
-      <h1 style={{ padding: "5px 0px 0px 40px", display: "inline", float:"left"}}>Connection Attempts </h1>
+      <h1 style={{ padding: "5px 0px 0px 40px", display: "inline"}}>Connection Attempts </h1>
           <span style={{ float: "right", padding: "10px 20px 0px 0px" }}>
-            <h3 style={{ float: "left",padding: "5px 30px 0px 0px"}}>  Connection result:</h3>
+            <h3 style={{ float: "left", padding: "5px 30px 0px 0px"}}>  Connection result:</h3>
             <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}  
             changeFilter={this.props.filterByConnectionResult}/>
           </span>
