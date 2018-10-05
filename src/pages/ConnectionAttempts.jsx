@@ -92,7 +92,7 @@ class ConnectionAttempts extends Component {
                 minHeight: 280
               }}
             >
-              <Tables dataSource={this.props.store.filteredConnectionResults}/>
+              <Tables dataSource={this.props.store.filteredConnectionResults.logs}/>
             </Card>
           </Col>
         </Row>

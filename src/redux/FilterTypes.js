@@ -14,7 +14,7 @@ export const OS = {
     ANY: '',
     WIN: 'WIN',
     OSX: 'OSX',
-    UNIX: 'UNIX'
+    LINUX: 'LINUX'
 }
 
 export const PROTOCOL = {

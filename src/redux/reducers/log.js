@@ -1,5 +1,5 @@
 import Action from '../ActionType';
-import { ConnectionResult } from './../FilterTypes';
+import { ConnectionResult, OS } from './../FilterTypes';
 import { filterLogs, daysInMilliseconds, sha256 } from '../utils';
 
 const now = new Date().getTime();
@@ -9,7 +9,11 @@ const initialState = {
     error: undefined,
     logs: [],
     filteredLogs: [],
-    filteredConnectionResults: [],
+    filteredConnectionResults: {
+        logs: [],
+        osList: Object.keys(OS),
+        countries: []
+    },
     connectionResultFilter: ConnectionResult.NONE,
     dateRange: {
         from: now - daysInMilliseconds(30),
@@ -18,13 +22,22 @@ const initialState = {
 };
 
 const filterByConnectionResult = (logs, filter) => {
-    if (filter === ConnectionResult.NONE) {
-        return logs;
-    }
-    return logs.filter((log) => {
+    const countries = [];
+    const filteredLogs = logs.filter((log) => {
+        if (countries.indexOf(log.peer_requester.geo_info.country_name) === -1) {
+            countries.push(log.peer_requester.geo_info.country_name)
+        }
+        if (countries.indexOf(log.peer_responder.geo_info.country_name) === -1) {
+            countries.push(log.peer_responder.geo_info.country_name)
+        }
         const isSuccess = log.is_direct_successful || log.utp_hole_punch_result.hasOwnProperty('Succeeded') || log.tcp_hole_punch_result.hasOwnProperty('Succeeded');
         return filter === ConnectionResult.SUCCESS ? isSuccess : !isSuccess;
     });
+    return {
+        countries,
+        osList: Object.keys(OS),
+        logs: filteredLogs
+    }
 };
 const logReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -56,7 +69,7 @@ const logReducer = (state = initialState, action) => {
                     error: undefined,
                     logs,
                     filteredLogs,
-                    filteredConnectionResults: filteredLogs
+                    filteredConnectionResults: { logs: filteredLogs }
                 };
             }
             break;
@@ -72,7 +85,7 @@ const logReducer = (state = initialState, action) => {
         case Action.FILTER_NONE:
             state = {
                 ...state,
-                filteredConnectionResults: state.filteredLogs
+                filteredConnectionResults: filterByConnectionResult(state.filteredLogs, ConnectionResult.NONE)
             };
             break;
         case Action.FILTER_SUCCESS:
