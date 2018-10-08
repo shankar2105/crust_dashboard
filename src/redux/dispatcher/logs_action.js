@@ -19,3 +19,18 @@ export const filterByConnectionResult = (action) => {
         type: action
     }
 }
+
+export const revalidate = (mod,logs) => {
+    return {
+        //type:  `${mod}_${Action.REVALIDATE}`, //this does not work for some reason, maybe wrong format mod parameter sent here
+        type:   `CON_ACT_${Action.REVALIDATE}`, //this works
+        payload: logs
+    }
+}
+
+export const filterChange = (mod, action, filter) => {
+    return {
+        //type: `${mod}_${action}`,  //check this also
+        payload: filter
+    }
+}

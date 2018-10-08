@@ -1,15 +1,18 @@
 import React, { Component } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col, Card, Button } from "antd";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import TabComp from "../components/TabComp";
 import "./Dashboard.css";
 import ButtonGroup from "../components/ButtonGroup";
-import { filterByConnectionResult } from '../redux/dispatcher/logs_action';
-
+import { filterByConnectionResult,revalidate,filterChange }from '../redux/dispatcher/logs_action';
+import {mods} from "../redux/FilterTypes"
 import data from "../assets/data";
 import { LineChartArray } from "../assets/data"
+import ActionType from "../redux/ActionType";
+import {NatType,OS,PROTOCOL} from "../redux/FilterTypes";
+
 //import "./pages.css"
 class ConnectionAttempts extends Component {
   prepareChartData() {
@@ -58,6 +61,17 @@ class ConnectionAttempts extends Component {
       }
     ]  
   }
+  constructor(props) {
+    super(props); 
+    this.props.revalidate(mods.CON_ACT_,this.props.store.filteredConnectionResults);
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    //initially if returns false since the state isn't changed. 
+    //we set the initial state using constructor and this function for later changes
+    if (this.props.store.filteredConnectionResults != nextProps.store.filteredConnectionResults) {
+      this.props.revalidate(mods.CON_ACT_,nextProps.store.filteredConnectionResults);
+    }
+  }
 
   render() {
     return (
@@ -83,7 +97,7 @@ class ConnectionAttempts extends Component {
           </Card>
           </Col>
         </Row>
-      </div>
+      </div> 
     );
   }
 }
@@ -96,7 +110,9 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    filterByConnectionResult
+    filterByConnectionResult,
+    revalidate,
+    filterChange
   }, dispatch);
 };
 

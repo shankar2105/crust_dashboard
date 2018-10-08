@@ -25,11 +25,15 @@ export const PROTOCOL = {
 }
 
 export const Filter = {
-    RequesterNatType: NatType.ANY,
-    ResponderNatType: NatType.ANY,
-    RequesterOS: OS.ANY,
-    ResponderOS: OS.ANY,
-    RequesterCountry: OS.ANY,
-    ResponderCountry: OS.ANY,
+    NatType1: NatType.ANY,
+    NatType2: NatType.ANY,
+    OSType1: OS.ANY,
+    OSType2: OS.ANY,
+    CountryType1: OS.ANY,
+    CountryType2: OS.ANY,
     Protocol: PROTOCOL.ANY
+}
+
+export const mods = {
+    CON_ACT_:'CON_ACT_'
 }
