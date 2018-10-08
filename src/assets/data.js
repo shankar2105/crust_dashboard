@@ -1,3 +1,62 @@
+export const AreaChartArray = [
+  {
+      year: "1986",
+      ACME: 162,
+      Compitor: 42,
+      TCP: 25,
+      UDP: 35
+  },
+  {
+      year: "1987",
+      ACME: 134,
+      Compitor: 54,
+      TCP: 42,
+      UDP: 24
+  },
+  {
+      year: "1988",
+      ACME: 116,
+      Compitor: 26,
+      TCP: 14,
+      UDP: 42
+  },
+  {
+      year: "1989",
+      ACME: 122,
+      Compitor: 32,
+      TCP: 31,
+      UDP: 24
+  },
+  {
+      year: "1990",
+      ACME: 178,
+      Compitor: 68,
+      TCP: 42,
+      UDP: 24
+  },
+  {
+      year: "1991",
+      ACME: 144,
+      Compitor: 54,
+      TCP: 14,
+      UDP: 53
+  },
+  {
+      year: "1992",
+      ACME: 125,
+      Compitor: 35,
+      TCP: 63,
+      UDP: 24
+  },
+  {
+      year: "1993",
+      ACME: 176,
+      Compitor: 66,
+      TCP: 42,
+      UDP: 52
+  },
+];
+
 export const protocolData = [
   {
     type: "TCP D",

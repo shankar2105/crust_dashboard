@@ -1,0 +1,17 @@
+.container {
+  }
+
+  .text {
+    margin: 0 auto;
+    padding: 0;
+    top: 5vh;
+    text-align: center;
+    font-size: 25px;
+  }
+
+  .chart {
+    left: -3vw;
+  }
+
+
+  

@@ -1,8 +1,6 @@
 import React from "react";
 import { Icon } from "antd";
 
-import './tableColumn.css';
-
 const columns = [
     {
       title: "#",
@@ -10,11 +8,11 @@ const columns = [
       key: "num",
       align: 'center',
       defaultSortOrder: 'ascend',
-      sorter: (a, b) => a.num - b.num,
       render: (a, b) => {
+        console.log(b);
         return (
           <table>
-            <tbody style={{padding: 0, textAlign: 'center'}}>
+            <tbody>
               <tr>
                 <td>
                   {b.direct === "No" &&
@@ -37,11 +35,10 @@ const columns = [
       dataIndex: "direct",
       key: "direct",
       align: 'center',
-      className: 'direct',
       render: text => {
         return (
           <table>
-            <tbody style={{padding: 0, textAlign: 'center', marginLeft: "1px solid #999"}}>
+            <tbody>
               <tr>
                 <td>
                   {text === "Yes" ? (
@@ -75,7 +72,7 @@ const columns = [
       render: text => {
         return (
           <table>
-            <tbody style={{padding: 0, textAlign: 'center'}}>
+            <tbody>
               <tr>
                 <td>
                   {text === "Fail" ? (
@@ -105,12 +102,10 @@ const columns = [
       title: "uTP HP",
       dataIndex: "utp_hp",
       key: "utp_hp",
-      align: 'center',
-      className: 'utp',
       render: text => {
         return (
           <table>
-            <tbody style={{padding: 0, textAlign: 'center'}}>
+            <tbody>
               <tr>
                 <td>
                   {text === "Fail" ? (
@@ -142,12 +137,11 @@ const columns = [
       key: "req_res",
       render: () => {
         return (
-          <table>
-            <tbody style={{padding: 10, color: '#ccc'}}>
+          <table style={{ textAlign: "right" }}>
+            <tbody>
               <tr>
                 <td>{`Requester`}</td>
               </tr>
-              <hr />
               <tr>
                 <td>{`Responder`}</td>
               </tr>
@@ -167,7 +161,6 @@ const columns = [
               <tr>
                 <td>{text[0]}</td>
               </tr>
-              <hr />
               <tr>
                 <td>{text[1]}</td>
               </tr>
@@ -180,11 +173,11 @@ const columns = [
       title: "Operating System",
       dataIndex: "os",
       key: "os",
-      // filters: [
-      //   { text: "Mac OS", value: "MacOS" },
-      //   { text: "Windows", value: "Windows" },
-      //   { text: "Linux", value: "Linux" }
-      // ],
+      filters: [
+        { text: "MacOS 10.3", value: "MacOS 10.3" },
+        { text: "Windows 10", value: "Windows 10" },
+        { text: "Linux RedHat 1.2", value: "Linux RedHat 1.2" }
+      ],
       render: text => {
         return (
           <table>
@@ -192,7 +185,6 @@ const columns = [
               <tr>
                 <td>{text[0]}</td>
               </tr>
-              <hr />
               <tr>
                 <td>{text[1]}</td>
               </tr>
@@ -205,7 +197,7 @@ const columns = [
       title: "Country",
       dataIndex: "country",
       key: "country",
-      // sorter: (a, b) => a.country.length - b.country.length,
+      sorter: (a, b) => a.country.length - b.country.length,
       render: text => {
         return (
           <table>
@@ -213,7 +205,6 @@ const columns = [
               <tr>
                 <td>{text[0]}</td>
               </tr>
-              <hr />
               <tr>
                 <td>{text[1]}</td>
               </tr>

@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { Table} from "antd";
 
-import "./Tables.css";
-//import data from '../assets/data';
 import columns from '../assets/tableData/tableColumn';
 
 
 function filterLogs(rawData){
+  let rand = Math.floor(Math.random()*10000);
   var dataSource = [];
   rawData.forEach(log => {
     dataSource.push({
         key: Math.floor(Math.random()*10000),
-        num: 7304,
+        num: rand+=1,
         direct: log.is_direct_successful === true ? "Yes" : "No",
         tcp_hp: log.tcp_hole_punch_result === "success" ? "Yes" : "Fail",
         utp_hp: !(log.utp_hole_punch_result.Succeeded) ? "Fail" : `${log.utp_hole_punch_result.Succeeded.time_spent.secs}:${log.utp_hole_punch_result.Succeeded.time_spent.nanos}`,
@@ -32,7 +31,6 @@ class Tables extends Component {
         <Table
           dataSource={filterData}
           columns={columns}
-          bordered
           pagination={false}
         />
       </div>

@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { Row, Col, Card, Tabs } from "antd";
 
 import Tables from "../components/Tables";
-import Charts from "../components/Charts";
-import TabComp from "../components/TabComp";
 import DropdownOptions from "../components/SubComponents/DropDownRender";
-import { ChartGenerator } from "../components/TabComp"
 import RenderPieChart from "../components/SubComponents/PieChartRender"
 import ButtonGroup from "../components/ButtonGroup";
-import data,{ LineChartArray } from "../assets/data";
+import data, { AreaChartArray } from "../assets/data";
+import AreaChart from "../components/AreaChart";
 
 
 function callback(key) {
@@ -21,10 +19,11 @@ class Protocol extends Component {
         return (
             <div className="gutter-example">
                 {/* <h1 style={{ padding: "10px 0px 0px 30px" }}>Protocol</h1> */}
-                <span>
-                    <h1 style={{ padding: "10px 0px 0px 30px", display: "inline" }}>PROTOCOL</h1>
+                <span>                        
+                        <h1 style={{ padding: "5px 0px 0px 40px", display: "inline"}}>PROTOCOL</h1>
                     <span style={{ float: "right", padding: "10px 20px 0px 0px" }}>
-                        Connection result: <ButtonGroup />
+                        <h3 style={{ float: "left", padding: "5px 30px 0px 0px" }}>  Connection result:</h3>
+                        <ButtonGroup />
                     </span>
                 </span>
                 <Row gutter={24} style={{ margin: "24px 8px" }}>
@@ -55,15 +54,15 @@ class Protocol extends Component {
                     </Col>
                 </Row>
                 <Row gutter={24} style={{ margin: "24px 8px" }}>
-                    <Col className="gutter-row" span={24}>
-                        <Card
+                <Col className="gutter-row" span={24}>
+                <Card title="Protocol Acceptance Rate Result: "
                             style={{
                                 background: "#fff",
-                                borderRadius: 5,
-                                minHeight: 500
-                            }}>
-                            <ChartGenerator type={"tabbedLineChart"} tabName1={"Protocol Success Rate"} tabName2={"Protocol Failure Rate"} data1={LineChartArray}/>
-                        </Card>
+                                minHeight: 280
+                            }}
+                        >
+                    <AreaChart data={AreaChartArray}/>
+                    </Card>
                     </Col>
                 </Row>
                 <Row gutter={24} style={{ margin: "24px 8px" }}>

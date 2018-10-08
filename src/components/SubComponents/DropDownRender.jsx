@@ -10,7 +10,6 @@ class DropDown extends Component {
     }
 
     render(){
-      console.log("render being called more than once");
         if (this.tabContent.length===4) {
             return( 
             <div>

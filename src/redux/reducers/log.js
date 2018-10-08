@@ -67,9 +67,9 @@ const logReducer = (state = initialState, action) => {
                     ...initialState,
                     isFetching: false,
                     error: undefined,
-                    logs,
-                    filteredLogs,
-                    filteredConnectionResults: { logs: filteredLogs }
+                    logs: logs,
+                    filteredLogs: filteredLogs,
+                    filteredConnectionResults: filteredLogs
                 };
             }
             break;
@@ -79,13 +79,14 @@ const logReducer = (state = initialState, action) => {
                 ...state,
                 dateRange: {from: action.payload.from, to: action.payload.to},
                 filteredLogs: logsByRange,
-                filteredConnectionResults: filterByConnectionResult(logsByRange, ConnectionResult.NONE)
+                filteredConnectionResults: filterByConnectionResult(logsByRange, state.connectionResultFilter)
             };
             break;
         case Action.FILTER_NONE:
             state = {
                 ...state,
-                filteredConnectionResults: filterByConnectionResult(state.filteredLogs, ConnectionResult.NONE)
+                connectionResultFilter: ConnectionResult.NONE, 
+                filteredConnectionResults: state.filteredLogs
             };
             break;
         case Action.FILTER_SUCCESS:

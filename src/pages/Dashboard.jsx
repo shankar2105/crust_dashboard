@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { Row, Col, Card } from "antd";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { filterByConnectionResult } from '../redux/dispatcher/logs_action';
 
 import Tables from "../components/Tables";
 import Charts from "../components/Charts";
 import "./Dashboard.css";
 import MiniAreas from "../components/MiniAreas";
 import PieCharts from "../components/PieCharts";
+import ButtonGroup from "../components/ButtonGroup";
 
 import data,{natData,protocolData} from "../assets/data";
 
@@ -22,7 +26,6 @@ const listCountry = data.globalNetworkActivity.map((coun, i) => (
 
 var sortNatData = natData.sort((m, n) => m.value < n.value);
 var sortProtocolData = protocolData.sort((m, n) => m.value < n.value);
-
 
 const topColResponsiveProps = {
   xs: 24,
@@ -88,6 +91,9 @@ class Dashboard extends Component {
             <MiniAreas />
             </Card>
           </Col>
+
+          <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}  changeFilter={this.props.filterByConnectionResult}/>
+
         </Row>
         <Row gutter={24} style={{ margin: "24px 8px" }}>
           <Col className="gutter-row" span={24}>
@@ -97,7 +103,7 @@ class Dashboard extends Component {
                 minHeight: 280
               }}
             >
-              <Tables dataSource={data.logs}/>
+              <Tables dataSource={this.props.store.filteredConnectionResults}/>
             </Card>
           </Col>
         </Row>
@@ -106,4 +112,18 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+//export default Dashboard;
+
+const mapStateToProps = (store) => {
+  return {
+    store: store.logReducer
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    filterByConnectionResult
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

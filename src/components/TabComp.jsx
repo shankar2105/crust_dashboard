@@ -4,6 +4,7 @@ import DropdownOptions from "./SubComponents/DropDownRender";
 import Charts from "./Charts";
 import LineChart from "./LineChart";
 const TabPane = Tabs.TabPane;
+import Tables from "../components/Tables";
 
 
 export class BarChartTabs extends Component {
@@ -105,11 +106,12 @@ class TabComp extends Component {
     console.log(key);
   }  
 
-  NestedTabChart(key, tabName, tabTypes, chartType, chartData1, chartData2) {
+  NestedTabChart(key, tabName, tabTypes, chartType, chartData1, chartData2,tableData) {
     return (
       <TabPane tab={tabName} key={key}>
         <DropdownOptions contents={tabTypes} />
         <ChartGenerator type={chartType} tabName1={"Success Rate"} tabName2={"Failure Rate"} data1={chartData1} data2={chartData2} />
+        <Tables dataSource={tableData}/>
       </TabPane>
     )
   }
@@ -118,12 +120,13 @@ class TabComp extends Component {
     const Chart1Data = this.props.chartData[0];
     const Chart2Data = this.props.chartData[1];
     const Chart3Data = this.props.chartData[2];
+    const tableData = this.props.tableData;
     return (
           <div>
             <Tabs defaultActiveKey="1" onChange={this.callback} size="large">
-              {this.NestedTabChart(1, "All Activity", ["NAT Type", "O.S.", "Protocol", "Country"], "lineChart", Chart1Data.values)}
-              {this.NestedTabChart(2, "Country", ["NAT Type", "Protocol", "O.S."], "tabbedBarChart", Chart2Data, Chart2Data)}
-              {this.NestedTabChart(3, "Operating System", ["NAT Type", "Protocol", "O.S."], "tabbedBarChart", Chart3Data, Chart3Data)}
+              {this.NestedTabChart(1, "All Activity", ["NAT Type", "O.S.", "Protocol", "Country"], "lineChart", Chart1Data.values,null,tableData)}
+              {this.NestedTabChart(2, "Country", ["NAT Type", "Protocol", "O.S."], "tabbedBarChart", Chart2Data, Chart2Data,tableData)}
+              {this.NestedTabChart(3, "Operating System", ["NAT Type", "Protocol", "O.S."], "tabbedBarChart", Chart3Data, Chart3Data,tableData)}
             </Tabs>
           </div>
         );

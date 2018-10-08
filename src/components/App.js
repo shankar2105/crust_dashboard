@@ -146,12 +146,13 @@ class App extends Component {
               type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
               onClick={this.toggle}
             />    
-            <span class="topnav">
-              <a className={this.state.dateFilterIndex === 1} href="#" onClick={() => this.filterByHour()}>Hour</a>
-              <a className={this.state.dateFilterIndex === 2} href="#" onClick={() => this.filterByDay()}>Day</a>
-              <a className={this.state.dateFilterIndex === 3} href="#" onClick={() => this.filterByWeek()}>Week</a>
-              <a className={this.state.dateFilterIndex === 4} href="#" onClick={() => this.filterByMonth()}>Month</a>
-              <a className={this.state.dateFilterIndex === 5} href="#" onClick={() => this.filterNone()}>
+            <span className="topnav">
+              {/* maybe these className attributes could be removed */}
+              <a className={this.state.dateFilterIndex === 1?"true":"false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
+              <a className={this.state.dateFilterIndex === 2?"true":"false"} href="#" onClick={() => this.filterByDay()}>Day</a>
+              <a className={this.state.dateFilterIndex === 3?"true":"false"} href="#" onClick={() => this.filterByWeek()}>Week</a>
+              <a className={this.state.dateFilterIndex === 4?"true":"false"} href="#" onClick={() => this.filterByMonth()}>Month</a>
+              <a className={this.state.dateFilterIndex === 5?"true":"false"} href="#" onClick={() => this.filterNone()}>
                 All Time
               </a>
             <span className="date">
