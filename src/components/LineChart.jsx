@@ -1,5 +1,5 @@
 import React from 'react';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import DataSet from '@antv/data-set';
 import { Chart, Axis, Geom, Tooltip, Legend } from 'bizcharts';
 import { Slider } from 'antd';
@@ -8,10 +8,10 @@ class CustomChart extends React.Component
 {
     handleSliderChange()
     {
-        console.log('Slider change'); 
+        console.log('Slider change');
         // This is where action creator should be called to update redux state, which will trigger a render of this component
     }
-    
+
     render() {
         const { data, titleMap, height } = this.props;
         const ds = new DataSet( {
@@ -22,7 +22,7 @@ class CustomChart extends React.Component
         } );
         const dv = ds.createView().source(data);
         const max = Math.max( ...data.map( ( datum ) => {
-            const moment = Object.assign( {}, datum ); 
+            const moment = Object.assign( {}, datum );
             delete moment.x;
             return Math.max( ...Object.keys( moment ).map( key => moment[key] ) );
         } ) );
@@ -38,7 +38,7 @@ class CustomChart extends React.Component
           callback: function callback(row) {
             const newRow = Object.assign({}, row);
             Object.keys( titleMap ).map( ( key ) => {
-                newRow[titleMap[key]] = row[key]; 
+                newRow[titleMap[key]] = row[key];
             } );
             return newRow;
           }
@@ -75,7 +75,7 @@ class CustomChart extends React.Component
                 <Slider min={ data[0].x } max={ data[data.length - 1].x } range defaultValue={ [0, data[data.length - 1].x] } onChange={this.handleSliderChange} />
             </div>
         );
-    } 
+    }
 }
 
 export default CustomChart;
