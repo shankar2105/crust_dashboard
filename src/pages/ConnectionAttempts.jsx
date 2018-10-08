@@ -12,7 +12,6 @@ import data from "../assets/data";
 import { LineChartArray } from "../assets/data"
 //import "./pages.css"
 class ConnectionAttempts extends Component {
-
   prepareChartData() {
     const osArr = [];
     data.logs.forEach((log) => {
