@@ -26,6 +26,25 @@ class DropDown extends Component {
             </Menu>
         )
     }
+
+    anyCountry1() {
+        return (
+            <Menu>
+                <Menu.Item key={`menu-country1-${0}`}>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_COUNTRY_TYPE1, OS.ANY)}>{OS.ANY}</a>
+                </Menu.Item>
+            </Menu>
+        )
+    }
+    anyCountry2() {
+        return (
+            <Menu>
+                <Menu.Item key={`menu-country2-${0}`}>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_COUNTRY_TYPE2, OS.ANY)}>{OS.ANY}</a>
+                </Menu.Item>
+            </Menu>
+        )
+    }
     
     natMenu1() {
         let items = this.props.labels.natTypes
@@ -53,7 +72,7 @@ class DropDown extends Component {
     }
    
     osMenu1() {
-        let items = Object.keys(this.props.labels.osCount)
+        let items = this.props.labels.osList
         let itemList = items.map((os, k) => {
             return (
                 <Menu.Item key={`menu-os1-${k}`}>
@@ -65,7 +84,7 @@ class DropDown extends Component {
     }
 
     osMenu2() {
-        let items = Object.keys(this.props.labels.osCount)
+        let items = this.props.labels.osList
         let itemList = items.map((os, k) => {
             return (
                 <Menu.Item key={`menu-os2-${k}`}>
@@ -122,7 +141,7 @@ class DropDown extends Component {
                     <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
                     selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2}/>
 
-                    <DropDownItems type={this.tabContent[3]} menu1={(<Menu>{countryMenu1}</Menu>)} menu2={(<Menu>{countryMenu2}</Menu>)}
+                    <DropDownItems type={this.tabContent[3]} menu1={(<Menu>{this.anyCountry1()}{countryMenu1}</Menu>)} menu2={(<Menu>{this.anyCountry2()}{countryMenu2}</Menu>)}
                     selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2}/>
                 </Row>
             </div>
