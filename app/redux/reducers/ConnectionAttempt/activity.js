@@ -2,8 +2,6 @@ import Action from '../../ActionType';
 import { Filter } from '../../FilterTypes';
 import { applyFilter } from '../../utils';
 
-export const MOD_NAME = 'CON_ACT';
-
 const initialState = {
     filteredLogs: [],
     filter: { ...Filter }
@@ -12,96 +10,77 @@ const initialState = {
 const activityReducer = (state=initialState, action) => {
     let filter;
     switch (action.type) {
-        // case Action.NEW_LOG:
-        // const logs = state.filteredLogs.concat(action.payload)
-        // state = {
-        //     ...state,
-        //     filteredLogs: applyFilter(logs, state.filter)
-        // };
-        // break;
-        case Action.REVALIDATE:
-        state = {
-            ...state,
-            filteredLogs: applyFilter(action.payload, state.filter)
-        };
-        break;
-
-        case `${MOD_NAME}_${Action.FILTER_NAT_TYPE1}`:
+        case Action.FILTER_REQUESTER_NAT:
             filter = {
                 ...state.filter,
-                NatType1: action.payload
+                RequesterNatType: action.payload.natType
             };
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                filteredLogs: applyFilter(action.payload.logs, filter)
             };
             break;
-            
-        case `${MOD_NAME}_${Action.FILTER_NAT_TYPE2}`:
-        filter = {
-            ...state.filter,
-            NatType2: action.payload
-        };
-        state = {
-            ...state,
-            filter,
-            filteredLogs: applyFilter(action.data, filter)
-        };
-        break;
-        case `${MOD_NAME}_${Action.FILTER_OS_TYPE1}`:
-            filter = {
-                ...state.filter,
-                OSType1: action.payload
-            };
+        case Action.FILTER_RESPONDER_NAT:
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                filteredLogs: applyFilter(action.payload.logs, filter)
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_OS_TYPE2}`:
+        case Action.FILTER_REQUESTER_OS:
             filter = {
                 ...state.filter,
-                OSType2: action.payload
+                RequesterOS: action.payload.os
             };
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                filteredLogs: applyFilter(action.payload.logs, filter)
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_COUNTRY_TYPE1}`:
+        case Action.FILTER_RESPONDER_OS:
             filter = {
                 ...state.filter,
-                CountryType1: action.payload
+                ResponderOS: action.payload.os
             };
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                filteredLogs: applyFilter(action.payload.logs, filter)
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_COUNTRY_TYPE2}`:
+        case Action.FILTER_REQUESTER_COUNTRY:
             filter = {
                 ...state.filter,
-                CountryType2: action.payload
+                RequesterCountry: action.payload.country
             };
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                filteredLogs: applyFilter(action.payload.logs, filter)
             };
-            break;            
-        case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
+            break;
+        case Action.FILTER_RESPONDER_COUNTRY:
             filter = {
                 ...state.filter,
-                Protocol: action.payload
+                ResponderCountry: action.payload.country
             };
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                filteredLogs: applyFilter(action.payload.logs, filter)
+            };
+            break;
+        case Action.FILTER_BY_PROTOCOL:
+            filter = {
+                ...state.filter,
+                Protocol: action.payload.protocol
+            };
+            state = {
+                ...state,
+                filter,
+                filteredLogs: applyFilter(action.payload.logs, filter)
             };
             break;
     }

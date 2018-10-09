@@ -1,0 +1,71 @@
+// Logo
+
+.logo {
+  height: 64px;
+  padding: 18px 0 18px 25px;
+  border-bottom: 1px solid #E8E8E8;
+  overflow: hidden;
+  .clearfix();
+  .logo-b {
+    height: 28px;
+    overflow: hidden;
+  }
+  .logo-media {
+    height: 28px;
+    float: left;
+  }
+  .logo-desc {
+    .font-campton();
+    font-size: 16px;
+    line-height: 28px;
+    color: @color-logo;
+    letter-spacing: 0.04em;
+    font-weight: bold;
+    margin-left: 20px;
+    float: left;
+    white-space: nowrap;
+  }
+}
+
+// main slider
+.main-slider {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  &.ant-layout-sider-collapsed {
+    .logo {
+      .logo-desc {
+        display: none;
+      }
+    }
+  }
+}
+
+// main header
+.main-layout {
+  .main-layout-head {
+    padding: 0 25px 0 20px;
+  }
+  .main-layout-content {
+    padding-top: 3px;
+  }
+  .main-head-nav {
+    float: right;
+    .font-sf-pro-text();
+    a {
+      font-size: 14px;
+      margin-right: 25px;
+      color: @text-color;
+      &:hover {
+        color: @orange;
+      }
+    }
+    .main-head-nav-date {
+      display: inline-block;
+      margin-left: 5px;
+      .ant-calendar-range-picker-input {
+        width: auto;
+        min-width: auto;
+        display: inline;
+      }
+    }
+  }
+}

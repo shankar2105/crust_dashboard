@@ -48,12 +48,12 @@ class DropDown extends Component {
             </Menu>
         )
     }
-    
+
     natMenu1() {
         let items = this.props.labels.natTypes
         let itemList = items.map((nat, k) => {
             return (
-                
+
                 <Menu.Item key={`menu-nat1-${k}`}>
                     <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_NAT_TYPE1,nat)}>{nat}</a>
                 </Menu.Item>
@@ -73,7 +73,7 @@ class DropDown extends Component {
         });
         return itemList;
     }
-   
+
     osMenu1() {
         let items = this.props.labels.osList
         let itemList = items.map((os, k) => {
@@ -99,6 +99,7 @@ class DropDown extends Component {
     }
 
     countryMenu1() {
+      console.log(this.props)
         let countries = Object.keys(this.props.labels.countriesCount)
         let countryList = countries.map((country, k) => {
             return (
@@ -130,25 +131,46 @@ class DropDown extends Component {
         const osMenu2 = this.osMenu2();
         const natMenu1 = this.natMenu1();
         const natMenu2 = this.natMenu2();
-        return (
-            <div>
-                <Row gutter={24} style={{ margin: "24px 8px" }}>
-                    <DropDownItems type={this.tabContent[0]} menu1={(<Menu>{natMenu1}</Menu>)} menu2={(<Menu>{natMenu2}</Menu>)} 
-                    selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2}/>
+        if (this.tabContent.length === 4) {
+            return (
+                <div className="dropdown-render">
+                    <Row gutter={24}>
+                        <DropDownItems type={this.tabContent[0]} menu1={(<Menu>{natMenu1}</Menu>)} menu2={(<Menu>{natMenu2}</Menu>)}
+                        selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2}/>
 
-                    <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""} 
-                    selected1={this.props.selectedLabel.Protocol}/>
-                </Row>
+                        <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
+                        selected1={this.props.selectedLabel.Protocol}/>
+                    </Row>
 
-                <Row gutter={24} style={{ margin: "24px 8px" }}>
-                    <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
-                    selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2}/>
+                    <Row gutter={24} style={{ margin: "24px 8px" }}>
+                        <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
+                        selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2}/>
 
-                    <DropDownItems type={this.tabContent[3]} menu1={(<Menu>{this.anyCountry1()}{countryMenu1}</Menu>)} menu2={(<Menu>{this.anyCountry2()}{countryMenu2}</Menu>)}
-                    selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2}/>
-                </Row>
-            </div>
-        )
+                        <DropDownItems type={this.tabContent[3]} menu1={(<Menu>{this.anyCountry1()}{countryMenu1}</Menu>)} menu2={(<Menu>{this.anyCountry2()}{countryMenu2}</Menu>)}
+                        selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2}/>
+                    </Row>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className="dropdown-render">
+                    <Row gutter={24}>
+                            <DropDownItems type={this.tabContent[0]} menu1={(<Menu>{natMenu1}</Menu>)} menu2={(<Menu>{natMenu2}</Menu>)}
+                            selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2}/>
+
+                            <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
+                            selected1={this.props.selectedLabel.Protocol}/>
+
+                            <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
+                            selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2}/>
+
+                    </Row>
+
+                </div>
+            )
+        }
+
     }
 }
 export default DropDown;

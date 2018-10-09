@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import './App.scss';
 
 import { Layout, Menu, Icon, DatePicker } from "antd";
 import { Link, Route } from "react-router-dom";
 import moment from "moment";
 
-import logo from "../assets/logo.png";
+import logo from "../assets/images/logo.svg";
 import Dashboard from "../pages/Dashboard";
 import NatType from "../pages/NatType";
 import ConnectionAttempts from "../pages/ConnectionAttempts";
@@ -46,27 +45,27 @@ class App extends Component {
     });
     const now = new Date().getTime();
     const hour = hoursInMilliseconds(1);
-    this.props.filterByRange(now-hour, now);
+    this.props.filterByRange(now - hour, now);
   }
 
   filterByDay() {
     this.setState({
       dateFilterIndex: 2
     });
-    
+
     const now = new Date().getTime();
     const hour = daysInMilliseconds(1);
-    this.props.filterByRange(now-hour, now);
+    this.props.filterByRange(now - hour, now);
   }
 
   filterByWeek() {
     this.setState({
       dateFilterIndex: 3
     });
-    
+
     const now = new Date().getTime();
     const hour = daysInMilliseconds(7);
-    this.props.filterByRange(now-hour, now);
+    this.props.filterByRange(now - hour, now);
   }
 
   filterByMonth() {
@@ -75,7 +74,7 @@ class App extends Component {
     });
     const now = new Date().getTime();
     const hour = daysInMilliseconds(30);
-    this.props.filterByRange(now-hour, now);
+    this.props.filterByRange(now - hour, now);
   }
 
   filterNone() {
@@ -101,14 +100,17 @@ class App extends Component {
           trigger={null}
           collapsible
           collapsed={this.state.collapsed}
-          width={256}
+          width={"256px"}
+          className="main-slider"
         >
           <div className="logo">
-            <img src={logo} alt="logo" />
-            <h1>CRUST TESTNET</h1>
+            <div className="logo-b">
+              <img className="logo-media" src={logo} alt="logo" />
+              <h1 className="logo-desc">CRUST TESTNET</h1>
+            </div>
           </div>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
-            {/* <Menu.Item key="1">
+          <Menu mode="inline" defaultSelectedKeys={["2"]}>
+            {/*<Menu.Item key="1">
               <Link to="/">
                 <span id="item">
                   <Icon type="dashboard" />
@@ -143,35 +145,35 @@ class App extends Component {
           </Menu>
         </Sider>
 
-        <Layout>
-          <Header style={{ background: "#fff", padding: 0 }}>
+        <Layout className="main-layout">
+          <Header className="main-layout-head">
             <Icon
               className="trigger"
               type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
               onClick={this.toggle}
-            />    
-            <span className="topnav">
-              {/* maybe these className attributes could be removed */}
-              {/* <a className={this.state.dateFilterIndex === 1?"true":"false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
-              <a className={this.state.dateFilterIndex === 2?"true":"false"} href="#" onClick={() => this.filterByDay()}>Day</a>
-              <a className={this.state.dateFilterIndex === 3?"true":"false"} href="#" onClick={() => this.filterByWeek()}>Week</a>
-              <a className={this.state.dateFilterIndex === 4?"true":"false"} href="#" onClick={() => this.filterByMonth()}>Month</a> */}
-              <a className={this.state.dateFilterIndex === 5? "active": ""} href="#" onClick={() => this.filterNone()}>
+              style={{ fontSize: '18px', color: '#000000' }}
+            />
+            <div className="main-head-nav">
+              {/* maybe these className attributes could be removed 
+              <a className={this.state.dateFilterIndex === 1 ? "true" : "false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
+              <a className={this.state.dateFilterIndex === 2 ? "true" : "false"} href="#" onClick={() => this.filterByDay()}>Day</a>
+              <a className={this.state.dateFilterIndex === 3 ? "true" : "false"} href="#" onClick={() => this.filterByWeek()}>Week</a>
+              <a className={this.state.dateFilterIndex === 4 ? "true" : "false"} href="#" onClick={() => this.filterByMonth()}>Month</a>*/}
+              <a className={this.state.dateFilterIndex === 5 ? "true" : "false"} href="#" onClick={() => this.filterNone()}>
                 All Time
               </a>
-            <span className="date">
-              <RangePicker 
-                disabled
-                defaultValue={[
-                  moment(this.props.store.dateRange.allTime.from, dateFormat),
-                  moment(this.props.store.dateRange.allTime.to, dateFormat)
-                ]}
-                format={dateFormat}
-              />
-            </span>
-            </span>
+              <div className="main-head-nav-date">
+                <RangePicker
+                  defaultValue={[
+                    moment("2015/01/01", dateFormat),
+                    moment("2015/01/01", dateFormat)
+                  ]}
+                  format={dateFormat}
+                />
+              </div>
+            </div>
           </Header>
-          { this.props.store.logs.length === 0 ? <div>No data available</div>: (<Content>
+          {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
             <Route path="/" exact component={Dashboard} />
             <Route path="/nat" component={NatType} />
             <Route path="/protocol" component={Protocol} />

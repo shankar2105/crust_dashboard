@@ -105,6 +105,10 @@ const columns = [
       key: "utp_hp",
       align: 'center',
       className: 'utp',
+      filters: [
+        { text: 'Male', value: 'male' },
+        { text: 'Female', value: 'female' },
+      ],
       render: text => {
         return (
           <table>

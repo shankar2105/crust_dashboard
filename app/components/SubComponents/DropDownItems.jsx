@@ -6,10 +6,10 @@ export class DropDownItems extends Component {
         const {type,menu1,menu2,selected1,selected2}=this.props;
         if (this.props.type === "Protocol") {
             return (
-                <Col className="gutter-row" span={8}>
+                <Col className="dropdown-render-i" span={8}>
                     <Col span={4}>{type}</Col>
-                    <Dropdown overlay={menu1} trigger={['click']}>
-                        <Button style={{ marginLeft: 8 }}>
+                    <Dropdown overlay={menu1} trigger={['click']} placement="topLeft">
+                        <Button>
                             {selected1} <Icon type="down" />
                         </Button>
                     </Dropdown>
@@ -18,15 +18,15 @@ export class DropDownItems extends Component {
         }
         else {
             return (
-                <Col className="gutter-row" span={8}>
+                <Col className="dropdown-render-i" span={8}>
                     <Col span={4}>{type}</Col>
-                    <Dropdown overlay={menu1} trigger={['click']}>
-                        <Button style={{ marginLeft: 8 }}>
+                    <Dropdown overlay={menu1} trigger={['click']} placement="topLeft">
+                        <Button>
                         {selected1} <Icon type="down" />
                         </Button>
                     </Dropdown>
-                    <Dropdown overlay={menu2} trigger={['click']}>
-                        <Button style={{ marginLeft: 8 }}>
+                    <Dropdown overlay={menu2} trigger={['click']} placement="topCenter">
+                        <Button>
                         {selected2} <Icon type="down" />
                         </Button>
                     </Dropdown>

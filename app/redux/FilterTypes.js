@@ -5,36 +5,31 @@ export const ConnectionResult = {
 };
 
 export const NatType = {
-    ANY: 'ANY',
+    ANY: '',
     EDM: 'EDM',
-    EIM: 'EIM',
-    EDM_RANDOM: 'EDM_RANDOM'
+    EIM: 'EIM'
 }
 
 export const OS = {
-    ANY: 'ANY',
-    Windows: 'WIN',
+    ANY: '',
+    WIN: 'WIN',
     OSX: 'OSX',
-    LINUX: 'LINUX'
+    UNIX: 'UNIX'
 }
 
 export const PROTOCOL = {
-    ANY: 'ANY',
+    ANY: '',
     TCP_DIRECT: 'TCP_DIRECT',
     UTP_HP: 'UTP_HP',
     TCP_HP: 'TCP_HP'
 }
 
 export const Filter = {
-    NatType1: NatType.ANY,
-    NatType2: NatType.ANY,
-    OSType1: OS.ANY,
-    OSType2: OS.ANY,
-    CountryType1: OS.ANY,
-    CountryType2: OS.ANY,
+    RequesterNatType: NatType.ANY,
+    ResponderNatType: NatType.ANY,
+    RequesterOS: OS.ANY,
+    ResponderOS: OS.ANY,
+    RequesterCountry: OS.ANY,
+    ResponderCountry: OS.ANY,
     Protocol: PROTOCOL.ANY
-}
-
-export const mods = {
-    CON_ACT_:'CON_ACT_'
 }

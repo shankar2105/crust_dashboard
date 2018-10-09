@@ -7,10 +7,11 @@ import columns from '../assets/tableData/tableColumn';
 function filterLogs(rawData){
   let rand = Math.floor(Math.random()*10000);
   const dataSource = [];
+  {/* FIXME: Something here */}
   rawData.forEach(log => {
     dataSource.push({
-        key: log.logDataHash.substring(0, 6),
-        num: log.logDataHash.substring(0, 6),
+        key: "Asdfds",
+        num: "asfdads",
         direct: log.is_direct_successful ? "Yes" : "No",
         tcp_hp: log.tcp_hole_punch_result === "Succeeded" ? "Yes" : "Fail",
         utp_hp: log.utp_hole_punch_result === "Succeeded" ? "Yes" : "Fail",
