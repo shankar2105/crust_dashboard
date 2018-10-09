@@ -10,7 +10,7 @@ npm run dev
 
 This will automatically open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Open an other terminal and run mock server to load data 
+Open an other terminal and run mock server to load data
 
 ```bash
 npm run mock-server
@@ -56,7 +56,7 @@ To lint JavaScript code:
 npm run lint:js
 ```
 
-This will also fix or lint if you have `.json` and `.md` files inside the `src/` folder.
+This will also fix or lint if you have `.json` and `.md` files inside the `app/` folder.
 
 ### Formatting and Linting Styles
 
