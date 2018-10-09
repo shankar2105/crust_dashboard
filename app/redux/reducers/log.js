@@ -18,15 +18,7 @@ const initialState = {
         countriesCount: {}
     },
     paging: {},
-    filteredConnectionResults: {
-        logs: [],
-        successfulConnections: [],
-        failedConnections: [],
-        osList: Object.keys(OS),
-        natTypes: Object.keys(NatType),
-        osCount: {},
-        countriesCount: {}
-    },
+    filteredConnectionResults: [],
     connectionResultFilter: ConnectionResult.NONE,
     dateRange: {
         allTime: {
@@ -47,6 +39,43 @@ const filterByConnectionResult = (preparedLogs, filter) => {
 
 const logReducer = (state = initialState, action) => {
     switch (action.type) {
+        case Action.NEW_LOG:
+            const logs = state.logs.concat(action.payload);
+            let logsByRange = [];
+            if (state.connectionResultFilter === ConnectionResult.NONE) {
+                logsByRange = action.payload; 
+            } else {
+                logsByRange = filterLogs(action.payload, state.dateRange.custom.from, state.dateRange.custom.to);
+            }
+            const logsFiltered = {
+                ...state.filteredLogs,
+                logs: state.logs.concat(logsByRange)
+            };
+            logsByRange.forEach(log => {
+                (log.isSuccessful ? filteredLogs.successfulConnections : logsFiltered.failedConnections).push(log);
+                if (!logsFiltered.osCount[log.peer_requester.os]) {
+                    logsFiltered.osCount[log.peer_requester.os] = 0;
+                }
+                if (!logsFiltered.osCount[log.peer_responder.os]) {
+                    logsFiltered.osCount[log.peer_responder.os] = 0;
+                }
+                if (!logsFiltered.countriesCount[log.peer_requester.geo_info.country_name]) {
+                    logsFiltered.countriesCount[log.peer_requester.geo_info.country_name] = 0;
+                }
+                if (!logsFiltered.countriesCount[log.peer_responder.geo_info.country_name]) {
+                    logsFiltered.countriesCount[log.peer_responder.geo_info.country_name] = 0;
+                }
+                logsFiltered.countriesCount[log.peer_requester.geo_info.country_name] = logsFiltered.countriesCount[log.peer_requester.geo_info.country_name] + 1;
+                logsFiltered.countriesCount[log.peer_responder.geo_info.country_name] = logsFiltered.countriesCount[log.peer_responder.geo_info.country_name] + 1;  
+            });
+            state = {
+                ...state,
+                logs,
+                filteredLogs: logsFiltered,
+                filteredConnectionResults: state.connectionResultFilter === ConnectionResult.NONE ? logsFiltered.logs :
+                    state.connectionResultFilter === ConnectionResult.SUCCESS ? logsFiltered.successfulConnections : logsFiltered.failedConnections
+            };
+            break;
         case `${Action.FETCH_LOGS}_PENDING`:
             state = {
                 ...initialState, 
