@@ -15,6 +15,7 @@ import { NatType, OS, PROTOCOL } from "../redux/FilterTypes";
 import DropDown from "../components/SubComponents/DropDownRender";
 import AreaChart from "../components/AreaChart";
 import Tables from "../components/Tables";
+import {MOD_NAME} from "../redux/reducers/ConnectionAttempt/activity"
 
 const formatAreaChart = (logs) => {
   let logCount = 0
@@ -76,7 +77,8 @@ class ConnectionAttempts extends Component {
                 minHeight: 100
               }}
             >
-              <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} mod={""} filterAction={""} />
+              <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} mod={MOD_NAME} filterAction={this.props.filterChange} 
+              labels={this.props.store.filteredLogs} selectedLabel={this.props.activity.filter}/>
             </Card>
           </Col>
         </Row>

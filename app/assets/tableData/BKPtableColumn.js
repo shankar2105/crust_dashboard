@@ -9,7 +9,6 @@ const columns = [
       align: 'center',
       defaultSortOrder: 'ascend',
       render: (a, b) => {
-        console.log(b);
         return (
           <table>
             <tbody>
