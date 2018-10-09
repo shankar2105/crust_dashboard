@@ -9,7 +9,7 @@ class ButtonGroup extends Component {
 
   render() {
     return (
-      <span style={{float: "right"}}>
+      <span className="btn-group">
         <FormItem>
           <Radio.Group>
             <Radio.Button value="successful" onClick={() => this.props.changeFilter(Action.FILTER_SUCCESS)}> Successful </Radio.Button>

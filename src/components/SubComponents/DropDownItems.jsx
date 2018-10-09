@@ -11,13 +11,13 @@ const menu = (
 
 export class DropDownItems extends Component {
     render() {
-        
+
         if (this.props.type === "Protocol") {
             return (
-                <Col className="gutter-row" span={8}>
-                    <Col span={4}>{this.props.type}</Col>
+                <Col className="dropdown-render-i" span={8}>
+                    <Col span={6}>{this.props.type}</Col>
                     <Dropdown overlay={menu} placement="topLeft" >
-                        <Button style={{ marginLeft: 8 }}>
+                        <Button>
                             Any <Icon type="down" />
                         </Button>
                     </Dropdown>
@@ -26,15 +26,15 @@ export class DropDownItems extends Component {
         }
         else {
             return (
-                <Col className="gutter-row" span={8}>
-                    <Col span={4}>{this.props.type}</Col>
+                <Col className="dropdown-render-i" span={8}>
+                    <Col span={6}>{this.props.type}</Col>
                     <Dropdown overlay={menu} placement="topLeft" >
-                        <Button style={{ marginLeft: 8 }}>
+                        <Button>
                             Any <Icon type="down" />
                         </Button>
                     </Dropdown>
                     <Dropdown overlay={menu} placement="topCenter">
-                        <Button style={{ marginLeft: 8 }}>
+                        <Button>
                             Any <Icon type="down" />
                         </Button>
                     </Dropdown>

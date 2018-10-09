@@ -100,8 +100,10 @@ class App extends Component {
           className="main-slider"
         >
           <div className="logo">
-            <img className="logo-media" src={logo} alt="logo" />
-            <h1 className="logo-desc">CRUST TESTNET</h1>
+            <div className="logo-b">
+              <img className="logo-media" src={logo} alt="logo" />
+              <h1 className="logo-desc">CRUST TESTNET</h1>
+            </div>
           </div>
           <Menu mode="inline" defaultSelectedKeys={["2"]}>
             <Menu.Item key="1">
@@ -139,15 +141,15 @@ class App extends Component {
           </Menu>
         </Sider>
 
-        <Layout className="main-header">
-          <Header className="main-header-b">
+        <Layout className="main-layout">
+          <Header className="main-layout-head">
             <Icon
               className="trigger"
               type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
               onClick={this.toggle}
               style={{ fontSize: '18px', color: '#000000' }}
             />
-            <div className="main-header-nav">
+            <div className="main-head-nav">
               {/* maybe these className attributes could be removed */}
               <a className={this.state.dateFilterIndex === 1 ? "true" : "false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
               <a className={this.state.dateFilterIndex === 2 ? "true" : "false"} href="#" onClick={() => this.filterByDay()}>Day</a>
@@ -156,7 +158,7 @@ class App extends Component {
               <a className={this.state.dateFilterIndex === 5 ? "true" : "false"} href="#" onClick={() => this.filterNone()}>
                 All Time
               </a>
-              <div className="main-header-nav-date">
+              <div className="main-head-nav-date">
                 <RangePicker
                   defaultValue={[
                     moment("2015/01/01", dateFormat),
@@ -167,7 +169,7 @@ class App extends Component {
               </div>
             </div>
           </Header>
-          {this.props.store.logs.length === 0 ? <div>No data available</div> : (<Content>
+          {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
             <Route path="/" exact component={Dashboard} />
             <Route path="/nat" component={NatType} />
             <Route path="/protocol" component={Protocol} />
