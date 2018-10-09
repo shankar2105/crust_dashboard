@@ -1,26 +1,26 @@
 {
 	"logs": [{
-		"createdAt": "2018-09-28T05:27:27.242Z",
+		"createdAt": "2018-10-08T09:13:25.835Z",
 		"peer_requester": {
-			"ip": "182.74.140.194",
 			"nat_type": "EIM",
-			"os": "win64",
+			"os": "linux",
 			"geo_info": {
-				"region": "Karnataka",
-				"region_code": "KA",
-				"country": "IN",
-				"country_name": "India"
+				"region": "North Holland",
+				"region_code": "NH",
+				"country": "NL",
+				"country_name": "Netherlands"
 			}
 		},
 		"peer_responder": {
-			"ip": "84.160.11.231",
-			"nat_type": "EIM",
-			"os": "win",
+			"nat_type": {
+				"EDMRandomPorts": [1, 2, 3]
+			},
+			"os": "macos",
 			"geo_info": {
-				"region": "Baden-Württemberg Region",
-				"region_code": "BW",
-				"country": "DE",
-				"country_name": "Germany"
+				"region": "West Java",
+				"region_code": "JB",
+				"country": "ID",
+				"country_name": "Indonesia"
 			}
 		},
 		"is_direct_successful": false,
@@ -28,37 +28,61 @@
 			"Succeeded": {
 				"time_spent": {
 					"secs": 0,
-					"nanos": 0
+					"nanos": 493000000
 				}
 			}
 		},
-		"tcp_hole_punch_result": "success"
-	}, {
-		"createdAt": "2018-09-28T03:27:27.242Z",
-		"peer_requester": {
-			"ip": "181.74.140.192",
-			"nat_type": "EDM",
-			"os": "win64",
-			"geo_info": {
-				"region": "Karnataka",
-				"region_code": "KA",
-				"country": "IN",
-				"country_name": "India"
+		"tcp_hole_punch_result": {
+			"Succeeded": {
+				"time_spent": {
+					"secs": 0,
+					"nanos": 184000000
+				}
 			}
 		},
-		"peer_responder": {
-			"ip": "184.160.11.231",
-			"nat_type": "EIM",
-			"os": "win",
-			"geo_info": {
-				"region": "Baden-Württemberg Region",
-				"region_code": "BW",
-				"country": "DE",
-				"country_name": "Germany"
-			}
+		"logDataHash": "a7e408ca20a67bd6c46516e81b5ac4f61d61a54b6c681afeb5e17515643e5881"
+	}, 
+	{
+		"createdAt": "2018-10-08T09:13:25.835Z",
+	    "peer_requester": {
+		"nat_type": "EDM",
+		"os": "linux",
+		"geo_info": {
+			"region": "North Holland",
+			"region_code": "NH",
+			"country": "IN",
+			"country_name": "India"
+		}
+	},
+	"peer_responder": {
+		"nat_type": {
+			"EDMRandomPorts": [1, 2, 3]
 		},
-		"is_direct_successful": false,
-		"utp_hole_punch_result": "failure",
-		"tcp_hole_punch_result": "failure"
-	}]
+		"os": "macos",
+		"geo_info": {
+			"region": "West Java",
+			"region_code": "JB",
+			"country": "ID",
+			"country_name": "Indonesia"
+		}
+	},
+	"is_direct_successful": false,
+	"utp_hole_punch_result": {
+		"Succeeded": {
+			"time_spent": {
+				"secs": 0,
+				"nanos": 493000000
+			}
+		}
+	},
+	"tcp_hole_punch_result": {
+		"Succeeded": {
+			"time_spent": {
+				"secs": 0,
+				"nanos": 184000000
+			}
+		}
+	},
+	"logDataHash": "b7e408ca20a67bd6c46516e81b5ac4f61d61a54b6c681afeb5e17515643e5881"
+}]
 }

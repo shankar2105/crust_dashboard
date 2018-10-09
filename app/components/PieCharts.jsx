@@ -4,9 +4,15 @@ import { Chart, Coord, Geom, Tooltip, Legend, Guide } from "bizcharts";
 const { Html } = Guide;
 
 export default class PieCharts extends Component {
-  state = {type: this.props.title, percent: 100}
+	constructor() {
+			super();
+		  this.state = {
+			  //type: this.props.title,
+				type: '',
+			  percent: 100}
+	}
 
-  percent = (e) => {
+  percent(e) {
     const value = this.props.data.map(val => val.value);
     let num = value.reduce((a, b) => a + b);
     let percentage = ((e.data._origin.value/num) * 100).toFixed(0);

@@ -21,12 +21,16 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY/MM/DD";
 
 class App extends Component {
-  state = {
+	
+	constructor() {
+		super();
+		this.state = {
     collapsed: false,
     dateFilterIndex: 5
   };
+	}
 
-  toggle = () => {
+  toggle() {
     this.setState({
       collapsed: !this.state.collapsed
     });

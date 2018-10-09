@@ -1,30 +1,55 @@
 import { NatType, OS, PROTOCOL } from './FilterTypes';
 
-
-const hex = (buffer) => {
-    var hexCodes = [];
-    var view = new DataView(buffer);
-    for (var i = 0; i < view.byteLength; i += 4) {
-        // Using getUint32 reduces the number of iterations needed (we process 4 bytes each time)
-        var value = view.getUint32(i)
-        // toString(16) will give the hex representation of the number without padding
-        var stringValue = value.toString(16)
-        // We use concatenation and slice for padding
-        var padding = '00000000'
-        var paddedValue = (padding + stringValue).slice(-padding.length)
-        hexCodes.push(paddedValue);
-    }
-
-    // Join all the hex strings into one
-    return hexCodes.join("");
-};
-
 export const hoursInMilliseconds = (HOURS) => 1 * 1000 * 60 * 60 * HOURS;
 export const daysInMilliseconds = (DAYS) => hoursInMilliseconds(24) * DAYS;
 
-export const sha256 = (log) => {
-    var buffer = new TextEncoder("utf-8").encode(JSON.stringify(log));
-    return crypto.subtle.digest("SHA-256", buffer).then(hash => hex(hash));
+export const prepareLogs = (logs) => {
+    const osCountMap = {};
+    const countryCountMap = {};
+    const successfulConnections = [];
+    const failedConnections = [];
+    let from = new Date;
+    logs.forEach(log => {
+        const isSuccess = log.is_direct_successful || log.utp_hole_punch_result.hasOwnProperty('Succeeded') || log.tcp_hole_punch_result.hasOwnProperty('Succeeded');
+        log.isSuccessful = isSuccess; 
+        if (!osCountMap[log.peer_requester.os]) {
+            osCountMap[log.peer_requester.os] = 0;
+        }
+        if (!osCountMap[log.peer_responder.os]) {
+            osCountMap[log.peer_responder.os] = 0;
+        }
+        osCountMap[log.peer_requester.os] = osCountMap[log.peer_requester.os] + 1;
+        osCountMap[log.peer_responder.os] = osCountMap[log.peer_responder.os] + 1; 
+        if (!countryCountMap[log.peer_requester.geo_info.country_name]) {
+            countryCountMap[log.peer_requester.geo_info.country_name] = 0;
+        }
+        if (!countryCountMap[log.peer_responder.geo_info.country_name]) {
+            countryCountMap[log.peer_responder.geo_info.country_name] = 0;
+        }
+        countryCountMap[log.peer_requester.geo_info.country_name] = countryCountMap[log.peer_requester.geo_info.country_name] + 1;
+        countryCountMap[log.peer_responder.geo_info.country_name] = countryCountMap[log.peer_responder.geo_info.country_name] + 1;
+        if (from > new Date(log.createdAt)) {
+            from = new Date(log.createdAt);
+        }
+        if (typeof(log.peer_requester.nat_type) !== 'string') {
+            log.peer_requester.nat_type = 'EDM_RANDOM'
+        }
+        if (typeof(log.peer_responder.nat_type) !== 'string') {
+            log.peer_responder.nat_type = 'EDM_RANDOM'
+        }
+        (isSuccess ? successfulConnections : failedConnections).push(log);
+    });
+    return {
+        logs,
+        osCountMap,
+        countryCountMap,
+        successfulConnections,
+        failedConnections,
+        dateRange: {
+            from,
+            to: new Date
+        }
+    };
 };
 
 
@@ -34,10 +59,13 @@ export const sha256 = (log) => {
  * @param {*} from - local date 
  * @param {*} to - local date
  */
-export const filterLogs = (logs, from, to) => logs.filter(log => {
-    log.createdAt = new Date(log.createdAt);
-    return log.createdAt >= from && log.createdAt <= to;
-});
+export const filterLogs = (logs, from, to) => {
+    const filteredLogs = logs.filter(log => {
+        log.createdAt = new Date(log.createdAt);
+        return log.createdAt >= from && log.createdAt <= to;
+    });
+    return prepareLogs(filteredLogs);
+};
 
 export const applyFilter = (logs, filter) => {
         const isNatTypeMatching = () => {
@@ -104,13 +132,4 @@ export const applyFilter = (logs, filter) => {
         }
 
         return isNatTypeMatching() && isOSMatching() && isProtocolMatching() && isCountryMatching();
-};
-
-export const computeStats = (logs, filter) => {
-    // TODO
-    return {
-        dashboard: {
-            totalNat: {}
-        }
-    }
 };

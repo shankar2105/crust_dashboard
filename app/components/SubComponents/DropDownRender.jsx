@@ -3,7 +3,7 @@ import {Row, Col, Icon, Menu, Dropdown, Button} from "antd";
 import {DropDownItems} from "./DropDownItems"
 
 class DropDown extends Component {
-    tabContent=null;
+
     constructor(props){
         super(props);
         this.tabContent=this.props.contents;

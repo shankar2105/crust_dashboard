@@ -63,15 +63,15 @@ class ConnectionAttempts extends Component {
   }
   constructor(props) {
     super(props); 
-    this.props.revalidate(mods.CON_ACT_,this.props.store.filteredConnectionResults);
+    // this.props.revalidate(mods.CON_ACT_,this.props.store.filteredConnectionResults);
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    //initially if returns false since the state isn't changed. 
-    //we set the initial state using constructor and this function for later changes
-    if (this.props.store.filteredConnectionResults != nextProps.store.filteredConnectionResults) {
-      this.props.revalidate(mods.CON_ACT_,nextProps.store.filteredConnectionResults);
-    }
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   //initially if returns false since the state isn't changed. 
+  //   //we set the initial state using constructor and this function for later changes
+  //   if (this.props.store.filteredConnectionResults != nextProps.store.filteredConnectionResults) {
+  //     this.props.revalidate(mods.CON_ACT_,nextProps.store.filteredConnectionResults);
+  //   }
+  // }
 
   render() {
     return (
@@ -111,7 +111,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     filterByConnectionResult,
-    revalidate,
+    // revalidate,
     filterChange
   }, dispatch);
 };

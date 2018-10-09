@@ -5,14 +5,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 import logReducer from './reducers/log';
 import connectionAttemptActivity from './reducers/ConnectionAttempt/activity';
-import connectionAttemptCountry from './reducers/ConnectionAttempt/country';
-import connectionAttemptOS from './reducers/ConnectionAttempt/os';
+// import connectionAttemptCountry from './reducers/ConnectionAttempt/country';
+// import connectionAttemptOS from './reducers/ConnectionAttempt/os';
 
 const store = createStore(combineReducers({
     logReducer,
     connectionAttemptActivity,
-    connectionAttemptCountry,
-    connectionAttemptOS
+    // connectionAttemptCountry,
+    // connectionAttemptOS
 }), applyMiddleware(logger, thunk, promiseMiddleware()));
 
 window.store = store;
