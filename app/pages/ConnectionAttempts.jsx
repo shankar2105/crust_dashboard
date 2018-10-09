@@ -6,12 +6,15 @@ import { bindActionCreators } from 'redux';
 import TabComp from "../components/TabComp";
 import "./Dashboard.css";
 import ButtonGroup from "../components/ButtonGroup";
-import { filterByConnectionResult,revalidate,filterChange }from '../redux/dispatcher/logs_action';
-import {mods} from "../redux/FilterTypes"
-import data from "../assets/data";
+import { filterByConnectionResult, revalidate, filterChange } from '../redux/dispatcher/logs_action';
+import { mods } from "../redux/FilterTypes"
+import data, { AreaChartArray } from "../assets/data";
 import { LineChartArray } from "../assets/data"
 import ActionType from "../redux/ActionType";
-import {NatType,OS,PROTOCOL} from "../redux/FilterTypes";
+import { NatType, OS, PROTOCOL } from "../redux/FilterTypes";
+import DropDown from "../components/SubComponents/DropDownRender";
+import AreaChart from "../components/AreaChart";
+import Tables from "../components/Tables";
 
 //import "./pages.css"
 class ConnectionAttempts extends Component {
@@ -23,13 +26,13 @@ class ConnectionAttempts extends Component {
 
     let osNames = new Set(osArr);
     const osName = Array.from(osNames);
-    const osCount = osName.map(osN => (osArr.filter(os => os===osN).length));
+    const osCount = osName.map(osN => (osArr.filter(os => os === osN).length));
 
     let osList = []
     osName.forEach((os, i) => {
       let osObj = {};
-      osObj["x"]=os;
-      osObj["y"]=osCount[i];
+      osObj["x"] = os;
+      osObj["y"] = osCount[i];
       osList.push(osObj);
     }
     );
@@ -47,22 +50,25 @@ class ConnectionAttempts extends Component {
     ))
 
     return [
-      {"values":LineChartArray,
-      "dataSource":null,
-      "interval":null
+      {
+        "values": LineChartArray,
+        "dataSource": null,
+        "interval": null
       },
-      {"values":listCountry,
-      "dataSource":data.globalNetworkActivity,
-      "interval":1000
+      {
+        "values": listCountry,
+        "dataSource": data.globalNetworkActivity,
+        "interval": 1000
       },
-      {"values":listOS,
-      "dataSource":osList,
-      "interval":10
+      {
+        "values": listOS,
+        "dataSource": osList,
+        "interval": 10
       }
-    ]  
+    ]
   }
   constructor(props) {
-    super(props); 
+    super(props);
     // this.props.revalidate(mods.CON_ACT_,this.props.store.filteredConnectionResults);
   }
   // shouldComponentUpdate(nextProps, nextState) {
@@ -76,13 +82,13 @@ class ConnectionAttempts extends Component {
   render() {
     return (
       <div className="gutter-example">
-      <span className="page-heading">
-      <h1 style={{ padding: "5px 0px 0px 40px", display: "inline"}}>Connection Attempts </h1>
-          <span style={{ float: "right", padding: "10px 20px 0px 0px" }}>
-            <h3 style={{ float: "left", padding: "5px 30px 0px 0px"}}>  Connection result:</h3>
-            <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}  
-            changeFilter={this.props.filterByConnectionResult}/>
-          </span>
+        <span className="page-heading">
+          <h1 style={{ padding: "5px 0px 0px 40px", display: "inline" }}>Connection Attempts </h1>
+          {/* <span style={{ float: "right", padding: "10px 20px 0px 0px" }}>
+            <h3 style={{ float: "left", padding: "5px 30px 0px 0px" }}>  Connection result:</h3>
+            <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}
+              changeFilter={this.props.filterByConnectionResult} />
+          </span> */}
         </span>
         <Row gutter={24} style={{ margin: "24px 8px" }}>
           <Col className="gutter-row" span={24}>
@@ -93,11 +99,35 @@ class ConnectionAttempts extends Component {
                 minHeight: 100
               }}
             >
-            <TabComp chartData={this.prepareChartData()} tableData={this.props.store.filteredConnectionResults}/>
-          </Card>
+              <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} mod={""} filterAction={""} />
+            </Card>
           </Col>
         </Row>
-      </div> 
+        <Row gutter={24} style={{ margin: "24px 8px" }}>
+          <Col className="gutter-row" span={24}>
+            <Card title="Connection Success Rate"
+              style={{
+                background: "#fff",
+                borderRadius: 5,
+                minHeight: 500
+              }}>
+              <AreaChart data={AreaChartArray} />
+            </Card>
+          </Col>
+        </Row>
+        <Row gutter={24} style={{ margin: "24px 8px" }}>
+          <Col className="gutter-row" span={24}>
+            <Card title="Connection Result: "
+              style={{
+                background: "#fff",
+                minHeight: 280
+              }}
+            >
+              <Tables dataSource={data.logs} />
+            </Card>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }

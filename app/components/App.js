@@ -25,9 +25,9 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-    collapsed: false,
-    dateFilterIndex: 5
-  };
+      collapsed: false,
+      dateFilterIndex: 5
+    };
 	}
 
   toggle() {
@@ -107,8 +107,8 @@ class App extends Component {
             <img src={logo} alt="logo" />
             <h1>CRUST TESTNET</h1>
           </div>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["2"]}>
-            <Menu.Item key="1">
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
+            {/* <Menu.Item key="1">
               <Link to="/">
                 <span id="item">
                   <Icon type="dashboard" />
@@ -131,7 +131,7 @@ class App extends Component {
                   <span>Protocol</span>
                 </span>
               </Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item key="4">
               <Link to="/connect">
                 <span id="item">
@@ -152,18 +152,19 @@ class App extends Component {
             />    
             <span className="topnav">
               {/* maybe these className attributes could be removed */}
-              <a className={this.state.dateFilterIndex === 1?"true":"false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
+              {/* <a className={this.state.dateFilterIndex === 1?"true":"false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
               <a className={this.state.dateFilterIndex === 2?"true":"false"} href="#" onClick={() => this.filterByDay()}>Day</a>
               <a className={this.state.dateFilterIndex === 3?"true":"false"} href="#" onClick={() => this.filterByWeek()}>Week</a>
-              <a className={this.state.dateFilterIndex === 4?"true":"false"} href="#" onClick={() => this.filterByMonth()}>Month</a>
-              <a className={this.state.dateFilterIndex === 5?"true":"false"} href="#" onClick={() => this.filterNone()}>
+              <a className={this.state.dateFilterIndex === 4?"true":"false"} href="#" onClick={() => this.filterByMonth()}>Month</a> */}
+              <a className={this.state.dateFilterIndex === 5? "active": ""} href="#" onClick={() => this.filterNone()}>
                 All Time
               </a>
             <span className="date">
-              <RangePicker
+              <RangePicker 
+                disabled
                 defaultValue={[
-                  moment("2015/01/01", dateFormat),
-                  moment("2015/01/01", dateFormat)
+                  moment(this.props.store.dateRange.allTime.from, dateFormat),
+                  moment(this.props.store.dateRange.allTime.to, dateFormat)
                 ]}
                 format={dateFormat}
               />

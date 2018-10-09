@@ -24,22 +24,8 @@
 			}
 		},
 		"is_direct_successful": false,
-		"utp_hole_punch_result": {
-			"Succeeded": {
-				"time_spent": {
-					"secs": 0,
-					"nanos": 493000000
-				}
-			}
-		},
-		"tcp_hole_punch_result": {
-			"Succeeded": {
-				"time_spent": {
-					"secs": 0,
-					"nanos": 184000000
-				}
-			}
-		},
+		"utp_hole_punch_result": "Succeeded",
+		"tcp_hole_punch_result": "Succeeded",
 		"logDataHash": "a7e408ca20a67bd6c46516e81b5ac4f61d61a54b6c681afeb5e17515643e5881"
 	}, 
 	{
@@ -67,22 +53,9 @@
 		}
 	},
 	"is_direct_successful": false,
-	"utp_hole_punch_result": {
-		"Succeeded": {
-			"time_spent": {
-				"secs": 0,
-				"nanos": 493000000
-			}
-		}
-	},
-	"tcp_hole_punch_result": {
-		"Succeeded": {
-			"time_spent": {
-				"secs": 0,
-				"nanos": 184000000
-			}
-		}
-	},
+
+	"utp_hole_punch_result": "Failed",
+	"tcp_hole_punch_result": "Failed",
 	"logDataHash": "b7e408ca20a67bd6c46516e81b5ac4f61d61a54b6c681afeb5e17515643e5881"
 }]
 }

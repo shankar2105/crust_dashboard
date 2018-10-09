@@ -81,7 +81,7 @@ const logReducer = (state = initialState, action) => {
                     filteredLogs,
                     filteredConnectionResults: filteredLogs.logs,
                     dateRange: {
-                        alltime: preparedLogs.dateRange,
+                        allTime: preparedLogs.dateRange,
                         custom: preparedLogs.dateRange
                     }
                 };

@@ -1,4 +1,5 @@
 import Action from '../ActionType'; 
+import { MOD_NAME } from '../reducers/ConnectionAttempt/activity';
 
 export const fetchLogs = (from, to) => {
     return {
@@ -22,15 +23,14 @@ export const filterByConnectionResult = (action) => {
 
 export const revalidate = (mod,logs) => {
     return {
-        //type:  `${mod}_${Action.REVALIDATE}`, //this does not work for some reason, maybe wrong format mod parameter sent here
-        type:   `CON_ACT_${Action.REVALIDATE}`, //this works
+        type:  `${mod}_${Action.REVALIDATE}`,
         payload: logs
     }
 }
 
-export const filterChange = (mod, action, filter) => {
+export const filterChange = (mod, action, value) => {
     return {
-        //type: `${mod}_${action}`,  //check this also
-        payload: filter
+        type:  `${mod}_${action}`,
+        payload: value
     }
 }

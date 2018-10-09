@@ -13,9 +13,9 @@ export const NatType = {
 
 export const OS = {
     ANY: '',
-    WIN: 'WIN',
+    Windows: 'WIN',
     OSX: 'OSX',
-    LINUX: 'LINUX'
+    Linux: 'LINUX'
 }
 
 export const PROTOCOL = {

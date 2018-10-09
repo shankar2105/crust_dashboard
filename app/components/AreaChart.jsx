@@ -8,7 +8,7 @@ class AreaChart extends React.Component {
         var dv = new DataSet.View().source(data);
         dv.transform({
             type: "fold",
-            fields: ["ACME", "Compitor", "TCP", "UDP"],
+            fields: ["TCP_D", "TCP_HP", "uTP_HP"],
             key: "type",
             value: "value"
         });
@@ -16,10 +16,10 @@ class AreaChart extends React.Component {
             value: {
                 alias: "The Share Price in Dollars",
                 formatter: function (val) {
-                    return "$" + val;
+                    return val;
                 }
             },
-            year: {
+            logCount: {
                 range: [0, 1]
             }
         };
@@ -35,10 +35,10 @@ class AreaChart extends React.Component {
                     <Tooltip crosshairs />
                     <Axis />
                     <Legend />
-                    <Geom type="area" position="year*value" color="type" shape="smooth" />
+                    <Geom type="area" position="logCount*value" color="type" shape="smooth" />
                     <Geom
                         type="line"
-                        position="year*value"
+                        position="logCount*value"
                         color="type"
                         shape="smooth"
                         size={2}
@@ -50,3 +50,4 @@ class AreaChart extends React.Component {
 }
 
 export default AreaChart;
+
