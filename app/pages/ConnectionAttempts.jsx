@@ -16,57 +16,30 @@ import DropDown from "../components/SubComponents/DropDownRender";
 import AreaChart from "../components/AreaChart";
 import Tables from "../components/Tables";
 
+const formatAreaChart = (logs) => {
+  let logCount = 0
+  let TCP_D = 0
+  let TCP_HP = 0
+  let uTP_HP = 0
+  const arrayList = []
+
+  logs.forEach(log => {
+      logCount++
+      log.is_direct_successful? TCP_D++ : TCP_D--
+      log.tcp_hole_punch_result === 'Succeeded' ? TCP_HP++ : TCP_HP--;
+      log.utp_hole_punch_result === 'Succeeded' ? uTP_HP++ : uTP_HP--;
+      arrayList.push({
+        "logCount": logCount,
+            "TCP_D": TCP_D,
+            "TCP_HP": TCP_HP,
+            "uTP_HP": uTP_HP
+        })
+    })
+    return (arrayList);
+};
+
 //import "./pages.css"
 class ConnectionAttempts extends Component {
-  prepareChartData() {
-    const osArr = [];
-    data.logs.forEach((log) => {
-      osArr.push(log.peer_requester.os, log.peer_responder.os);
-    });
-
-    let osNames = new Set(osArr);
-    const osName = Array.from(osNames);
-    const osCount = osName.map(osN => (osArr.filter(os => os === osN).length));
-
-    let osList = []
-    osName.forEach((os, i) => {
-      let osObj = {};
-      osObj["x"] = os;
-      osObj["y"] = osCount[i];
-      osList.push(osObj);
-    }
-    );
-
-    const listCountry = data.globalNetworkActivity.map((coun, i) => (
-      <li>
-        {coun.x} {coun.y}
-      </li>
-    ));
-
-    const listOS = osName.map((os, i) => (
-      <li>
-        {os}
-      </li>
-    ))
-
-    return [
-      {
-        "values": LineChartArray,
-        "dataSource": null,
-        "interval": null
-      },
-      {
-        "values": listCountry,
-        "dataSource": data.globalNetworkActivity,
-        "interval": 1000
-      },
-      {
-        "values": listOS,
-        "dataSource": osList,
-        "interval": 10
-      }
-    ]
-  }
   constructor(props) {
     super(props);
     // this.props.revalidate(mods.CON_ACT_,this.props.store.filteredConnectionResults);
@@ -78,6 +51,10 @@ class ConnectionAttempts extends Component {
   //     this.props.revalidate(mods.CON_ACT_,nextProps.store.filteredConnectionResults);
   //   }
   // }
+
+  componentDidMount() {
+    this.props.revalidate(this.props.store.filteredConnectionResults);
+  }
 
   render() {
     return (
@@ -111,7 +88,7 @@ class ConnectionAttempts extends Component {
                 borderRadius: 5,
                 minHeight: 500
               }}>
-              <AreaChart data={AreaChartArray} />
+              <AreaChart data={formatAreaChart(this.props.activity.filteredLogs)} />
             </Card>
           </Col>
         </Row>
@@ -123,7 +100,7 @@ class ConnectionAttempts extends Component {
                 minHeight: 280
               }}
             >
-              <Tables dataSource={data.logs} />
+              <Tables dataSource={this.props.activity.filteredLogs} />
             </Card>
           </Col>
         </Row>
@@ -134,14 +111,15 @@ class ConnectionAttempts extends Component {
 
 const mapStateToProps = (store) => {
   return {
-    store: store.logReducer
+    store: store.logReducer,
+    activity: store.connectionAttemptActivity
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     filterByConnectionResult,
-    // revalidate,
+    revalidate,
     filterChange
   }, dispatch);
 };

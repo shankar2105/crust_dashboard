@@ -17,9 +17,7 @@ const columns = [
             <tbody style={{padding: 0, textAlign: 'center'}}>
               <tr>
                 <td>
-                  {b.direct === "No" &&
-                  b.tcp_hp === "Fail" &&
-                  b.utp_hp === "Fail" ? (
+                  {!b.isSuccessful ? (
                     <Icon type="disconnect" style={{fontSize: 24, color: "red"}}/>
                   ) : (
                     <Icon type="check-circle" theme="filled" style={{fontSize: 24, color: "#52c41a"}}/>

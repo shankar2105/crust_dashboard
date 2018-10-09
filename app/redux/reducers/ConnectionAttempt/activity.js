@@ -19,7 +19,7 @@ const activityReducer = (state=initialState, action) => {
         //     filteredLogs: applyFilter(logs, state.filter)
         // };
         // break;
-        case `${MOD_NAME}_${Action.REVALIDATE}`:
+        case Action.REVALIDATE:
         state = {
             ...state,
             filteredLogs: applyFilter(action.payload, state.filter)

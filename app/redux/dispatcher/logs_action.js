@@ -21,9 +21,9 @@ export const filterByConnectionResult = (action) => {
     }
 }
 
-export const revalidate = (mod,logs) => {
+export const revalidate = (logs) => {
     return {
-        type:  `${mod}_${Action.REVALIDATE}`,
+        type: Action.REVALIDATE,
         payload: logs
     }
 }

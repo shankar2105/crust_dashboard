@@ -5,6 +5,7 @@ import { filterLogs, daysInMilliseconds, prepareLogs } from '../utils';
 const now = new Date().getTime();
 
 const initialState = {
+    isReady: false,
     isFetching: false,
     error: undefined,
     logs: [],
@@ -104,6 +105,7 @@ const logReducer = (state = initialState, action) => {
                 };
                 state = {
                     ...initialState,
+                    isReady: true,
                     isFetching: false,
                     error: undefined,
                     logs: logs,
