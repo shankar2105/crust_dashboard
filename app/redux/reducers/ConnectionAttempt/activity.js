@@ -34,7 +34,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(state.filteredLogs, filter)
+                filteredLogs: applyFilter(action.data, filter)
             };
             break;
             
@@ -46,7 +46,7 @@ const activityReducer = (state=initialState, action) => {
         state = {
             ...state,
             filter,
-            filteredLogs: applyFilter(state.filteredLogs, filter)
+            filteredLogs: applyFilter(action.data, filter)
         };
         break;
         case `${MOD_NAME}_${Action.FILTER_OS_TYPE1}`:
@@ -57,7 +57,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(state.filteredLogs, filter)
+                filteredLogs: applyFilter(action.data, filter)
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_OS_TYPE2}`:
@@ -68,7 +68,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(state.filteredLogs, filter)
+                filteredLogs: applyFilter(action.data, filter)
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_COUNTRY_TYPE1}`:
@@ -79,7 +79,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(state.filteredLogs, filter)
+                filteredLogs: applyFilter(action.data, filter)
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_COUNTRY_TYPE2}`:
@@ -90,7 +90,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(state.filteredLogs, filter)
+                filteredLogs: applyFilter(action.data, filter)
             };
             break;            
         case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
@@ -101,7 +101,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(state.filteredLogs, filter)
+                filteredLogs: applyFilter(action.data, filter)
             };
             break;
     }

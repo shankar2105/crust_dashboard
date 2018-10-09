@@ -77,7 +77,7 @@ class ConnectionAttempts extends Component {
                 minHeight: 100
               }}
             >
-              <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} mod={MOD_NAME} filterAction={this.props.filterChange} 
+              <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} data={this.props.store.filteredConnectionResults} mod={MOD_NAME} filterAction={this.props.filterChange} 
               labels={this.props.store.filteredLogs} selectedLabel={this.props.activity.filter}/>
             </Card>
           </Col>
