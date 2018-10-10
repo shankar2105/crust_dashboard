@@ -62,8 +62,12 @@ export class RenderTable extends Component {
               borderRadius: 5,
               minHeight: 100
             }}
-            className="tab-1-base"
+            className="cus-card-1 table-1 tab-1-base"
+            title="Failed Connections"
           >
+          <div className="table-1-opt">
+            <Button type="primary" icon="download" size="large">Download CSV</Button>
+          </div>
           <Tables dataSource={tableData} />
           </Card>
         </Col>
@@ -85,8 +89,16 @@ export class RenderAreaChart extends Component {
                 borderRadius: 5,
                 minHeight: 100
               }}
-              className="tab-1-base"
+              className="cus-card-1 chart-1 tab-1-base"
             >
+             <Meta
+                title="Failed Connections"
+                description="Volume / Time"
+              />
+              <div className="chart-1-meta">
+                <div className="chart-1-meta-val">4,504</div>
+                <div className="chart-1-meta-desc">Failed Connections</div>
+              </div>
             <AreaChart data={chartData} />
             </Card>
           </Col>

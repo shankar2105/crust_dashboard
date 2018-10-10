@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Layout, Menu, Icon, DatePicker } from "antd";
+import { Layout, Menu, Icon, DatePicker, Progress } from "antd";
 import { Link, Route } from "react-router-dom";
 import moment from "moment";
 
@@ -20,7 +20,7 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY/MM/DD";
 
 class App extends Component {
-	
+
 	constructor() {
 		super();
 		this.state = {
@@ -91,9 +91,9 @@ class App extends Component {
 
   render() {
     window.prop = this.props;
-    if (this.props.store.isFetching) {
-      return <div>LOADING...!!!</div>
-    }
+    // if (this.props.store.isFetching) {
+    //   return <div>LOADING...!!!</div>
+    // }
     return (
       <Layout style={{ minHeight: 900 }}>
         <Sider
@@ -150,11 +150,11 @@ class App extends Component {
             <Icon
               className="trigger"
               type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
-              onClick={this.toggle}
+              onClick={() => this.toggle()}
               style={{ fontSize: '18px', color: '#000000' }}
             />
             <div className="main-head-nav">
-              {/* maybe these className attributes could be removed 
+              {/* maybe these className attributes could be removed
               <a className={this.state.dateFilterIndex === 1 ? "true" : "false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
               <a className={this.state.dateFilterIndex === 2 ? "true" : "false"} href="#" onClick={() => this.filterByDay()}>Day</a>
               <a className={this.state.dateFilterIndex === 3 ? "true" : "false"} href="#" onClick={() => this.filterByWeek()}>Week</a>
@@ -168,13 +168,27 @@ class App extends Component {
                   defaultValue={[
                     moment("2015/01/01", dateFormat),
                     moment("2015/01/01", dateFormat)
-                  ]} 
-                  format={dateFormat} disabled  
+                  ]}
+                  format={dateFormat} disabled
                 />
               </div>
             </div>
           </Header>
           {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
+          <div className="main-progress" style={{display: this.props.store.paging.completed ? 'none': 'block'}}>
+              {
+                (this.props.store.paging.done <= 100) ? (
+                  <Progress
+                  percent={this.props.store.paging.done}
+                  strokeLinecap="square"
+                  strokeWidth="3px"
+                  status="active"
+                  showInfo={false}
+                  strokeColor="#FA541C"
+                />
+                ) : null
+              }
+            </div>
             <Route path="/" exact component={Dashboard} />
             <Route path="/nat" component={NatType} />
             <Route path="/protocol" component={Protocol} />
