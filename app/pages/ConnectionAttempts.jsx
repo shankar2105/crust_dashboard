@@ -16,7 +16,7 @@ class ConnectionAttempts extends Component {
     // this.props.revalidate(mods.CON_ACT_,this.props.store.filteredConnectionResults);
   }
   // shouldComponentUpdate(nextProps, nextState) {
-  //   //initially if returns false since the state isn't changed. 
+  //   //initially if returns false since the state isn't changed.
   //   //we set the initial state using constructor and this function for later changes
   //   if (this.props.store.filteredConnectionResults != nextProps.store.filteredConnectionResults) {
   //     this.props.revalidate(mods.CON_ACT_,nextProps.store.filteredConnectionResults);
@@ -35,14 +35,16 @@ class ConnectionAttempts extends Component {
       "filterAction": this.props.filterChange,
       "labels": this.props.store.filteredLogs,
       "selectedLabel": this.props.activity.filter
-    }  
+    }
 
     return (
       <div className="page-1">
         <span className="page-1-head">
-          <h1 className="page-1-head-title">Connection Attempts <Icon type="info-circle" theme="outlined" style={{ fontSize: '14px', fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.45)' }} /></h1>
+          <h1 className="page-1-head-title">Connection Attempts
+          {/* <Icon type="info-circle" theme="outlined" style={{ fontSize: '14px', fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.45)' }} /> */}
+          </h1>
           <div className="page-1-head-opts">
-            <h3 className="page-1-head-opts-title">Connection result:</h3>
+            {/* <h3 className="page-1-head-opts-title">Connection result:</h3> */}
             {/* <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}
               changeFilter={this.props.filterByConnectionResult} /> */}
           </div>
