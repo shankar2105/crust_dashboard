@@ -10,7 +10,7 @@ const columns = [
       key: "num",
       align: 'center',
       defaultSortOrder: 'ascend',
-      sorter: (a, b) => a.num - b.num,
+      // sorter: (a, b) => a.num - b.num,
       render: (a, b) => {
         return (
           <table>
@@ -105,10 +105,10 @@ const columns = [
       key: "utp_hp",
       align: 'center',
       className: 'utp',
-      filters: [
-        { text: 'Male', value: 'male' },
-        { text: 'Female', value: 'female' },
-      ],
+      // filters: [
+      //   { text: 'Male', value: 'male' },
+      //   { text: 'Female', value: 'female' },
+      // ],
       render: text => {
         return (
           <table>
