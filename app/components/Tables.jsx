@@ -11,7 +11,7 @@ function filterLogs(rawData){
     dataSource.push({
         key: log.logDataHash.substring(0, 6),
         num: log.logDataHash.substring(0, 6),
-        direct: log.is_direct_successful ? "Yes" : "No",
+        // direct: log.is_direct_successful ? "Yes" : "No",
         tcp_hp: log.tcp_hole_punch_result === "Succeeded" ? "Yes" : "Fail",
         utp_hp: log.utp_hole_punch_result === "Succeeded" ? "Yes" : "Fail",
         nat_type: [log.peer_requester.nat_type, log.peer_responder.nat_type],

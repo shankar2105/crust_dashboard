@@ -8,7 +8,7 @@ class AreaChart extends React.Component {
         var dv = new DataSet.View().source(data);
         dv.transform({
             type: "fold",
-            fields: ["TCP_D", "TCP_HP", "uTP_HP"],
+            fields: ["TCP_HP", "uTP_HP"],
             key: "type",
             value: "value"
         });

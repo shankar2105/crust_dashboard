@@ -39,16 +39,16 @@ const activityReducer = (state=initialState, action) => {
             break;
             
         case `${MOD_NAME}_${Action.FILTER_NAT_TYPE2}`:
-        filter = {
-            ...state.filter,
-            NatType2: action.payload
-        };
-        state = {
-            ...state,
-            filter,
-            filteredLogs: applyFilter(action.data, filter)
-        };
-        break;
+            filter = {
+                ...state.filter,
+                NatType2: action.payload
+            };
+            state = {
+                ...state,
+                filter,
+                filteredLogs: applyFilter(action.data, filter)
+            };
+            break;
         case `${MOD_NAME}_${Action.FILTER_OS_TYPE1}`:
             filter = {
                 ...state.filter,

@@ -63,11 +63,11 @@ export class RenderTable extends Component {
               minHeight: 100
             }}
             className="cus-card-1 table-1 tab-1-base"
-            title="Failed Connections"
+            title="All Connection Attempts"
           >
-          <div className="table-1-opt">
+          {/* <div className="table-1-opt">
             <Button type="primary" icon="download" size="large">Download CSV</Button>
-          </div>
+          </div> */}
           <Tables dataSource={tableData} />
           </Card>
         </Col>
@@ -92,13 +92,13 @@ export class RenderAreaChart extends Component {
               className="cus-card-1 chart-1 tab-1-base"
             >
              <Meta
-                title="Failed Connections"
+                title="Protocol Acceptance"
                 description="Volume / Time"
               />
-              <div className="chart-1-meta">
-                <div className="chart-1-meta-val">4,504</div>
+              {/* <div className="chart-1-meta">
+                <div className="chart-1-meta-val">{this.props.failedCount}</div>
                 <div className="chart-1-meta-desc">Failed Connections</div>
-              </div>
+              </div> */}
             <AreaChart data={chartData} />
             </Card>
           </Col>
@@ -117,7 +117,7 @@ class TabComp extends Component {
       <TabPane tab={tabName} key={key} className="tab-1-panel">
         <DropdownOptions contents={tabData.contents} data={tabData.data} mod={tabData.mod} filterAction={tabData.filterAction}
           labels={tabData.labels} selectedLabel={tabData.selectedLabel} />
-          <RenderAreaChart chartData={chartData}/>
+        <RenderAreaChart failedCount={this.props.failedCount} chartData={chartData}/>
         <RenderTable tableData={tableData}/>
       </TabPane>
     )

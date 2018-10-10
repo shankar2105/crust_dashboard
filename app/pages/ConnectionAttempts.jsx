@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Card, Icon } from "antd";
+import { Row, Col, Card, Icon, Skeleton } from "antd";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -40,6 +40,7 @@ class ConnectionAttempts extends Component {
     return (
       <div className="page-1">
         <span className="page-1-head">
+        <Skeleton loading={!this.props.store.paging.completed} active animate>
           <h1 className="page-1-head-title">Connection Attempts
           {/* <Icon type="info-circle" theme="outlined" style={{ fontSize: '14px', fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.45)' }} /> */}
           </h1>
@@ -48,6 +49,7 @@ class ConnectionAttempts extends Component {
             {/* <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}
               changeFilter={this.props.filterByConnectionResult} /> */}
           </div>
+          </Skeleton>
         </span>
         <Row gutter={24}>
           <Col className="gutter-row" span={24}>
@@ -62,8 +64,9 @@ class ConnectionAttempts extends Component {
             >
               {/* <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} data={this.props.store.filteredConnectionResults} mod={MOD_NAME} filterAction={this.props.filterChange}
                 labels={this.props.store.filteredLogs} selectedLabel={this.props.activity.filter} /> */}
-
-              <TabComp tabData={tabData} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
+              <Skeleton loading={!this.props.store.paging.completed} active animate>
+                <TabComp tabData={tabData}  failedCount={this.props.store.filteredLogs.failedConnections.length} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
+              </Skeleton>
             </Card>
           </Col>
         </Row>

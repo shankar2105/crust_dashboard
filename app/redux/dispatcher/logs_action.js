@@ -1,46 +1,51 @@
 import Action from '../ActionType';
-import { MOD_NAME } from '../reducers/ConnectionAttempt/activity';
 
-const BASE_URL = `http://localhost:3000/api`;
+const BASE_URL = `http://192.168.0.101:3000/api`;
 const PROGRESS_COMPLETED_TIMEOUT = 1000;
 
 const fetchAllLogs = (dispatcher) => {
     let result = [];
-     const fetchData = async(from, limit = 10) => {
-        try {
-            const dataFetched = await fetch(`${BASE_URL}/stats?pageNo=${from}&size=${limit}`);
-            const jsonData = await dataFetched.json();
-            result = result.concat(jsonData.logs);
-            const donePercentage = Math.ceil(result.length / (jsonData.totalPages * 10) * 100)
-            console.log('result', jsonData, from, limit, result.length, `${donePercentage}%`)
-            dispatcher({
-                type: `${Action.FETCH_LOGS}_FULFILLED`,
-                payload: {
-                    logs: result,
-                    done: donePercentage
+    const fetchData = (from, limit = 100) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const dataFetched = await fetch(`${BASE_URL}/stats?pageNo=${from}&size=${limit}`);
+                const jsonData = await dataFetched.json();
+                result = result.concat(jsonData.logs);
+                const donePercentage = Math.ceil(from / (jsonData.totalPages) * 100)
+                console.log('result', jsonData.totalPages, from, limit, result.length, `${donePercentage}%`)
+                dispatcher({
+                    type: `${Action.FETCH_LOGS}_FULFILLED`,
+                    payload: {
+                        logs: result,
+                        done: donePercentage
+                    }
+                });
+                if (from !== jsonData.totalPages) {
+                    return await fetchData(from + 1);
                 }
-            });
-            if (from !== jsonData.totalPages) {
-                await fetchData(from + 1);
+                dispatcher({
+                    type: Action.PROGRESS_COMPLETED
+                });
+                return resolve();
+            } catch (err) {
+                return reject(err);
             }
-            return Promise.resolve();
-        } catch (err) {
-            return Promise.reject(err);
-        }
+        });
     };
      return new Promise(async (resolve, reject) => {
         dispatcher({
             type: `${Action.FETCH_LOGS}_PENDING`
         });
-        await fetchData(1);
-         // Dispatch progress complete action
-        const timer = setTimeout(() => {
+        try {
+            await fetchData(1);
+            return resolve(result);
+        } catch(e) {
             dispatcher({
-                type: Action.PROGRESS_COMPLETED
-            })
-            clearTimeout(timer);
-        }, PROGRESS_COMPLETED_TIMEOUT);
-         return resolve();
+                type: Action.ERROR,
+                payload: 'Failed to get initial data from Server'
+            });
+            reject(e);
+        }
     });
 }
  export const fetchLogs = () => {

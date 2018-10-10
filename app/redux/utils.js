@@ -23,8 +23,7 @@ export const prepareLogs = (logs) => {
     };
 
     logs.forEach(log => {
-        const isSuccess = log.is_direct_successful || 
-            log.utp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded';
+        const isSuccess = log.utp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded';
         log.isSuccessful = isSuccess;
         log.peer_requester.os = tranformOSName(log.peer_requester.os);
         log.peer_responder.os = tranformOSName(log.peer_responder.os);
@@ -123,7 +122,6 @@ export const applyFilter = (logs, filter) => {
     }
 
     const isCountryMatching = (log) => {
-        console.log("logs in country match",log)
         const ANY = OS.ANY;
         if (filter.CountryType1 === ANY && filter.CountryType2 === ANY)
             return true;
@@ -143,19 +141,19 @@ export const applyFilter = (logs, filter) => {
 
 export const formatAreaChart = (logs) => {
     let logCount = 0
-    let TCP_D = 0
+    // let TCP_D = 0
     let TCP_HP = 0
     let uTP_HP = 0
     const arrayList = []
   
     logs.forEach(log => {
         logCount++
-        log.is_direct_successful? TCP_D++ : TCP_D--
+        // log.is_direct_successful? TCP_D++ : TCP_D--
         log.tcp_hole_punch_result === 'Succeeded' ? TCP_HP++ : TCP_HP--;
         log.utp_hole_punch_result === 'Succeeded' ? uTP_HP++ : uTP_HP--;
         arrayList.push({
           "logCount": logCount,
-              "TCP_D": TCP_D,
+            //   "TCP_D": TCP_D,
               "TCP_HP": TCP_HP,
               "uTP_HP": uTP_HP
           })

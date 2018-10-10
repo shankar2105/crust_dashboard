@@ -43,6 +43,12 @@ const filterByConnectionResult = (preparedLogs, filter) => {
 
 const logReducer = (state = initialState, action) => {
     switch (action.type) {
+        case Action.ERROR:
+            state = {
+                ...state,
+                error: action.payload
+            };
+            break;
         case Action.NEW_LOG:
             const logs = state.logs.concat(action.payload);
             let logsByRange = [];

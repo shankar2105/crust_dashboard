@@ -30,45 +30,46 @@ const columns = [
         );
       }
     },
-    {
-      title: "Direct",
-      dataIndex: "direct",
-      key: "direct",
-      align: 'center',
-      className: 'direct',
-      render: text => {
-        return (
-          <table>
-            <tbody style={{padding: 0, textAlign: 'center', marginLeft: "1px solid #999"}}>
-              <tr>
-                <td>
-                  {text === "Yes" ? (
-                    <Icon
-                      type="check-circle"
-                      theme="twoTone"
-                      twoToneColor="#52c41a"
-                    />
-                  ) : (
-                    <Icon
-                      type="close-circle"
-                      theme="twoTone"
-                      twoToneColor="red"
-                    />
-                  )}
-                </td>
-              </tr>
-              <tr>
-                <td>{text}</td>
-              </tr>
-            </tbody>
-          </table>
-        );
-      }
-    },
+    // {
+    //   title: "Direct",
+    //   dataIndex: "direct",
+    //   key: "direct",
+    //   align: 'center',
+    //   className: 'direct',
+    //   render: text => {
+    //     return (
+    //       <table>
+    //         <tbody style={{padding: 0, textAlign: 'center', marginLeft: "1px solid #999"}}>
+    //           <tr>
+    //             <td>
+    //               {text === "Yes" ? (
+    //                 <Icon
+    //                   type="check-circle"
+    //                   theme="twoTone"
+    //                   twoToneColor="#52c41a"
+    //                 />
+    //               ) : (
+    //                 <Icon
+    //                   type="close-circle"
+    //                   theme="twoTone"
+    //                   twoToneColor="red"
+    //                 />
+    //               )}
+    //             </td>
+    //           </tr>
+    //           <tr>
+    //             <td>{text}</td>
+    //           </tr>
+    //         </tbody>
+    //       </table>
+    //     );
+    //   }
+    // },
     {
       title: "TCP HP",
       dataIndex: "tcp_hp",
       key: "tcp_hp",
+      className: 'direct',
       align: 'center',
       render: text => {
         return (

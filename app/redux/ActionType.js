@@ -1,4 +1,5 @@
 export default {
+    ERROR: 'ERROR',
     FILTER_BY_RANGE: 'FILTER_BY_RANGE',
     FETCH_LOGS: 'FETCH_LOGS',
     FILTER_NONE: 'FILTER_NONE',

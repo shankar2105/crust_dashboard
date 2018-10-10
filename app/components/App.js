@@ -84,6 +84,12 @@ class App extends Component {
     this.props.filterByRange(-1);
   }
 
+  componentDidUpdate() {
+    if (this.props.store.error) {
+      alert(this.props.store.error);
+    }
+  }
+
   // TODO
   // filterCustomRange() {
   //   this.props.filterByRange(from, to);
@@ -106,7 +112,7 @@ class App extends Component {
           <div className="logo">
             <div className="logo-b">
               <img className="logo-media" src={logo} alt="logo" />
-              <h1 className="logo-desc">CRUST TESTNET</h1>
+              <h1 className="logo-desc">CRUST TEST</h1>
             </div>
           </div>
           <Menu mode="inline" defaultSelectedKeys={["2"]}>
@@ -189,10 +195,10 @@ class App extends Component {
                 ) : null
               }
             </div>
-            <Route path="/" exact component={Dashboard} />
-            <Route path="/nat" component={NatType} />
+            <Route path="/" exact component={ConnectionAttempts} />
+            {/* <Route path="/nat" component={NatType} />
             <Route path="/protocol" component={Protocol} />
-            <Route path="/connect" component={ConnectionAttempts} />
+            <Route path="/connect" component={ConnectionAttempts} /> */}
           </Content>)}
         </Layout>
       </Layout>
