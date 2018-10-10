@@ -34,7 +34,7 @@ class DropDown extends Component {
         return (
             <Menu>
                 <Menu.Item key={`menu-country1-${0}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_COUNTRY_TYPE1, OS.ANY)}>{OS.ANY}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE1, OS.ANY)}>{OS.ANY}</a>
                 </Menu.Item>
             </Menu>
         )
@@ -43,7 +43,7 @@ class DropDown extends Component {
         return (
             <Menu>
                 <Menu.Item key={`menu-country2-${0}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_COUNTRY_TYPE2, OS.ANY)}>{OS.ANY}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE2, OS.ANY)}>{OS.ANY}</a>
                 </Menu.Item>
             </Menu>
         )
@@ -55,7 +55,7 @@ class DropDown extends Component {
             return (
 
                 <Menu.Item key={`menu-nat1-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_NAT_TYPE1,nat)}>{nat}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_NAT_TYPE1, nat)}>{nat}</a>
                 </Menu.Item>
             )
         });
@@ -67,7 +67,7 @@ class DropDown extends Component {
         let itemList = items.map((nat, k) => {
             return (
                 <Menu.Item key={`menu-nat2-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_NAT_TYPE2,nat)}>{nat}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_NAT_TYPE2, nat)}>{nat}</a>
                 </Menu.Item>
             )
         });
@@ -79,7 +79,7 @@ class DropDown extends Component {
         let itemList = items.map((os, k) => {
             return (
                 <Menu.Item key={`menu-os1-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_OS_TYPE1, os)}>{os}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_OS_TYPE1, os)}>{os}</a>
                 </Menu.Item>
             )
         });
@@ -91,7 +91,7 @@ class DropDown extends Component {
         let itemList = items.map((os, k) => {
             return (
                 <Menu.Item key={`menu-os2-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_OS_TYPE2, os)}>{os}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_OS_TYPE2, os)}>{os}</a>
                 </Menu.Item>
             )
         });
@@ -99,12 +99,12 @@ class DropDown extends Component {
     }
 
     countryMenu1() {
-      console.log(this.props)
+        console.log(this.props)
         let countries = Object.keys(this.props.labels.countriesCount)
         let countryList = countries.map((country, k) => {
             return (
                 <Menu.Item key={`menu-country1-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_COUNTRY_TYPE1, country)}>{country}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE1, country)}>{country}</a>
                 </Menu.Item>
             )
         });
@@ -117,7 +117,7 @@ class DropDown extends Component {
         let countryList = countries.map((country, k) => {
             return (
                 <Menu.Item key={`menu-country2-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data,this.props.mod, Action.FILTER_COUNTRY_TYPE2, country)}>{country}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE2, country)}>{country}</a>
                 </Menu.Item>
             )
         });
@@ -131,46 +131,25 @@ class DropDown extends Component {
         const osMenu2 = this.osMenu2();
         const natMenu1 = this.natMenu1();
         const natMenu2 = this.natMenu2();
-        if (this.tabContent.length === 4) {
-            return (
-                <div className="dropdown-render">
-                    <Row gutter={24}>
-                        <DropDownItems type={this.tabContent[0]} menu1={(<Menu>{natMenu1}</Menu>)} menu2={(<Menu>{natMenu2}</Menu>)}
-                        selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2}/>
+        return (
+            <div className="dropdown-render">
+                <Row gutter={24}>
+                    <DropDownItems type={this.tabContent[0]} menu1={(<Menu>{natMenu1}</Menu>)} menu2={(<Menu>{natMenu2}</Menu>)}
+                        selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2} />
 
-                        <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
-                        selected1={this.props.selectedLabel.Protocol}/>
-                    </Row>
+                    <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
+                        selected1={this.props.selectedLabel.Protocol} />
+                </Row>
 
-                    <Row gutter={24} style={{ margin: "24px 8px" }}>
-                        <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
-                        selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2}/>
+                <Row gutter={24}>
+                    <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
+                        selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2} />
 
-                        <DropDownItems type={this.tabContent[3]} menu1={(<Menu>{this.anyCountry1()}{countryMenu1}</Menu>)} menu2={(<Menu>{this.anyCountry2()}{countryMenu2}</Menu>)}
-                        selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2}/>
-                    </Row>
-                </div>
-            )
-        }
-        else {
-            return (
-                <div className="dropdown-render">
-                    <Row gutter={24}>
-                            <DropDownItems type={this.tabContent[0]} menu1={(<Menu>{natMenu1}</Menu>)} menu2={(<Menu>{natMenu2}</Menu>)}
-                            selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2}/>
-
-                            <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
-                            selected1={this.props.selectedLabel.Protocol}/>
-
-                            <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
-                            selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2}/>
-
-                    </Row>
-
-                </div>
-            )
-        }
-
+                    <DropDownItems type={this.tabContent[3]} menu1={(<Menu>{this.anyCountry1()}{countryMenu1}</Menu>)} menu2={(<Menu>{this.anyCountry2()}{countryMenu2}</Menu>)}
+                        selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2} />
+                </Row>
+            </div>
+        )
     }
 }
 export default DropDown;
