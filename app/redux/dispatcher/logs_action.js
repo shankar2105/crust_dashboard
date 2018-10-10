@@ -28,9 +28,10 @@ export const revalidate = (logs) => {
     }
 }
 
-export const filterChange = (mod, action, value) => {
+export const filterChange = (data, mod, action, value) => {
     return {
         type:  `${mod}_${action}`,
-        payload: value
+        payload: value,
+        data: data
     }
 }

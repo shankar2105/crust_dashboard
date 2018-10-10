@@ -5,21 +5,21 @@ export const ConnectionResult = {
 };
 
 export const NatType = {
-    ANY: '',
+    ANY: 'ANY',
     EDM: 'EDM',
     EIM: 'EIM',
     EDM_RANDOM: 'EDM_RANDOM'
 }
 
 export const OS = {
-    ANY: '',
+    ANY: 'ANY',
     Windows: 'WIN',
     OSX: 'OSX',
-    Linux: 'LINUX'
+    LINUX: 'LINUX'
 }
 
 export const PROTOCOL = {
-    ANY: '',
+    ANY: 'ANY',
     TCP_DIRECT: 'TCP_DIRECT',
     UTP_HP: 'UTP_HP',
     TCP_HP: 'TCP_HP'

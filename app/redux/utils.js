@@ -12,7 +12,7 @@ export const prepareLogs = (logs) => {
     const tranformOSName = (osName) => {
         switch(osName.toLowerCase()) {
             case 'linux':
-                return OS.Linux;
+                return OS.LINUX;
             case 'macos':
                 return OS.OSX;
             case 'windows':
@@ -98,7 +98,6 @@ export const applyFilter = (logs, filter) => {
         }
         return matches;
     }
-
     
     const isOSMatching = (log) => {
         let matches = false;
@@ -124,16 +123,17 @@ export const applyFilter = (logs, filter) => {
     }
 
     const isCountryMatching = (log) => {
+        console.log("logs in country match",log)
         const ANY = OS.ANY;
         if (filter.CountryType1 === ANY && filter.CountryType2 === ANY)
             return true;
         else if ((filter.CountryType1 === ANY && filter.CountryType2 !== ANY))
-            return (filter.CountryType2 === log.peer_requester.geo_info.country || filter.CountryType2 === log.peer_responder.geo_info.country)
+            return (filter.CountryType2 === log.peer_requester.geo_info.country_name || filter.CountryType2 === log.peer_responder.geo_info.country_name)
         else if ((filter.CountryType2 === ANY && filter.CountryType1 !== ANY))
-            return (filter.CountryType1 === log.peer_requester.geo_info.country || filter.CountryType1 === log.peer_responder.geo_info.country)
+            return (filter.CountryType1 === log.peer_requester.geo_info.country_name || filter.CountryType1 === log.peer_responder.geo_info.country_name)
         else if (filter.CountryType1 !== ANY && filter.CountryType2 !== ANY)
-            return (log.peer_requester.geo_info.country === filter.CountryType1 && log.peer_responder.geo_info.country === filter.CountryType2) ||
-                (log.peer_requester.geo_info.country === filter.CountryType2 && log.peer_responder.geo_info.country === filter.CountryType1)
+            return (log.peer_requester.geo_info.country_name === filter.CountryType1 && log.peer_responder.geo_info.country_name === filter.CountryType2) ||
+                (log.peer_requester.geo_info.country_name === filter.CountryType2 && log.peer_responder.geo_info.country_name === filter.CountryType1)
     }
     
     return logs.filter(log => {
