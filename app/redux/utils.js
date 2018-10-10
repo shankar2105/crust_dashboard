@@ -16,14 +16,14 @@ export const prepareLogs = (logs) => {
             case 'macos':
                 return OS.OSX;
             case 'windows':
-                return OS.Windows;  
+                return OS.Windows;
             default:
                 return osName;
         }
     };
 
     logs.forEach(log => {
-        const isSuccess = log.is_direct_successful || 
+        const isSuccess = log.is_direct_successful ||
             log.utp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded';
         log.isSuccessful = isSuccess;
         log.peer_requester.os = tranformOSName(log.peer_requester.os);
@@ -35,7 +35,7 @@ export const prepareLogs = (logs) => {
             osCountMap[log.peer_responder.os] = 0;
         }
         osCountMap[log.peer_requester.os] = osCountMap[log.peer_requester.os] + 1;
-        osCountMap[log.peer_responder.os] = osCountMap[log.peer_responder.os] + 1; 
+        osCountMap[log.peer_responder.os] = osCountMap[log.peer_responder.os] + 1;
         if (!countryCountMap[log.peer_requester.geo_info.country_name]) {
             countryCountMap[log.peer_requester.geo_info.country_name] = 0;
         }
@@ -70,9 +70,9 @@ export const prepareLogs = (logs) => {
 
 
 /**
- * 
- * @param {*} logs 
- * @param {*} from - local date 
+ *
+ * @param {*} logs
+ * @param {*} from - local date
  * @param {*} to - local date
  */
 export const filterLogs = (logs, from, to) => {
@@ -98,7 +98,7 @@ export const applyFilter = (logs, filter) => {
         }
         return matches;
     }
-    
+
     const isOSMatching = (log) => {
         let matches = false;
         if (filter.OSType1 === OS.ANY && filter.OSType2 === OS.ANY)
@@ -107,7 +107,7 @@ export const applyFilter = (logs, filter) => {
             matches = (filter.OSType2 === log.peer_requester.os || filter.OSType2 === log.peer_responder.os)
         else if ((filter.OSType2 === OS.ANY && filter.OSType1 !== OS.ANY))
             matches = (filter.OSType1 === log.peer_requester.os || filter.OSType1 === log.peer_responder.os)
-        else if (filter.OSType1 !== OS.ANY && filter.OSType2 !== OS.ANY) 
+        else if (filter.OSType1 !== OS.ANY && filter.OSType2 !== OS.ANY)
             matches = (log.peer_requester.os === filter.OSType1 && log.peer_responder.os === filter.OSType2) ||
                 (log.peer_requester.os === filter.OSType2 && log.peer_responder.os === filter.OSType1)
         return matches;
@@ -135,7 +135,7 @@ export const applyFilter = (logs, filter) => {
             return (log.peer_requester.geo_info.country_name === filter.CountryType1 && log.peer_responder.geo_info.country_name === filter.CountryType2) ||
                 (log.peer_requester.geo_info.country_name === filter.CountryType2 && log.peer_responder.geo_info.country_name === filter.CountryType1)
     }
-    
+
     return logs.filter(log => {
         return isNatTypeMatching(log) && isOSMatching(log) && isProtocolMatching(log) && isCountryMatching(log);
     });

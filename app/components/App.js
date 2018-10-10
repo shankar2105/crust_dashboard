@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './App.scss';
 
-import { Layout, Menu, Icon, DatePicker } from "antd";
+import { Layout, Menu, Icon, DatePicker, Progress } from "antd";
 import { Link, Route } from "react-router-dom";
 import moment from "moment";
 
@@ -21,9 +21,10 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY/MM/DD";
 
 class App extends Component {
-	
+
 	constructor() {
-		super();
+    super();
+    // this.toggle = this.toggle.bind(this);
 		this.state = {
       collapsed: false,
       dateFilterIndex: 5
@@ -53,7 +54,7 @@ class App extends Component {
     this.setState({
       dateFilterIndex: 2
     });
-    
+
     const now = new Date().getTime();
     const hour = daysInMilliseconds(1);
     this.props.filterByRange(now-hour, now);
@@ -63,7 +64,7 @@ class App extends Component {
     this.setState({
       dateFilterIndex: 3
     });
-    
+
     const now = new Date().getTime();
     const hour = daysInMilliseconds(7);
     this.props.filterByRange(now-hour, now);
@@ -148,8 +149,8 @@ class App extends Component {
             <Icon
               className="trigger"
               type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
-              onClick={this.toggle}
-            />    
+              onClick={() => this.toggle()}
+            />
             <span className="topnav">
               {/* maybe these className attributes could be removed */}
               {/* <a className={this.state.dateFilterIndex === 1?"true":"false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
@@ -160,7 +161,7 @@ class App extends Component {
                 All Time
               </a>
             <span className="date">
-              <RangePicker 
+              <RangePicker
                 disabled
                 defaultValue={[
                   moment(this.props.store.dateRange.allTime.from, dateFormat),
@@ -172,6 +173,20 @@ class App extends Component {
             </span>
           </Header>
           { this.props.store.logs.length === 0 ? <div>No data available</div>: (<Content>
+            <div className="main-progress" style={{display: this.props.store.paging.completed ? 'none': 'block'}}>
+              {
+                (this.props.store.paging.done <= 100) ? (
+                  <Progress
+                  percent={this.props.store.paging.done}
+                  strokeLinecap="square"
+                  strokeWidth="3px"
+                  status="active"
+                  showInfo={false}
+                  strokeColor="#FA541C"
+                />
+                ) : null
+              }
+            </div>
             <Route path="/" exact component={Dashboard} />
             <Route path="/nat" component={NatType} />
             <Route path="/protocol" component={Protocol} />

@@ -18,7 +18,10 @@ const initialState = {
         osCount: {},
         countriesCount: {}
     },
-    paging: {},
+    paging: {
+        done: 0,
+        completed: false
+    },
     filteredConnectionResults: [],
     connectionResultFilter: ConnectionResult.NONE,
     dateRange: {
@@ -34,7 +37,7 @@ const initialState = {
 };
 
 const filterByConnectionResult = (preparedLogs, filter) => {
-    (filter === ConnectionResult.NONE) ? preparedLogs.logs : 
+    (filter === ConnectionResult.NONE) ? preparedLogs.logs :
         ((filter === ConnectionResult.SUCCESS) ? preparedLogs.successfulConnections: preparedLogs.failedConnections);
 };
 
@@ -44,7 +47,7 @@ const logReducer = (state = initialState, action) => {
             const logs = state.logs.concat(action.payload);
             let logsByRange = [];
             if (state.connectionResultFilter === ConnectionResult.NONE) {
-                logsByRange = action.payload; 
+                logsByRange = action.payload;
             } else {
                 logsByRange = filterLogs(action.payload, state.dateRange.custom.from, state.dateRange.custom.to);
             }
@@ -67,7 +70,7 @@ const logReducer = (state = initialState, action) => {
                     logsFiltered.countriesCount[log.peer_responder.geo_info.country_name] = 0;
                 }
                 logsFiltered.countriesCount[log.peer_requester.geo_info.country_name] = logsFiltered.countriesCount[log.peer_requester.geo_info.country_name] + 1;
-                logsFiltered.countriesCount[log.peer_responder.geo_info.country_name] = logsFiltered.countriesCount[log.peer_responder.geo_info.country_name] + 1;  
+                logsFiltered.countriesCount[log.peer_responder.geo_info.country_name] = logsFiltered.countriesCount[log.peer_responder.geo_info.country_name] + 1;
             });
             state = {
                 ...state,
@@ -79,7 +82,7 @@ const logReducer = (state = initialState, action) => {
             break;
         case `${Action.FETCH_LOGS}_PENDING`:
             state = {
-                ...initialState, 
+                ...initialState,
                 isFetching: true
             };
             break;
@@ -92,7 +95,7 @@ const logReducer = (state = initialState, action) => {
                     error: action.payload,
                 };
             } else {
-                const logs = action.payload;
+                const logs = action.payload.logs;
                 const preparedLogs = prepareLogs(logs);
                 const filteredLogs = {
                     logs: preparedLogs.logs,
@@ -114,6 +117,10 @@ const logReducer = (state = initialState, action) => {
                     dateRange: {
                         allTime: preparedLogs.dateRange,
                         custom: preparedLogs.dateRange
+                    },
+                    paging: {
+                        done: action.payload.done,
+                        completed: false
                     }
                 };
             }
@@ -142,14 +149,14 @@ const logReducer = (state = initialState, action) => {
         case Action.FILTER_NONE:
             state = {
                 ...state,
-                connectionResultFilter: ConnectionResult.NONE, 
+                connectionResultFilter: ConnectionResult.NONE,
                 filteredConnectionResults: state.filteredLogs.logs
             };
             break;
         case Action.FILTER_SUCCESS:
             state = {
                 ...state,
-                connectionResultFilter: ConnectionResult.SUCCESS, 
+                connectionResultFilter: ConnectionResult.SUCCESS,
                 filteredConnectionResults: state.filteredLogs.successfulConnections
             };
             break;
@@ -160,6 +167,14 @@ const logReducer = (state = initialState, action) => {
                 filteredConnectionResults: state.filteredLogs.failedConnections
             };
             break;
+        case Action.PROGRESS_COMPLETED:
+            state = {
+                ...state,
+                paging: {
+                    done: state.paging.done,
+                    completed: true
+                }
+            }
     }
     return state;
 };
