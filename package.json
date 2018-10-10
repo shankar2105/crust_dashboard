@@ -4,7 +4,7 @@
   "description": "React App",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development parcel ./public/index.html -p 3000 --open",
+    "dev": "cross-env NODE_ENV=development parcel ./public/index.html -p 3000 --open --no-autoinstall",
     "build": "cross-env NODE_ENV=production parcel build ./public/index.html -d build --public-url ./",
     "format:js": "prettier --write './src/**/*.{js,jsx,json,md}'",
     "format:style": "prettier-stylelint --write './src/**/*.{css,scss}'",

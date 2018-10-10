@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Layout, Menu, Icon, DatePicker } from "antd";
+import { Layout, Menu, Icon, DatePicker, Progress } from "antd";
 import { Link, Route } from "react-router-dom";
 import moment from "moment";
 
@@ -22,7 +22,8 @@ const dateFormat = "YYYY/MM/DD";
 class App extends Component {
   state = {
     collapsed: false,
-    dateFilterIndex: 5
+    dateFilterIndex: 5,
+    progressPercentage: 0,
   };
 
   toggle = () => {
@@ -33,6 +34,15 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchLogs();
+    setTimeout(() => { this.updateProgress() }, 2000);
+  }
+
+  updateProgress() {
+    if (this.state.progressPercentage === 100) {
+      return;
+    }
+    this.setState({ progressPercentage: this.state.progressPercentage + 10 })
+    setTimeout(() => { this.updateProgress() }, 2000);
   }
 
   filterByHour() {
@@ -170,6 +180,16 @@ class App extends Component {
             </div>
           </Header>
           {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
+            <div className="main-progress">
+              <Progress
+                percent={this.state.progressPercentage}
+                strokeLinecap="square"
+                strokeWidth="3px"
+                status="active"
+                showInfo={false}
+                strokeColor="#FA541C"
+              />
+            </div>
             <Route path="/" exact component={Dashboard} />
             <Route path="/nat" component={NatType} />
             <Route path="/protocol" component={Protocol} />
