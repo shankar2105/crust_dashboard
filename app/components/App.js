@@ -159,16 +159,17 @@ class App extends Component {
               <a className={this.state.dateFilterIndex === 2 ? "true" : "false"} href="#" onClick={() => this.filterByDay()}>Day</a>
               <a className={this.state.dateFilterIndex === 3 ? "true" : "false"} href="#" onClick={() => this.filterByWeek()}>Week</a>
               <a className={this.state.dateFilterIndex === 4 ? "true" : "false"} href="#" onClick={() => this.filterByMonth()}>Month</a>*/}
-              <a className={this.state.dateFilterIndex === 5 ? "true" : "false"} href="#" onClick={() => this.filterNone()}>
+              {/* <a className={this.state.dateFilterIndex === 5 ? "true" : "false"} href="#" onClick={() => this.filterNone()}>
                 All Time
-              </a>
+              </a> */}
+              All Time
               <div className="main-head-nav-date">
                 <RangePicker
                   defaultValue={[
                     moment("2015/01/01", dateFormat),
                     moment("2015/01/01", dateFormat)
-                  ]}
-                  format={dateFormat}
+                  ]} 
+                  format={dateFormat} disabled  
                 />
               </div>
             </div>

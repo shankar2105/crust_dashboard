@@ -13,8 +13,8 @@ const initialState = {
         logs: [],
         successfulConnections: [],
         failedConnections: [],
-        osList: Object.keys(OS),
-        natTypes: Object.keys(NatType),
+        osList: Object.values(OS),
+        natTypes: Object.values(NatType),
         osCount: {},
         countriesCount: {}
     },
@@ -98,8 +98,8 @@ const logReducer = (state = initialState, action) => {
                     logs: preparedLogs.logs,
                     successfulConnections: preparedLogs.successfulConnections,
                     failedConnections: preparedLogs.failedConnections,
-                    osList: Object.keys(OS),
-                    natTypes: Object.keys(NatType),
+                    osList: Object.values(OS),
+                    natTypes: Object.values(NatType),
                     osCount: preparedLogs.osCountMap,
                     countriesCount: preparedLogs.countryCountMap
                 };
@@ -124,8 +124,8 @@ const logReducer = (state = initialState, action) => {
                 logs: logsByrange.logs,
                 successfulConnections: logsByrange.successfulConnections,
                 failedConnections: logsByrange.failedConnections,
-                osList: Object.keys(OS),
-                natTypes: Object.keys(NatType),
+                osList: Object.values(OS),
+                natTypes: Object.values(NatType),
                 osCount: logsByrange.osCountMap,
                 countriesCount: logsByrange.countryCountMap
             };
