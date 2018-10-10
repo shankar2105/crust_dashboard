@@ -140,3 +140,26 @@ export const applyFilter = (logs, filter) => {
         return isNatTypeMatching(log) && isOSMatching(log) && isProtocolMatching(log) && isCountryMatching(log);
     });
 };
+
+export const formatAreaChart = (logs) => {
+    let logCount = 0
+    let TCP_D = 0
+    let TCP_HP = 0
+    let uTP_HP = 0
+    const arrayList = []
+  
+    logs.forEach(log => {
+        logCount++
+        log.is_direct_successful? TCP_D++ : TCP_D--
+        log.tcp_hole_punch_result === 'Succeeded' ? TCP_HP++ : TCP_HP--;
+        log.utp_hole_punch_result === 'Succeeded' ? uTP_HP++ : uTP_HP--;
+        arrayList.push({
+          "logCount": logCount,
+              "TCP_D": TCP_D,
+              "TCP_HP": TCP_HP,
+              "uTP_HP": uTP_HP
+          })
+      })
+      return (arrayList);
+  };
+  

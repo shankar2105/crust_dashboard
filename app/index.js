@@ -8,6 +8,7 @@ import App from './components/App.js'
 import store from './redux';
 import { prepareLogs } from './redux/utils';
 import Action from './redux/ActionType';
+import './less/main.less'
 
 class Websocket {
     
@@ -15,7 +16,7 @@ class Websocket {
         this.isReady = false;
         this.store = store;
         this.logs = [];
-        this.store.subsribe(() => this._storeListener());
+        this.store.subscribe(() => this._storeListener());
     }
 
     _storeListener() {
@@ -55,5 +56,5 @@ render((
         <BrowserRouter>
             <Route component={App}/>
         </BrowserRouter>
-    </Provider>), 
+    </Provider>),
     document.getElementById('root'));

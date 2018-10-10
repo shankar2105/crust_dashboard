@@ -14,6 +14,3 @@ export default {
     FILTER_BY_PROTOCOL: 'FILTER_BY_PROTOCOL',
     NEW_LOG: 'NEW_LOG'
 };
-
-
-
