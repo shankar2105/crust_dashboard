@@ -149,8 +149,13 @@ export const formatAreaChart = (logs) => {
     let logCount = 0
     let TCP_HP = 0
     let uTP_HP = 0
-    let arrayList = []
     let failed = 0
+    let arrayList = [{
+        "logCount": "0",
+        "TCP Holepunch": 0,
+        "UDP Holepunch": 0,
+        "Average": 0  
+    }]
     logs.forEach(log => {
         logCount++
         log.tcp_hole_punch_result === 'Succeeded' ? TCP_HP++ : null;
