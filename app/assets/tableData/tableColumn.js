@@ -101,9 +101,9 @@ const columns = [
       }
     },
     {
-      title: "uTP HP",
-      dataIndex: "utp_hp",
-      key: "utp_hp",
+      title: "UDP HP",
+      dataIndex: "udp_hp",
+      key: "udp_hp",
       align: 'center',
       className: 'utp',
       // filters: [

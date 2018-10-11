@@ -6,6 +6,7 @@ export const MOD_NAME = 'CON_ACT';
 
 const initialState = {
     filteredLogs: [],
+    isComputing: false,
     filter: { ...Filter }
 };
 
@@ -19,12 +20,20 @@ const activityReducer = (state=initialState, action) => {
         //     filteredLogs: applyFilter(logs, state.filter)
         // };
         // break;
-        case Action.REVALIDATE:
-        state = {
-            ...state,
-            filteredLogs: applyFilter(action.payload, state.filter)
-        };
-        break;
+        case `${Action.REVALIDATE}_PENDING`:
+            state = {
+                ...state,
+                isComputing: true,
+                filteredLogs: []
+            };
+            break;
+        case `${Action.REVALIDATE}_FULFILLED`:
+            state = {
+                ...state,
+                isComputing: false,
+                filteredLogs: action.payload
+            };
+            break;
 
         case `${MOD_NAME}_${Action.FILTER_NAT_TYPE1}`:
             filter = {
@@ -34,7 +43,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                // filteredLogs: applyFilter(action.data, filter)
             };
             break;
             
@@ -46,7 +55,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                // filteredLogs: applyFilter(action.data, filter)
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_OS_TYPE1}`:
@@ -57,7 +66,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                // filteredLogs: applyFilter(action.data, filter)
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_OS_TYPE2}`:
@@ -68,7 +77,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                // filteredLogs: applyFilter(action.data, filter)
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_COUNTRY_TYPE1}`:
@@ -79,7 +88,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                // filteredLogs: applyFilter(action.data, filter)
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_COUNTRY_TYPE2}`:
@@ -90,7 +99,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                // filteredLogs: applyFilter(action.data, filter)
             };
             break;            
         case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
@@ -101,7 +110,7 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 filter,
-                filteredLogs: applyFilter(action.data, filter)
+                // filteredLogs: applyFilter(action.data, filter)
             };
             break;
     }

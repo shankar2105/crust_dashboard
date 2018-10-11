@@ -1,6 +1,7 @@
 import Action from '../ActionType';
+import { applyFilter } from '../utils';
 
-const BASE_URL = `http://192.168.0.101:3000/api`;
+const BASE_URL = `http://localhost:8080/logs/#api`;
 const PROGRESS_COMPLETED_TIMEOUT = 1000;
 
 const fetchAllLogs = (dispatcher) => {
@@ -10,7 +11,8 @@ const fetchAllLogs = (dispatcher) => {
             try {
                 const dataFetched = await fetch(`${BASE_URL}/stats?pageNo=${from}&size=${limit}`);
                 const jsonData = await dataFetched.json();
-                result = result.concat(jsonData.logs);
+                result = result.concat(jsonData);//.logs);
+                jsonData.totalPages=1;//remove
                 const donePercentage = Math.ceil(from / (jsonData.totalPages) * 100)
                 console.log('result', jsonData.totalPages, from, limit, result.length, `${donePercentage}%`)
                 dispatcher({
@@ -23,9 +25,6 @@ const fetchAllLogs = (dispatcher) => {
                 if (from !== jsonData.totalPages) {
                     return await fetchData(from + 1);
                 }
-                dispatcher({
-                    type: Action.PROGRESS_COMPLETED
-                });
                 return resolve();
             } catch (err) {
                 return reject(err);
@@ -38,6 +37,12 @@ const fetchAllLogs = (dispatcher) => {
         });
         try {
             await fetchData(1);
+            const timeout = setTimeout(() => {
+                dispatcher({
+                    type: Action.PROGRESS_COMPLETED
+                });
+                clearTimeout(timeout);
+            }, PROGRESS_COMPLETED_TIMEOUT);
             return resolve(result);
         } catch(e) {
             dispatcher({
@@ -60,10 +65,12 @@ export const filterByConnectionResult = (action) => {
     }
 }
 
-export const revalidate = (logs) => {
+export const revalidate = (logs, filter) => {
     return {
         type: Action.REVALIDATE,
-        payload: logs
+        payload: new Promise((resolve) => {
+            resolve(applyFilter(logs, filter))
+        })
     }
 }
 

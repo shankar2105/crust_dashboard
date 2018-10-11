@@ -21,7 +21,7 @@ class DropDown extends Component {
                     <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_DIRECT)}>{PROTOCOL.TCP_DIRECT}</a>
                 </Menu.Item>
                 <Menu.Item key="menu-proto3">
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.UTP_HP)}>{PROTOCOL.UTP_HP}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.UDP_HP)}>{PROTOCOL.UDP_HP}</a>
                 </Menu.Item>
                 <Menu.Item key="menu-proto4">
                     <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_HP)}>{PROTOCOL.TCP_HP}</a>

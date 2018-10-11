@@ -7,8 +7,8 @@ import "./Dashboard.css";
 import { filterByConnectionResult, revalidate, filterChange } from '../redux/dispatcher/logs_action';
 //import DropDown from "../components/SubComponents/DropDownRender";
 import TabComp from "../components/TabComp";
-import { formatAreaChart } from "../redux/utils"
-import { MOD_NAME } from "../redux/reducers/ConnectionAttempt/activity"
+import { formatAreaChart, isEquivalent } from "../redux/utils";
+import { MOD_NAME } from "../redux/reducers/ConnectionAttempt/activity";
 
 class ConnectionAttempts extends Component {
   constructor(props) {
@@ -24,7 +24,14 @@ class ConnectionAttempts extends Component {
   // }
 
   componentDidMount() {
-    this.props.revalidate(this.props.store.filteredConnectionResults);
+    this.props.revalidate(this.props.store.filteredConnectionResults, this.props.activity.filter);
+  }
+
+  componentWillUpdate(nextProps) {
+    if (!isEquivalent(this.props.activity.filter, nextProps.activity.filter)) {
+      this.props.revalidate(this.props.store.filteredConnectionResults, nextProps.activity.filter);
+    }
+    // return prevState;
   }
 
   render() {

@@ -23,7 +23,13 @@ export const prepareLogs = (logs) => {
     };
 
     logs.forEach(log => {
-        const isSuccess = log.utp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded';
+        if (!log.hasOwnProperty('udp_hole_punch_result')) {
+            log.udp_hole_punch_result = 'Failed';
+        }
+        if (!log.hasOwnProperty('tcp_hole_punch_result')) {
+            log.tcp_hole_punch_result = 'Failed';
+        }
+        const isSuccess = log.udp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded';
         log.isSuccessful = isSuccess;
         log.peer_requester.os = tranformOSName(log.peer_requester.os);
         log.peer_responder.os = tranformOSName(log.peer_responder.os);
@@ -118,7 +124,7 @@ export const applyFilter = (logs, filter) => {
         }
         return (filter.Protocol === PROTOCOL.TCP_DIRECT && log.is_direct_successful) ||
             (filter.Protocol === PROTOCOL.TCP_HP && log.tcp_hole_punch_result === 'Succeeded') ||
-            (filter.Protocol === PROTOCOL.UTP_HP && log.utp_hole_punch_result === 'Succeeded');
+            (filter.Protocol === PROTOCOL.UDP_HP && log.udp_hole_punch_result === 'Succeeded');
     }
 
     const isCountryMatching = (log) => {
@@ -150,7 +156,7 @@ export const formatAreaChart = (logs) => {
         logCount++
         // log.is_direct_successful? TCP_D++ : TCP_D--
         log.tcp_hole_punch_result === 'Succeeded' ? TCP_HP++ : TCP_HP--;
-        log.utp_hole_punch_result === 'Succeeded' ? uTP_HP++ : uTP_HP--;
+        log.udp_hole_punch_result === 'Succeeded' ? uTP_HP++ : uTP_HP--;
         arrayList.push({
           "logCount": logCount,
             //   "TCP_D": TCP_D,
@@ -161,3 +167,29 @@ export const formatAreaChart = (logs) => {
       return (arrayList);
   };
   
+
+  export const isEquivalent = (a, b) => {
+    // Create arrays of property names
+    var aProps = Object.getOwnPropertyNames(a);
+    var bProps = Object.getOwnPropertyNames(b);
+
+    // If number of properties is different,
+    // objects are not equivalent
+    if (aProps.length != bProps.length) {
+        return false;
+    }
+
+    for (var i = 0; i < aProps.length; i++) {
+        var propName = aProps[i];
+
+        // If values of same property are not equal,
+        // objects are not equivalent
+        if (a[propName] !== b[propName]) {
+            return false;
+        }
+    }
+
+    // If we made it this far, objects
+    // are considered equivalent
+    return true;
+}

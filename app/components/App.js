@@ -115,7 +115,7 @@ class App extends Component {
               <h1 className="logo-desc">CRUST TEST</h1>
             </div>
           </div>
-          <Menu mode="inline" defaultSelectedKeys={["2"]}>
+          <Menu mode="inline" defaultSelectedKeys={["4"]}>
             {/*<Menu.Item key="1">
               <Link to="/">
                 <span id="item">
@@ -141,7 +141,7 @@ class App extends Component {
               </Link>
             </Menu.Item> */}
             <Menu.Item key="4">
-              <Link to="/connect">
+              <Link to="/">
                 <span id="item">
                   <Icon type="warning" />
                   <span>Connection Attempts</span>
