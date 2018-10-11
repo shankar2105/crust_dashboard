@@ -14,7 +14,6 @@ const fetchAllLogs = (dispatcher) => {
                 result = result.concat(jsonData);//.logs);
                 jsonData.totalPages=1;//remove
                 const donePercentage = Math.ceil(from / (jsonData.totalPages) * 100)
-                console.log('result', jsonData.totalPages, from, limit, result.length, `${donePercentage}%`)
                 dispatcher({
                     type: `${Action.FETCH_LOGS}_FULFILLED`,
                     payload: {
