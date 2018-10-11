@@ -1,0 +1,80 @@
+@tab-section-border-radius: 2px;
+
+.tab-1 {
+  background-color: @layout-body-background;
+  .ant-tabs-bar {
+    background-color: @white;
+    margin-bottom: 0;
+    border-top-left-radius: @tab-section-border-radius;
+    border-top-right-radius: @tab-section-border-radius;
+    .ant-tabs-nav-container {
+      .ant-tabs-nav-wrap {
+        padding-left: 32px;
+        .ant-tabs-nav {
+          .ant-tabs-tab {
+            .font-sf-pro-text();
+            color: @text-color;
+            font-size: 16px;
+            padding-top: 22px;
+            &.ant-tabs-tab-active {
+              color: @orange;
+            }
+          }
+          .ant-tabs-ink-bar {
+            background-color: @orange;
+            bottom: auto;
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.tab-1-base {
+  .ant-card-body {
+    padding: 0;
+  }
+}
+
+.dropdown-render {
+  background-color: @white;
+  padding: 40px 32px;
+  margin-bottom: 30px;
+  border-bottom-left-radius: @tab-section-border-radius;
+  border-bottom-right-radius: @tab-section-border-radius;
+  .dropdown-render-i {
+    display: flex;
+    margin-bottom: 20px;
+    .ant-dropdown-trigger {
+      flex: 1;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      text-align: left;
+      &:hover {
+        color: @orange;
+      }
+
+      &:nth-child(even) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:nth-child(odd) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        margin-left: -1px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+    }
+    .ant-dropdown-trigger {
+      text-align: right;
+      span:first-child {
+        float: left;
+      }
+    }
+  }
+}
