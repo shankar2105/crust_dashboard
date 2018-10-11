@@ -8,7 +8,7 @@ export class DropDownItems extends Component {
             return (
                 <Col className="dropdown-render-i" span={8}>
                     <Col span={6}>{type}</Col>
-                    <Dropdown overlay={menu1} trigger={['click']} placement="topLeft">
+                    <Dropdown overlay={menu1} trigger={['click']} placement="bottomCenter">
                         <Button>
                             {selected1} <Icon type="down" />
                         </Button>
@@ -20,12 +20,12 @@ export class DropDownItems extends Component {
             return (
                 <Col className="dropdown-render-i" span={8}>
                     <Col span={6}>{type}</Col>
-                    <Dropdown overlay={menu1} trigger={['click']} placement="topLeft">
+                    <Dropdown overlay={menu1} trigger={['click']} placement="bottomCenter">
                         <Button>
                         {selected1} <Icon type="down" />
                         </Button>
                     </Dropdown>
-                    <Dropdown overlay={menu2} trigger={['click']} placement="topCenter">
+                    <Dropdown overlay={menu2} trigger={['click']} placement="bottomCenter">
                         <Button>
                         {selected2} <Icon type="down" />
                         </Button>
