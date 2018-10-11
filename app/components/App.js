@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Layout, Menu, Icon, DatePicker, Progress } from "antd";
+import { Layout, Menu, Icon, DatePicker, Progress, Alert } from "antd";
 import { Link, Route } from "react-router-dom";
 import moment from "moment";
 
@@ -21,13 +21,13 @@ const dateFormat = "YYYY/MM/DD";
 
 class App extends Component {
 
-	constructor() {
-		super();
-		this.state = {
+  constructor() {
+    super();
+    this.state = {
       collapsed: false,
       dateFilterIndex: 5
     };
-	}
+  }
 
   toggle() {
     this.setState({
@@ -84,12 +84,6 @@ class App extends Component {
     this.props.filterByRange(-1);
   }
 
-  componentDidUpdate() {
-    if (this.props.store.error) {
-      alert(this.props.store.error);
-    }
-  }
-
   // TODO
   // filterCustomRange() {
   //   this.props.filterByRange(from, to);
@@ -101,22 +95,24 @@ class App extends Component {
     //   return <div>LOADING...!!!</div>
     // }
     return (
-      <Layout style={{ minHeight: 900 }}>
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-          width={"256px"}
-          className="main-slider"
-        >
-          <div className="logo">
-            <div className="logo-b">
-              <img className="logo-media" src={logo} alt="logo" />
-              <h1 className="logo-desc">CRUST TEST</h1>
+      <div>
+        {this.props.store.error ? <Alert banner message={this.props.store.error} type="error" showIcon closable /> : null}
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider
+            trigger={null}
+            collapsible
+            collapsed={this.state.collapsed}
+            width={"256px"}
+            className="main-slider"
+          >
+            <div className="logo">
+              <div className="logo-b">
+                <img className="logo-media" src={logo} alt="logo" />
+                <h1 className="logo-desc">CRUST TEST</h1>
+              </div>
             </div>
-          </div>
-          <Menu mode="inline" defaultSelectedKeys={["4"]}>
-            {/*<Menu.Item key="1">
+            <Menu mode="inline" defaultSelectedKeys={["4"]}>
+              {/*<Menu.Item key="1">
               <Link to="/">
                 <span id="item">
                   <Icon type="dashboard" />
@@ -140,75 +136,77 @@ class App extends Component {
                 </span>
               </Link>
             </Menu.Item> */}
-            <Menu.Item key="4">
-              <Link to="/">
-                <span id="item">
-                  <Icon type="warning" />
-                  <span>Connection Attempts</span>
-                </span>
-              </Link>
-            </Menu.Item>
-          </Menu>
-        </Sider>
+              <Menu.Item key="4">
+                <Link to="/">
+                  <span id="item">
+                    <Icon type="warning" />
+                    <span>Connection Attempts</span>
+                  </span>
+                </Link>
+              </Menu.Item>
+            </Menu>
+          </Sider>
 
-        <Layout className="main-layout">
-          <Header className="main-layout-head">
-            <Icon
-              className="trigger"
-              type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
-              onClick={() => this.toggle()}
-              style={{ fontSize: '18px', color: '#000000' }}
-            />
-            <div className="main-head-nav">
-              {/* maybe these className attributes could be removed
+          <Layout className="main-layout">
+            <Header className="main-layout-head">
+              <Icon
+                className="trigger"
+                type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
+                onClick={() => this.toggle()}
+                style={{ fontSize: '18px', color: '#000000' }}
+              />
+              <div className="main-head-nav">
+                {/* maybe these className attributes could be removed
               <a className={this.state.dateFilterIndex === 1 ? "true" : "false"} href="#" onClick={() => this.filterByHour()}>Hour</a>
               <a className={this.state.dateFilterIndex === 2 ? "true" : "false"} href="#" onClick={() => this.filterByDay()}>Day</a>
               <a className={this.state.dateFilterIndex === 3 ? "true" : "false"} href="#" onClick={() => this.filterByWeek()}>Week</a>
               <a className={this.state.dateFilterIndex === 4 ? "true" : "false"} href="#" onClick={() => this.filterByMonth()}>Month</a>*/}
-              {/* <a className={this.state.dateFilterIndex === 5 ? "true" : "false"} href="#" onClick={() => this.filterNone()}>
+                {/* <a className={this.state.dateFilterIndex === 5 ? "true" : "false"} href="#" onClick={() => this.filterNone()}>
                 All Time
               </a> */}
-              All Time
+                All Time
               <div className="main-head-nav-date">
-                <RangePicker
-                  defaultValue={[
-                    moment("2015/01/01", dateFormat),
-                    moment("2015/01/01", dateFormat)
-                  ]}
-                  format={dateFormat} disabled
-                />
+                  <RangePicker
+                    defaultValue={[
+                      moment("2015/01/01", dateFormat),
+                      moment("2015/01/01", dateFormat)
+                    ]}
+                    format={dateFormat} disabled
+                  />
+                </div>
               </div>
-            </div>
-          </Header>
-          {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
-          <div className="main-progress" style={{display: this.props.store.paging.completed ? 'none': 'block'}}>
-              {
-                (this.props.store.paging.done <= 100) ? (
-                  <Progress
-                  percent={this.props.store.paging.done}
-                  strokeLinecap="square"
-                  strokeWidth="3px"
-                  status="active"
-                  showInfo={false}
-                  strokeColor="#FA541C"
-                />
-                ) : null
-              }
-            </div>
-            <Route path="/" exact component={ConnectionAttempts} />
-            {/* <Route path="/nat" component={NatType} />
+            </Header>
+            {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
+              <div className="main-progress" style={{ display: (!this.props.store.paging.completed || this.props.activity.isComputing) ? 'block' : 'none' }}>
+                {
+                  (this.props.store.paging.done <= 100) || this.props.activity.isComputing ? (
+                    <Progress
+                      percent={this.props.activity.isComputing ? 100 : this.props.store.paging.done}
+                      strokeLinecap="square"
+                      strokeWidth="3px"
+                      status="active"
+                      showInfo={false}
+                      strokeColor="#FA541C"
+                    />
+                  ) : null
+                }
+              </div>
+              <Route path="/" exact component={ConnectionAttempts} />
+              {/* <Route path="/nat" component={NatType} />
             <Route path="/protocol" component={Protocol} />
             <Route path="/connect" component={ConnectionAttempts} /> */}
-          </Content>)}
+            </Content>)}
+          </Layout>
         </Layout>
-      </Layout>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (store) => {
   return {
-    store: store.logReducer
+    store: store.logReducer,
+    activity: store.connectionAttemptActivity
   }
 };
 
