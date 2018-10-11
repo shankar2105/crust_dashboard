@@ -1,18 +1,16 @@
 import Action from '../ActionType';
 import { applyFilter } from '../utils';
 
-const BASE_URL = `http://localhost:8080/logs/#api`;
 const PROGRESS_COMPLETED_TIMEOUT = 1000;
 
 const fetchAllLogs = (dispatcher) => {
     let result = [];
-    const fetchData = (from, limit = 100) => {
+    const fetchData = (from, limit = 200) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const dataFetched = await fetch(`${BASE_URL}/stats?pageNo=${from}&size=${limit}`);
+                const dataFetched = await fetch(`/api/stats?pageNo=${from}&size=${limit}`);
                 const jsonData = await dataFetched.json();
-                result = result.concat(jsonData);//.logs);
-                jsonData.totalPages=1;//remove
+                result = result.concat(jsonData.logs);
                 const donePercentage = Math.ceil(from / (jsonData.totalPages) * 100)
                 dispatcher({
                     type: `${Action.FETCH_LOGS}_FULFILLED`,

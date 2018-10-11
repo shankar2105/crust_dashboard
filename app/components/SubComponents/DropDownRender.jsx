@@ -17,14 +17,14 @@ class DropDown extends Component {
                 <Menu.Item key="menu-proto1">
                     <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.ANY)}>{PROTOCOL.ANY}</a>
                 </Menu.Item>
-                <Menu.Item key="menu-proto2">
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_DIRECT)}>{PROTOCOL.TCP_DIRECT}</a>
-                </Menu.Item>
+                {/* <Menu.Item key="menu-proto2">
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_DIRECT)}>TCP Direct</a>
+                </Menu.Item> */}
                 <Menu.Item key="menu-proto3">
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.UDP_HP)}>{PROTOCOL.UDP_HP}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.UDP_HP)}>UDP Holepunch</a>
                 </Menu.Item>
                 <Menu.Item key="menu-proto4">
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_HP)}>{PROTOCOL.TCP_HP}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_HP)}>TCP Holepunch</a>
                 </Menu.Item>
             </Menu>
         )
@@ -99,7 +99,6 @@ class DropDown extends Component {
     }
 
     countryMenu1() {
-        console.log(this.props)
         let countries = Object.keys(this.props.labels.countriesCount)
         let countryList = countries.map((country, k) => {
             return (
@@ -131,6 +130,17 @@ class DropDown extends Component {
         const osMenu2 = this.osMenu2();
         const natMenu1 = this.natMenu1();
         const natMenu2 = this.natMenu2();
+
+        const getProtocolDisplayName = () => {
+            switch(this.props.selectedLabel.Protocol) {
+                case PROTOCOL.TCP_HP:
+                    return 'TCP Holepunch';
+                case PROTOCOL.UDP_HP:
+                    return 'UDP Holepunch';
+                default:
+                    return PROTOCOL.ANY;
+            }
+        };
         return (
             <div className="dropdown-render">
                 <Row gutter={24}>
@@ -138,7 +148,7 @@ class DropDown extends Component {
                         selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2} />
 
                     <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
-                        selected1={this.props.selectedLabel.Protocol} />
+                        selected1={getProtocolDisplayName()} />
                 </Row>
 
                 <Row gutter={24}>

@@ -8,18 +8,17 @@ class AreaChart extends React.Component {
         var dv = new DataSet.View().source(data);
         dv.transform({
             type: "fold",
-            fields: ["TCP_HP", "uTP_HP"],
+            fields: ["TCP Holepunch", "UDP Holepunch","Average"],
             key: "type",
             value: "value"
         });
         const scale = {
             value: {
                 alias: "The Share Price in Dollars",
-                formatter: function (val) {
-                    return val;
-                }
+                formatter: (val) => `${val}%`
             },
             logCount: {
+                tickCount: 10,
                 range: [0, 1]
             }
         };

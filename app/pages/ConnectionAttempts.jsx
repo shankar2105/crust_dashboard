@@ -71,8 +71,8 @@ class ConnectionAttempts extends Component {
             >
               {/* <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} data={this.props.store.filteredConnectionResults} mod={MOD_NAME} filterAction={this.props.filterChange}
                 labels={this.props.store.filteredLogs} selectedLabel={this.props.activity.filter} /> */}
-              <Skeleton loading={!this.props.store.paging.completed} active animate>
-                <TabComp tabData={tabData}  failedCount={this.props.store.filteredLogs.failedConnections.length} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
+              <Skeleton loading={!this.props.store.paging.completed} active animate>            
+                <TabComp filteredLogs={this.props.activity.filteredLogs} tabData={tabData} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
               </Skeleton>
             </Card>
           </Col>
