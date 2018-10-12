@@ -95,12 +95,22 @@ export class RenderAreaChart extends Component {
                 title="Connection Attempts"
                 description="Success Rate / Cumulative Attempts"
               />
-              <div className="chart-1-meta">
-                <div className="chart-1-meta-val">{filteredLogs.length-chartData.failed}</div>
-                <div className="chart-1-meta-desc">Successful Connections</div>
-                <div className="chart-1-meta-val">{chartData.failed}</div>
-                <div className="chart-1-meta-desc">Failed Connections</div>
-                </div>
+
+                {
+                  this.props.showFailedCount ? (
+                    <div className="chart-1-meta">
+                      <div className="chart-1-meta-val">{filteredLogs.length-chartData.failed}</div>
+                      <div className="chart-1-meta-desc">Successful Connections</div>   
+                      <div className="chart-1-meta-val">{chartData.failed}</div>
+                      <div className="chart-1-meta-desc">Failed Connections</div>
+                    </div>
+                  ) : (
+                    <div className="chart-1-meta">
+                      <div className="chart-1-meta-val">{filteredLogs.length-chartData.failed}</div>
+                      <div className="chart-1-meta-desc">Successful Connections</div>   
+                    </div>
+                  )
+                }
             <AreaChart data={chartData.data} />
             </Card>
           </Col>
@@ -119,7 +129,7 @@ class TabComp extends Component {
       <TabPane tab={tabName} key={key} className="tab-1-panel">
         <DropdownOptions contents={tabData.contents} data={tabData.data} mod={tabData.mod} filterAction={tabData.filterAction}
           labels={tabData.labels} selectedLabel={tabData.selectedLabel} />
-        <RenderAreaChart chartData={chartData} filteredLogs={filteredLogs}/>
+        <RenderAreaChart showFailedCount={this.props.showFailedCount} chartData={chartData} filteredLogs={filteredLogs}/>
         <RenderTable tableData={tableData}/>
       </TabPane>
     )

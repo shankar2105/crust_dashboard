@@ -7,10 +7,10 @@ import { Link, Route } from "react-router-dom";
 import moment from "moment";
 
 import logo from "../assets/images/logo.svg";
-import Dashboard from "../pages/Dashboard";
-import NatType from "../pages/NatType";
+// import Dashboard from "../pages/Dashboard";
+// import NatType from "../pages/NatType";
 import ConnectionAttempts from "../pages/ConnectionAttempts";
-import Protocol from "../pages/Protocol";
+// import Protocol from "../pages/Protocol";
 import { hoursInMilliseconds, daysInMilliseconds } from '../redux/utils';
 import { fetchLogs, filterByRange } from '../redux/dispatcher/logs_action';
 

@@ -9,6 +9,7 @@ import { filterByConnectionResult, revalidate, filterChange } from '../redux/dis
 import TabComp from "../components/TabComp";
 import { formatAreaChart, isEquivalent } from "../redux/utils";
 import { MOD_NAME } from "../redux/reducers/ConnectionAttempt/activity";
+import { PROTOCOL } from '../redux/FilterTypes';
 
 class ConnectionAttempts extends Component {
   constructor(props) {
@@ -76,7 +77,7 @@ class ConnectionAttempts extends Component {
               {/* <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} data={this.props.store.filteredConnectionResults} mod={MOD_NAME} filterAction={this.props.filterChange}
                 labels={this.props.store.filteredLogs} selectedLabel={this.props.activity.filter} /> */}
               <Skeleton loading={!this.props.store.paging.completed} active animate>            
-                <TabComp filteredLogs={this.props.activity.filteredLogs} tabData={tabData} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
+                <TabComp  showFailedCount={this.props.activity.filter.Protocol === PROTOCOL.ANY} filteredLogs={this.props.activity.filteredLogs} tabData={tabData} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
               </Skeleton>
             </Card>
           </Col>
