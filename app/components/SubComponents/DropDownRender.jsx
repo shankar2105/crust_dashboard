@@ -4,6 +4,12 @@ import { DropDownItems } from "./DropDownItems"
 import { PROTOCOL, NatType, OS } from "../../redux/FilterTypes";
 import Action from '../../redux/ActionType';
 
+const getCustomMenu = (menuOpts) => {
+    return (
+        <Menu className="_menu-item">{menuOpts}</Menu>
+    );
+}
+
 class DropDown extends Component {
 
     constructor(props) {
@@ -13,7 +19,7 @@ class DropDown extends Component {
 
     protocolMenu() {
         return (
-            <Menu>
+            <Menu className="_menu-item">
                 <Menu.Item key="menu-proto1">
                     <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.ANY)}>{PROTOCOL.ANY}</a>
                 </Menu.Item>
@@ -30,24 +36,24 @@ class DropDown extends Component {
         )
     }
 
-    anyCountry1() {
-        return (
-            <Menu>
-                <Menu.Item key={`menu-country1-${0}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE1, OS.ANY)}>{OS.ANY}</a>
-                </Menu.Item>
-            </Menu>
-        )
-    }
-    anyCountry2() {
-        return (
-            <Menu>
-                <Menu.Item key={`menu-country2-${0}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE2, OS.ANY)}>{OS.ANY}</a>
-                </Menu.Item>
-            </Menu>
-        )
-    }
+    // anyCountry1() {
+    //     return (
+    //         <Menu>
+    //             <Menu.Item key={`menu-country1-${0}`}>
+    //                 <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE1, OS.ANY)}>{OS.ANY}</a>
+    //             </Menu.Item>
+    //         </Menu>
+    //     )
+    // }
+    // anyCountry2() {
+    //     return (
+    //         <Menu>
+    //             <Menu.Item key={`menu-country2-${0}`}>
+    //                 <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE2, OS.ANY)}>{OS.ANY}</a>
+    //             </Menu.Item>
+    //         </Menu>
+    //     )
+    // }
 
     natMenu1() {
         let items = this.props.labels.natTypes
@@ -101,6 +107,7 @@ class DropDown extends Component {
     countryMenu1() {
         let countries = Object.keys(this.props.labels.countriesCount)
         countries.sort();
+        countries.unshift("Any");
         let countryList = countries.map((country, k) => {
             return (
                 <Menu.Item key={`menu-country1-${k}`}>
@@ -113,8 +120,9 @@ class DropDown extends Component {
 
 
     countryMenu2() {
-        let countries = Object.keys(this.props.labels.countriesCount)
+        let countries = Object.keys(this.props.labels.countriesCount);
         countries.sort();
+        countries.unshift("Any");
         let countryList = countries.map((country, k) => {
             return (
                 <Menu.Item key={`menu-country2-${k}`}>
@@ -134,7 +142,7 @@ class DropDown extends Component {
         const natMenu2 = this.natMenu2();
 
         const getProtocolDisplayName = () => {
-            switch(this.props.selectedLabel.Protocol) {
+            switch (this.props.selectedLabel.Protocol) {
                 case PROTOCOL.TCP_HP:
                     return 'TCP Holepunch';
                 case PROTOCOL.UDP_HP:
@@ -146,7 +154,7 @@ class DropDown extends Component {
         return (
             <div className="dropdown-render">
                 <Row gutter={24}>
-                    <DropDownItems type={this.tabContent[0]} menu1={(<Menu>{natMenu1}</Menu>)} menu2={(<Menu>{natMenu2}</Menu>)}
+                    <DropDownItems type={this.tabContent[0]} menu1={(getCustomMenu(natMenu1))} menu2={(getCustomMenu(natMenu2))}
                         selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2} />
 
                     <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
@@ -154,10 +162,10 @@ class DropDown extends Component {
                 </Row>
 
                 <Row gutter={24}>
-                    <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
+                    <DropDownItems type={this.tabContent[2]} menu1={(getCustomMenu(osMenu1))} menu2={(getCustomMenu(osMenu2))}
                         selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2} />
 
-                    <DropDownItems type={this.tabContent[3]} menu1={(<Menu className="Menu-render">{this.anyCountry1()}{countryMenu1}</Menu>)} menu2={(<Menu className="Menu-render">{this.anyCountry2()}{countryMenu2}</Menu>)}
+                    <DropDownItems type={this.tabContent[3]} menu1={(getCustomMenu(countryMenu1))} menu2={(getCustomMenu(countryMenu2))}
                         selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2} />
                 </Row>
             </div>
