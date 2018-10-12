@@ -160,6 +160,7 @@ export const formatAreaChart = (logs) => {
         logCount++
         log.tcp_hole_punch_result === 'Succeeded' ? TCP_HP++ : null;
         log.udp_hole_punch_result === 'Succeeded' ? uDP_HP++ : null;
+
         log.tcp_hole_punch_result !== 'Succeeded' && log.udp_hole_punch_result !== 'Succeeded' ? failed++ : null;
 
         let tcp_percent = Math.round((TCP_HP/logCount)*100)
