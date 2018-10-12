@@ -51,6 +51,10 @@ class ConnectionAttempts extends Component {
           <h1 className="page-1-head-title">Connection Attempts
           {/* <Icon type="info-circle" theme="outlined" style={{ fontSize: '14px', fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.45)' }} /> */}
           </h1>
+          <div className="page-1-head-info">
+           To participate in the test, get started on our <a href="https://safenetforum.org" target="_blank">community forum</a> 
+          </div>
+
           <div className="page-1-head-opts">
             {/* <h3 className="page-1-head-opts-title">Connection result:</h3> */}
             {/* <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}

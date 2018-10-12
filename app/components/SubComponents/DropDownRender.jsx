@@ -100,6 +100,7 @@ class DropDown extends Component {
 
     countryMenu1() {
         let countries = Object.keys(this.props.labels.countriesCount)
+        countries.sort();
         let countryList = countries.map((country, k) => {
             return (
                 <Menu.Item key={`menu-country1-${k}`}>
@@ -113,6 +114,7 @@ class DropDown extends Component {
 
     countryMenu2() {
         let countries = Object.keys(this.props.labels.countriesCount)
+        countries.sort();
         let countryList = countries.map((country, k) => {
             return (
                 <Menu.Item key={`menu-country2-${k}`}>
@@ -155,7 +157,7 @@ class DropDown extends Component {
                     <DropDownItems type={this.tabContent[2]} menu1={(<Menu>{osMenu1}</Menu>)} menu2={(<Menu>{osMenu2}</Menu>)}
                         selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2} />
 
-                    <DropDownItems type={this.tabContent[3]} menu1={(<Menu>{this.anyCountry1()}{countryMenu1}</Menu>)} menu2={(<Menu>{this.anyCountry2()}{countryMenu2}</Menu>)}
+                    <DropDownItems type={this.tabContent[3]} menu1={(<Menu className="Menu-render">{this.anyCountry1()}{countryMenu1}</Menu>)} menu2={(<Menu className="Menu-render">{this.anyCountry2()}{countryMenu2}</Menu>)}
                         selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2} />
                 </Row>
             </div>
