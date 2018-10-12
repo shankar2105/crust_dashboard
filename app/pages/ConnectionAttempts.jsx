@@ -53,7 +53,7 @@ class ConnectionAttempts extends Component {
           {/* <Icon type="info-circle" theme="outlined" style={{ fontSize: '14px', fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.45)' }} /> */}
           </h1>
           <div className="page-1-head-info">
-           Want to participate in the test programme? We’ve got all the instructions you’ll need on our community forum. Just <a href="https://safenetforum.org/t/crust-nat-traversal-test/25799" target="_blank">click here</a> to get started. 
+           Want to participate in the test programme? We’ve got all the instructions you’ll need on our community forum. Just <a href="https://safenetforum.org/" target="_blank">click here</a> to get started. 
           </div>
 
           <div className="page-1-head-opts">
