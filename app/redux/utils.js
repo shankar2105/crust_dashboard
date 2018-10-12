@@ -148,22 +148,23 @@ export const applyFilter = (logs, filter) => {
 export const formatAreaChart = (logs) => {
     let logCount = 0
     let TCP_HP = 0
-    let uTP_HP = 0
+    let uDP_HP = 0
     let failed = 0
     let arrayList = [{
         "logCount": "0",
         "TCP Holepunch": 0,
         "UDP Holepunch": 0,
         "Average": 0  
-    }]
-    logs.forEach(log => {
+    }] 
+    logs.forEach(log => { 
         logCount++
         log.tcp_hole_punch_result === 'Succeeded' ? TCP_HP++ : null;
-        log.udp_hole_punch_result === 'Succeeded' ? uTP_HP++ : null;
+        log.udp_hole_punch_result === 'Succeeded' ? uDP_HP++ : null;
+
         log.tcp_hole_punch_result !== 'Succeeded' && log.udp_hole_punch_result !== 'Succeeded' ? failed++ : null;
 
         let tcp_percent = Math.round((TCP_HP/logCount)*100)
-        let udp_percent = Math.round((uTP_HP/logCount)*100)
+        let udp_percent = Math.round((uDP_HP/logCount)*100)
         arrayList.push({
           "logCount": logCount.toString(),
               "TCP Holepunch": tcp_percent,
