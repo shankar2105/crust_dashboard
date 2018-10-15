@@ -100,18 +100,18 @@ export class RenderAreaChart extends Component {
                   this.props.showFailedCount ? (
                     <div className="chart-1-meta">
                       <div className="chart-1-meta-val">{filteredLogs.length-chartData.failed}</div>
-                      <div className="chart-1-meta-desc">Successful Connections</div>   
+                      <div className="chart-1-meta-desc">Successful Connections</div>
                       <div className="chart-1-meta-val">{chartData.failed}</div>
                       <div className="chart-1-meta-desc">Failed Connections</div>
                     </div>
                   ) : (
                     <div className="chart-1-meta">
                       <div className="chart-1-meta-val">{filteredLogs.length-chartData.failed}</div>
-                      <div className="chart-1-meta-desc">Successful Connections</div>   
+                      <div className="chart-1-meta-desc">Successful Connections</div>
                     </div>
                   )
                 }
-            <AreaChart data={chartData.data} />
+              <div className="chat-2"><AreaChart data={chartData.data} /></div>
             </Card>
           </Col>
         </Row>

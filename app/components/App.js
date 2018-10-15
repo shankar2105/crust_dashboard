@@ -95,7 +95,7 @@ class App extends Component {
     //   return <div>LOADING...!!!</div>
     // }
     return (
-      <div>
+      <div className="root-b">
         {this.props.store.error ? <Alert banner message={this.props.store.error} type="error" showIcon closable /> : null}
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
@@ -104,6 +104,12 @@ class App extends Component {
             collapsed={this.state.collapsed}
             width={"256px"}
             className="main-slider"
+            breakpoint="md"
+            onBreakpoint={(broken) => {
+              if (broken) {
+                this.setState({collapsed: true})
+              }
+            }}
           >
             <div className="logo">
               <div className="logo-b">
