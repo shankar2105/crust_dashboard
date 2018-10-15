@@ -20,7 +20,7 @@ const fetchAllLogs = (dispatcher) => {
                     }
                 });
                 if (from !== jsonData.totalPages) {
-                    return await fetchData(from + 1);
+                    return resolve(await fetchData(from + 1));
                 }
                 return resolve();
             } catch (err) {
