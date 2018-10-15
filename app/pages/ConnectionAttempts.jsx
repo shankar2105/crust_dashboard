@@ -16,13 +16,6 @@ class ConnectionAttempts extends Component {
     super(props);
     // this.props.revalidate(mods.CON_ACT_,this.props.store.filteredConnectionResults);
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   //initially if returns false since the state isn't changed.
-  //   //we set the initial state using constructor and this function for later changes
-  //   if (this.props.store.filteredConnectionResults != nextProps.store.filteredConnectionResults) {
-  //     this.props.revalidate(mods.CON_ACT_,nextProps.store.filteredConnectionResults);
-  //   }
-  // }
 
   componentDidMount() {
     this.props.revalidate(this.props.store.filteredConnectionResults, this.props.activity.filter);
@@ -32,7 +25,10 @@ class ConnectionAttempts extends Component {
     if (!isEquivalent(this.props.activity.filter, nextProps.activity.filter)) {
       this.props.revalidate(this.props.store.filteredConnectionResults, nextProps.activity.filter);
     }
-    // return prevState;
+
+    if (!isEquivalent(this.props.store.filteredConnectionResults, nextProps.store.filteredConnectionResults)) {
+      this.props.revalidate(nextProps.store.filteredConnectionResults, this.props.activity.filter);
+    }
   }
 
   render() {
@@ -48,19 +44,19 @@ class ConnectionAttempts extends Component {
     return (
       <div className="page-1">
         <span className="page-1-head">
-        <Skeleton loading={!this.props.store.paging.completed} active animate>
-          <h1 className="page-1-head-title">Connection Attempts
+          <Skeleton loading={!this.props.store.paging.completed} active animate>
+            <h1 className="page-1-head-title">Connection Attempts
           {/* <Icon type="info-circle" theme="outlined" style={{ fontSize: '14px', fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.45)' }} /> */}
-          </h1>
-          <div className="page-1-head-info">
-           Want to participate in the test programme? We've got all the instructions you'll need on our community forum. Just <a href="https://safenetforum.org/" target="_blank">click here</a> to get started. 
+            </h1>
+            <div className="page-1-head-info">
+              Want to participate in the test programme? We've got all the instructions you'll need on our community forum. Just <a href="https://safenetforum.org/" target="_blank">click here</a> to get started.
           </div>
 
-          <div className="page-1-head-opts">
-            {/* <h3 className="page-1-head-opts-title">Connection result:</h3> */}
-            {/* <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}
+            <div className="page-1-head-opts">
+              {/* <h3 className="page-1-head-opts-title">Connection result:</h3> */}
+              {/* <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}
               changeFilter={this.props.filterByConnectionResult} /> */}
-          </div>
+            </div>
           </Skeleton>
         </span>
         <Row gutter={24}>
@@ -76,8 +72,8 @@ class ConnectionAttempts extends Component {
             >
               {/* <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} data={this.props.store.filteredConnectionResults} mod={MOD_NAME} filterAction={this.props.filterChange}
                 labels={this.props.store.filteredLogs} selectedLabel={this.props.activity.filter} /> */}
-              <Skeleton loading={!this.props.store.paging.completed} active animate>            
-                <TabComp  showFailedCount={this.props.activity.filter.Protocol === PROTOCOL.ANY} filteredLogs={this.props.activity.filteredLogs} tabData={tabData} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
+              <Skeleton loading={!this.props.store.paging.completed} active animate>
+                <TabComp showFailedCount={this.props.activity.filter.Protocol === PROTOCOL.ANY} filteredLogs={this.props.activity.filteredLogs} tabData={tabData} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
               </Skeleton>
             </Card>
           </Col>

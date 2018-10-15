@@ -31,7 +31,7 @@ class Tables extends Component {
         <Table
           dataSource={filterData}
           columns={columns}
-          pagination={false}
+          pagination={true}
         />
       </div>
     );

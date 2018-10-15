@@ -3,25 +3,25 @@ import { applyFilter } from '../utils';
 
 const PROGRESS_COMPLETED_TIMEOUT = 1000;
 
-const fetchAllLogs = (dispatcher) => {
+const fetchAllLogs = (dispatcher, from, limit, oldLogs) => {
     let result = [];
-    const fetchData = (from, limit = 200) => {
+    const fetchData = (from, limit, oldLogs) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const dataFetched = await fetch(`/api/stats?pageNo=${from}&size=${limit}`);
                 const jsonData = await dataFetched.json();
                 result = result.concat(jsonData.logs);
                 const donePercentage = Math.ceil(from / (jsonData.totalPages) * 100)
+                if (from < jsonData.totalPages) {
+                    return resolve(await fetchData(from + 1, limit, oldLogs));
+                }
                 dispatcher({
                     type: `${Action.FETCH_LOGS}_FULFILLED`,
                     payload: {
-                        logs: result,
+                        logs: oldLogs.concat(result),
                         done: donePercentage
                     }
                 });
-                if (from !== jsonData.totalPages) {
-                    return resolve(await fetchData(from + 1));
-                }
                 return resolve();
             } catch (err) {
                 return reject(err);
@@ -33,7 +33,7 @@ const fetchAllLogs = (dispatcher) => {
             type: `${Action.FETCH_LOGS}_PENDING`
         });
         try {
-            await fetchData(1);
+            await fetchData(from, limit, oldLogs);
             const timeout = setTimeout(() => {
                 dispatcher({
                     type: Action.PROGRESS_COMPLETED
@@ -50,9 +50,9 @@ const fetchAllLogs = (dispatcher) => {
         }
     });
 }
- export const fetchLogs = () => {
-    return (dispatcher) => {
-        return fetchAllLogs(dispatcher);
+ export const fetchLogs = (from, limit) => {
+    return (dispatcher,getState) => {
+        return fetchAllLogs(dispatcher, from, limit, getState().logReducer.logs);
     }
 }
 
