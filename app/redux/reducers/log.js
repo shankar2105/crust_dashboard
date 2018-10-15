@@ -88,7 +88,7 @@ const logReducer = (state = initialState, action) => {
             break;
         case `${Action.FETCH_LOGS}_PENDING`:
             state = {
-                ...initialState,
+                ...state,
                 isFetching: true
             };
             break;

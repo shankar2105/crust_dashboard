@@ -36,7 +36,21 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchLogs();
+    this.props.fetchLogs(1, 400);
+  }
+
+  fetchNewLogs() {
+    var self = this;
+    const timeoutId = setTimeout(function () {
+      self.props.fetchLogs(2, self.props.store.logs.length);
+      clearTimeout(timeoutId);
+    }, 2 * 60 * 1000);
+  }
+
+  componentWillUpdate(nextProps) {
+    if (!nextProps.store.isFetching && this.props.store.isFetching) {
+      this.fetchNewLogs()
+    }
   }
 
   filterByHour() {
