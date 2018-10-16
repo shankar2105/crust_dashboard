@@ -84,7 +84,7 @@ export class RenderAreaChart extends Component {
     return (
         <Row gutter={24}>
           <Col className="gutter-row" span={24}>
-            <Card 
+            <Card
               bordered={false}
               style={{
                 background: "#fff",
@@ -94,8 +94,8 @@ export class RenderAreaChart extends Component {
               className="cus-card-1 chart-1 tab-1-base"
             >
              <Meta
-                title="Connection Attempts"
-                description="Success Rate / Cumulative Attempts"
+                title="Connection Success Rate"
+                description="Cumulative Attempts"
               />
 
                 {
