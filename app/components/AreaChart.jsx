@@ -4,7 +4,7 @@ import DataSet from "@antv/data-set";
 
 class AreaChart extends React.Component {
     render() {
-        const {data} = this.props; 
+        const {data} = this.props;
         var dv = new DataSet.View().source(data);
         dv.transform({
             type: "fold",
@@ -32,8 +32,8 @@ class AreaChart extends React.Component {
                     forceFit
                 >
                     <Tooltip crosshairs />
-                    <Axis />
-                    <Legend />
+                    <Axis label={{}}/>
+                    <Legend position="bottom-right" />
                     <Geom type="area" position="logCount*value" color="type" shape="smooth" />
                     <Geom
                         type="line"
