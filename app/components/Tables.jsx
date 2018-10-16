@@ -34,6 +34,7 @@ class Tables extends Component {
           columns={columns}
           rowClassName={(record) => record.color}
           pagination={true}
+          
         />
       </div>
     );

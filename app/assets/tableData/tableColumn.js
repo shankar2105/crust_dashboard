@@ -2,6 +2,7 @@ import React from "react";
 import { Icon } from "antd";
 
 import './tableColumn.css';
+import { PROTOCOL, NatType } from "../../redux/FilterTypes";
 
 const columns = [
     {
@@ -168,11 +169,11 @@ const columns = [
           <table>
             <tbody>
               <tr>
-                <td>{text[0]}</td>
+                <td>{text[0] === NatType.EDM_RANDOM ? "EDM Random" : text[0]}</td>
               </tr>
               <hr />
               <tr>
-                <td>{text[1]}</td>
+                <td>{text[1] === NatType.EDM_RANDOM ? "EDM Random" : text[1]}</td>
               </tr>
             </tbody>
           </table>
