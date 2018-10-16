@@ -170,10 +170,9 @@ class App extends Component {
           <Layout className="main-layout">
             <Header className="main-layout-head">
               <Icon
-                className="trigger"
+                className="main-layout-head-trigger"
                 type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
                 onClick={() => this.toggle()}
-                style={{ fontSize: '18px', color: '#000000' }}
               />
               <div className="main-head-nav">
                 {/* maybe these className attributes could be removed

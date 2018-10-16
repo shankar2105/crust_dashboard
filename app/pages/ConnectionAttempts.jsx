@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Card, Icon, Skeleton } from "antd";
+import { Row, Col, Card, Icon} from "antd";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -44,7 +44,6 @@ class ConnectionAttempts extends Component {
     return (
       <div className="page-1">
         <span className="page-1-head">
-          <Skeleton loading={!this.props.store.paging.completed} active animate>
             <h1 className="page-1-head-title">Connection Attempts
           {/* <Icon type="info-circle" theme="outlined" style={{ fontSize: '14px', fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.45)' }} /> */}
             </h1>
@@ -57,7 +56,6 @@ class ConnectionAttempts extends Component {
               {/* <ButtonGroup selectedIndex={this.props.store.connectionResultFilter}
               changeFilter={this.props.filterByConnectionResult} /> */}
             </div>
-          </Skeleton>
         </span>
         <Row gutter={24}>
           <Col className="gutter-row" span={24}>
@@ -72,9 +70,7 @@ class ConnectionAttempts extends Component {
             >
               {/* <DropDown contents={["NAT Type", "Protocol", "O.S.", "Country"]} data={this.props.store.filteredConnectionResults} mod={MOD_NAME} filterAction={this.props.filterChange}
                 labels={this.props.store.filteredLogs} selectedLabel={this.props.activity.filter} /> */}
-              <Skeleton loading={!this.props.store.paging.completed} active animate>
-                <TabComp showFailedCount={this.props.activity.filter.Protocol === PROTOCOL.ANY} filteredLogs={this.props.activity.filteredLogs} tabData={tabData} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
-              </Skeleton>
+                <TabComp loading={!this.props.store.paging.completed} showFailedCount={this.props.activity.filter.Protocol === PROTOCOL.ANY} filteredLogs={this.props.activity.filteredLogs} tabData={tabData} chartData={formatAreaChart(this.props.activity.filteredLogs)} tableData={this.props.activity.filteredLogs} />
             </Card>
           </Col>
         </Row>

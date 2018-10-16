@@ -42,7 +42,7 @@ class DropDown extends Component {
             return (
 
                 <Menu.Item key={`menu-nat1-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_NAT_TYPE1, nat)}>{nat}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_NAT_TYPE1, nat)}>{nat === NatType.EDM_RANDOM ? 'EDM Random' : nat}</a>
                 </Menu.Item>
             )
         });
@@ -54,7 +54,7 @@ class DropDown extends Component {
         let itemList = items.map((nat, k) => {
             return (
                 <Menu.Item key={`menu-nat2-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_NAT_TYPE2, nat)}>{nat}</a>
+                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_NAT_TYPE2, nat)}>{nat === NatType.EDM_RANDOM ? 'EDM Random' : nat}</a>
                 </Menu.Item>
             )
         });

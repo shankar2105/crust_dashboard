@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs, Row, Col, Dropdown, Button, Icon, Menu, Card } from "antd";
+import { Tabs, Row, Col, Dropdown, Button, Icon, Menu, Card, Skeleton } from "antd";
 import DropdownOptions from "./SubComponents/DropDownRender";
 import Charts from "./Charts";
 import LineChart from "./LineChart";
@@ -51,7 +51,7 @@ export class RenderLineChart extends Component {
 
 export class RenderTable extends Component {
   render() {
-    const { tableData } = this.props;
+    const { tableData, loading } = this.props;
     return (
       <Row gutter={24}>
         <Col className="gutter-row" span={24}>
@@ -68,7 +68,9 @@ export class RenderTable extends Component {
           {/* <div className="table-1-opt">
             <Button type="primary" icon="download" size="large">Download CSV</Button>
           </div> */}
+          <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
           <Tables dataSource={tableData} />
+          </Skeleton>
           </Card>
         </Col>
       </Row>
@@ -78,11 +80,11 @@ export class RenderTable extends Component {
 
 export class RenderAreaChart extends Component {
   render() {
-    const { chartData, filteredLogs } = this.props;
+    const { chartData, filteredLogs, loading } = this.props;
     return (
         <Row gutter={24}>
           <Col className="gutter-row" span={24}>
-            <Card
+            <Card 
               bordered={false}
               style={{
                 background: "#fff",
@@ -111,7 +113,9 @@ export class RenderAreaChart extends Component {
                     </div>
                   )
                 }
+              <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
               <div className="chat-2"><AreaChart data={chartData.data} /></div>
+              </Skeleton>
             </Card>
           </Col>
         </Row>
@@ -124,23 +128,23 @@ class TabComp extends Component {
     console.log(key);
   }
 
-  TabContent(key, tabName, tabData, chartData, tableData, filteredLogs) {
+  TabContent(key, tabName, tabData, chartData, tableData, filteredLogs, loading) {
     return (
       <TabPane tab={tabName} key={key} className="tab-1-panel">
         <DropdownOptions contents={tabData.contents} data={tabData.data} mod={tabData.mod} filterAction={tabData.filterAction}
           labels={tabData.labels} selectedLabel={tabData.selectedLabel} />
-        <RenderAreaChart showFailedCount={this.props.showFailedCount} chartData={chartData} filteredLogs={filteredLogs}/>
-        <RenderTable tableData={tableData}/>
+        <RenderAreaChart showFailedCount={this.props.showFailedCount} chartData={chartData} filteredLogs={filteredLogs} loading={loading}/>
+        <RenderTable tableData={tableData} loading={loading}/>
       </TabPane>
     )
   }
 
   render() {
-    const { tabData, chartData, tableData, filteredLogs } = this.props;
+    const { loading, tabData, chartData, tableData, filteredLogs } = this.props;
     return (
       <div className="tab-1">
         <Tabs defaultActiveKey="1" onChange={this.callback} size="large">
-          {this.TabContent(1, "All Activity", tabData, chartData, tableData, filteredLogs)}
+          {this.TabContent(1, "All Activity", tabData, chartData, tableData, filteredLogs, loading)}
         </Tabs>
       </div>
     );
