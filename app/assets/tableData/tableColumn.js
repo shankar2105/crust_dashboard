@@ -9,7 +9,7 @@ const columns = [
       dataIndex: "num",
       key: "num",
       align: 'center',
-      defaultSortOrder: 'ascend',
+      //defaultSortOrder: 'ascend',
       // sorter: (a, b) => a.num - b.num,
       render: (a, b) => {
         return (

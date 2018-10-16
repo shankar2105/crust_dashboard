@@ -16,7 +16,8 @@ function filterLogs(rawData){
         nat_type: [log.peer_requester.nat_type, log.peer_responder.nat_type],
         os: [log.peer_requester.os, log.peer_responder.os],
         country: [log.peer_requester.geo_info.country_name, log.peer_responder.geo_info.country_name],
-        isSuccessful: log.isSuccessful
+        isSuccessful: log.isSuccessful,
+        color: (log.tcp_hole_punch_result === "Failed" && log.udp_hole_punch_result === "Failed")? 'table-row-colour-fail' : 'table-row-colour-success'
     });
   });
   return dataSource
@@ -28,9 +29,10 @@ class Tables extends Component {
     const filterData=filterLogs(dataSource)
     return (
       <div>
-        <Table
+        <Table 
           dataSource={filterData}
           columns={columns}
+          rowClassName={(record) => record.color}
           pagination={true}
         />
       </div>
