@@ -32,7 +32,7 @@ class AreaChart extends React.Component {
                     forceFit
                 >
                     <Tooltip crosshairs />
-                    <Axis label={{}}/>
+                    <Axis />
                     <Legend position="bottom-right" />
                     <Geom type="area" position="logCount*value" color="type" shape="smooth" />
                     <Geom
