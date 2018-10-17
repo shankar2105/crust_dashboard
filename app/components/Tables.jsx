@@ -28,18 +28,20 @@ class Tables extends Component {
   constructor() {
     super();
     this.state = {
-      page: 1,
+      page: window.pageNo || 1,
     };
   }
 
   pageChange(page) {
+    window.pageNo = page;
     this.setState({
       page: page
     });
   }
 
   componentWillUpdate(nextProps) {
-    if (!isEquivalent(this.props.dataSource, nextProps.dataSource)) {
+    if (!isEquivalent(this.props.dropDownFilter, nextProps.dropDownFilter)) {
+      window.pageNo = 1;
       this.setState({
         page: 1
       });

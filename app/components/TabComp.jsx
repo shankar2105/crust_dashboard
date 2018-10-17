@@ -51,7 +51,7 @@ export class RenderLineChart extends Component {
 
 export class RenderTable extends Component {
   render() {
-    const { tableData, loading } = this.props;
+    const { tableData, loading, tabData } = this.props;
     return (
       <Row gutter={24}>
         <Col className="gutter-row" span={24}>
@@ -69,7 +69,7 @@ export class RenderTable extends Component {
             <Button type="primary" icon="download" size="large">Download CSV</Button>
           </div> */}
           <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
-          <Tables dataSource={tableData} />
+          <Tables dataSource={tableData} dropDownFilter={tabData.selectedLabel}/>
           </Skeleton>
           </Card>
         </Col>
@@ -130,7 +130,7 @@ class TabComp extends Component {
         <DropdownOptions contents={tabData.contents} data={tabData.data} mod={tabData.mod} filterAction={tabData.filterAction}
           labels={tabData.labels} selectedLabel={tabData.selectedLabel} />
         <RenderAreaChart showFailedCount={this.props.showFailedCount} chartData={chartData} filteredLogs={filteredLogs} loading={loading}/>
-        <RenderTable tableData={tableData} loading={loading}/>
+        <RenderTable tableData={tableData} loading={loading} tabData={tabData}/>
       </TabPane>
     )
   }
