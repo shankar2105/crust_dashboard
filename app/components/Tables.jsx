@@ -57,7 +57,7 @@ class Tables extends Component {
           dataSource={filterData}
           columns={columns}
           rowClassName={(record) => record.color}
-          pagination={{ onChange: this.pageChange.bind(this), current: this.state.page }}
+          pagination={{ onChange: this.pageChange.bind(this), current: this.state.page, hideOnSinglePage: true }}
         />
       </div>
     );
