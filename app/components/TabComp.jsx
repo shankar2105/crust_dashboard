@@ -82,47 +82,43 @@ export class RenderAreaChart extends Component {
   render() {
     const { chartData, filteredLogs, loading } = this.props;
     return (
-        <Row gutter={24}>
-          <Col className="gutter-row" span={24}>
-            <Card
-              bordered={false}
-              style={{
-                background: "#fff",
-                borderRadius: 5,
-                minHeight: 100
-              }}
-              className="cus-card-1 chart-1 tab-1-base"
-            >
-             <Meta
-                title="Connection Success Rate"
-                description="Cumulative Attempts"
-              />
-
-                {
-                  this.props.showFailedCount ? (
+      <Row gutter={24}>
+        <Col className="gutter-row" span={24}>
+          <Card
+            bordered={false}
+            style={{
+              background: "#fff",
+              borderRadius: 5,
+              minHeight: 100
+            }}
+            className="cus-card-1 chart-1 tab-1-base"
+            title="Connection Success Rate"
+          >
+            <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
+              <div className="x-axis-label">Cumulative Attempts</div>
+              {
+                this.props.showFailedCount ? (
+                  <div className="chart-1-meta">
+                    <div className="chart-1-meta-val">{filteredLogs.length - chartData.failed}</div>
+                    <div className="chart-1-meta-desc">Successful Connections</div>
+                    <div className="chart-1-meta-val">{chartData.failed}</div>
+                    <div className="chart-1-meta-desc">Failed Connections</div>
+                  </div>
+                ) : (
                     <div className="chart-1-meta">
-                      <div className="chart-1-meta-val">{filteredLogs.length-chartData.failed}</div>
-                      <div className="chart-1-meta-desc">Successful Connections</div>
-                      <div className="chart-1-meta-val">{chartData.failed}</div>
-                      <div className="chart-1-meta-desc">Failed Connections</div>
-                    </div>
-                  ) : (
-                    <div className="chart-1-meta">
-                      <div className="chart-1-meta-val">{filteredLogs.length-chartData.failed}</div>
+                      <div className="chart-1-meta-val">{filteredLogs.length - chartData.failed}</div>
                       <div className="chart-1-meta-desc">Successful Connections</div>
                     </div>
                   )
-                }
-              <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
+              }
               <div className="chat-2"><AreaChart data={chartData.data} /></div>
-              </Skeleton>
-            </Card>
-          </Col>
-        </Row>
+            </Skeleton>
+          </Card>
+        </Col>
+      </Row>
     )
   }
 }
-
 class TabComp extends Component {
   callback(key) {
     console.log(key);
