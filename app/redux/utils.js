@@ -8,6 +8,9 @@ export const prepareLogs = (logs) => {
     const countryCountMap = {};
     const successfulConnections = [];
     const failedConnections = [];
+    let tcpHpCount=0;
+    let udpHpCount=0;
+    let directCount=0;
     let from = new Date;
     const tranformOSName = (osName) => {
         switch(osName.toLowerCase()) {
@@ -23,6 +26,10 @@ export const prepareLogs = (logs) => {
     };
 
     logs.forEach(log => {
+        log.tcp_hole_punch_result === 'Succeeded' ? tcpHpCount++ : null;
+        log.udp_hole_punch_result === 'Succeeded' ? udpHpCount++ : null;
+        log.is_direct_successful === 'Succeeded' ? directCount++ : null;
+
         if (!log.hasOwnProperty('udp_hole_punch_result')) {
             log.udp_hole_punch_result = 'Failed';
         }
@@ -56,6 +63,9 @@ export const prepareLogs = (logs) => {
     });
     return {
         logs,
+        tcpHpCount,
+        udpHpCount,
+        directCount,
         osCountMap,
         countryCountMap,
         successfulConnections,
