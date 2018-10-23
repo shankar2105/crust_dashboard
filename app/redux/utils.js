@@ -35,8 +35,8 @@ export const prepareLogs = (logs) => {
         const isSuccess = log.udp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded' || log.is_direct_successful;
         log.isSuccessful = isSuccess;
 
-        var requesterPeerId = log.peer_requester.name + '(' + log.peer_requester.id + ')';
-        var responderPeerId = log.peer_responder.name + '(' + log.peer_responder.id + ')';
+        var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
+        var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
         if (!peerIdMap.includes(requesterPeerId)) {
             peerIdMap.push(requesterPeerId);
         }
@@ -148,9 +148,41 @@ export const applyFilter = (logs, filter) => {
                 (log.peer_requester.geo_info.country_name === filter.CountryType2 && log.peer_responder.geo_info.country_name === filter.CountryType1)
     }
 
+    const isPeerIdIncluded = (log) => {
+        if (!filter.IncludePeerId.length) {
+            return true;
+        }
+        var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
+        var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
+        if (filter.IncludePeerId.includes(requesterPeerId) || filter.IncludePeerId.includes(responderPeerId)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    const isPeerIdExcluded = (log) => {
+        if (!filter.ExcludePeerId.length) {
+            return true;
+        }
+        var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
+        var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
+        if (filter.ExcludePeerId.includes(requesterPeerId) || filter.ExcludePeerId.includes(responderPeerId)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     return logs.filter(log => {
-        return isNatTypeMatching(log) && isOSMatching(log) && isProtocolMatching(log) && isCountryMatching(log);
+        return isNatTypeMatching(log) && isOSMatching(log) && isProtocolMatching(log) && isCountryMatching(log) && isPeerIdIncluded(log) && isPeerIdExcluded(log);
     });
+};
+
+export const generatePeerPublicInfo = (name, id) => {
+    return name + '(' + id + ')'
 };
 
 export const formatAreaChart = (logs) => {

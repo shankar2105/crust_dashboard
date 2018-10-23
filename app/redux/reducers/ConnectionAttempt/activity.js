@@ -10,7 +10,11 @@ const initialState = {
     filter: { ...Filter }
 };
 
-const activityReducer = (state=initialState, action) => {
+const filterByPeerId = (existingPeerId, peerId) => {
+    return existingPeerId.includes(peerId) ? existingPeerId : existingID.push(peerId);
+};
+
+const activityReducer = (state = initialState, action) => {
     let filter;
     switch (action.type) {
         // case Action.NEW_LOG:
@@ -46,7 +50,7 @@ const activityReducer = (state=initialState, action) => {
                 // filteredLogs: applyFilter(action.data, filter)
             };
             break;
-            
+
         case `${MOD_NAME}_${Action.FILTER_NAT_TYPE2}`:
             filter = {
                 ...state.filter,
@@ -101,7 +105,7 @@ const activityReducer = (state=initialState, action) => {
                 filter,
                 // filteredLogs: applyFilter(action.data, filter)
             };
-            break;            
+            break;
         case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
             filter = {
                 ...state.filter,
@@ -111,6 +115,26 @@ const activityReducer = (state=initialState, action) => {
                 ...state,
                 filter,
                 // filteredLogs: applyFilter(action.data, filter)
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_INCLUDE_PEER_ID}`:
+            filter = {
+                ...state.filter,
+                IncludePeerId: filterByPeerId(state.IncludePeerId, action.payload.include)
+            };
+            state = {
+                ...state,
+                filter,
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_EXCLUDE_PEER__ID}`:
+            filter = {
+                ...state.filter,
+                ExcludePeerId: filterByPeerId(state.ExcludePeerId, action.payload.exclude)
+            };
+            state = {
+                ...state,
+                filter,
             };
             break;
     }
