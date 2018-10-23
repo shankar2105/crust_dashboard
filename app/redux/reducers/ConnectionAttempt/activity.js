@@ -10,10 +10,6 @@ const initialState = {
     filter: { ...Filter }
 };
 
-const filterByPeerId = (existingPeerId, peerId) => {
-    return existingPeerId.includes(peerId) ? existingPeerId : existingID.push(peerId);
-};
-
 const activityReducer = (state = initialState, action) => {
     let filter;
     switch (action.type) {
@@ -120,17 +116,17 @@ const activityReducer = (state = initialState, action) => {
         case `${MOD_NAME}_${Action.FILTER_INCLUDE_PEER_ID}`:
             filter = {
                 ...state.filter,
-                IncludePeerId: filterByPeerId(state.IncludePeerId, action.payload.include)
+                IncludePeerId: action.payload
             };
             state = {
                 ...state,
                 filter,
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_EXCLUDE_PEER__ID}`:
+        case `${MOD_NAME}_${Action.FILTER_EXCLUDE_PEER_ID}`:
             filter = {
                 ...state.filter,
-                ExcludePeerId: filterByPeerId(state.ExcludePeerId, action.payload.exclude)
+                ExcludePeerId: action.payload
             };
             state = {
                 ...state,
