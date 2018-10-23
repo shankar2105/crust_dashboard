@@ -16,7 +16,8 @@ const initialState = {
         osList: Object.values(OS),
         natTypes: Object.values(NatType),
         osCount: {},
-        countriesCount: {}
+        countriesCount: {},
+        peerIds: []
     },
     paging: {
         done: 0,
@@ -38,7 +39,7 @@ const initialState = {
 
 const filterByConnectionResult = (preparedLogs, filter) => {
     (filter === ConnectionResult.NONE) ? preparedLogs.logs :
-        ((filter === ConnectionResult.SUCCESS) ? preparedLogs.successfulConnections: preparedLogs.failedConnections);
+        ((filter === ConnectionResult.SUCCESS) ? preparedLogs.successfulConnections : preparedLogs.failedConnections);
 };
 
 const logReducer = (state = initialState, action) => {
@@ -110,7 +111,8 @@ const logReducer = (state = initialState, action) => {
                     osList: Object.values(OS),
                     natTypes: Object.values(NatType),
                     osCount: preparedLogs.osCountMap,
-                    countriesCount: preparedLogs.countryCountMap
+                    countriesCount: preparedLogs.countryCountMap,
+                    peerIds: preparedLogs.peerIdMap
                 };
                 state = {
                     ...initialState,
@@ -146,7 +148,7 @@ const logReducer = (state = initialState, action) => {
                 ...state,
                 dateRange: {
                     ...state.dateRange,
-                    custom: {from: action.payload.from, to: action.payload.to}
+                    custom: { from: action.payload.from, to: action.payload.to }
                 },
                 filteredLogs: filteredLogs,
                 filteredConnectionResults: filterByConnectionResult(filteredLogs, state.connectionResultFilter)
