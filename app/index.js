@@ -10,6 +10,11 @@ import { prepareLogs } from './redux/utils';
 import Action from './redux/ActionType';
 import './less/main.less'
 
+import BizCharts from 'bizcharts';
+
+// Disable telemetry (https://github.com/alibaba/BizCharts/issues/143)
+BizCharts.track(false);
+
 class Websocket {
     
     constructor(store) {

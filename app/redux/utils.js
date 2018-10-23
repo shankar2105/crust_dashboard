@@ -6,11 +6,15 @@ export const daysInMilliseconds = (DAYS) => hoursInMilliseconds(24) * DAYS;
 export const prepareLogs = (logs) => {
     const osCountMap = {};
     const countryCountMap = {};
+    const peerIdMap = [];
     const successfulConnections = [];
     const failedConnections = [];
+    let tcpHpCount=0;
+    let udpHpCount=0;
+    let directCount=0;
     let from = new Date;
     const tranformOSName = (osName) => {
-        switch(osName.toLowerCase()) {
+        switch (osName.toLowerCase()) {
             case 'linux':
                 return OS.LINUX;
             case 'macos':
@@ -22,15 +26,30 @@ export const prepareLogs = (logs) => {
         }
     };
 
-    logs.forEach(log => {
+    logs.forEach((log, i) => {
+        log.index = i;
+        log.tcp_hole_punch_result === 'Succeeded' ? tcpHpCount++ : null;
+        log.udp_hole_punch_result === 'Succeeded' ? udpHpCount++ : null;
+        log.is_direct_successful === 'Succeeded' ? directCount++ : null;
+
         if (!log.hasOwnProperty('udp_hole_punch_result')) {
             log.udp_hole_punch_result = 'Failed';
         }
         if (!log.hasOwnProperty('tcp_hole_punch_result')) {
             log.tcp_hole_punch_result = 'Failed';
         }
-        const isSuccess = log.udp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded';
+        const isSuccess = log.udp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded' || log.is_direct_successful;
         log.isSuccessful = isSuccess;
+
+        var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
+        var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
+        if (!peerIdMap.includes(requesterPeerId)) {
+            peerIdMap.push(requesterPeerId);
+        }
+        if (!peerIdMap.includes(responderPeerId)) {
+            peerIdMap.push(responderPeerId)
+        }
+
         log.peer_requester.os = tranformOSName(log.peer_requester.os);
         log.peer_responder.os = tranformOSName(log.peer_responder.os);
         if (!osCountMap[log.peer_requester.os]) {
@@ -56,8 +75,12 @@ export const prepareLogs = (logs) => {
     });
     return {
         logs,
+        tcpHpCount,
+        udpHpCount,
+        directCount,
         osCountMap,
         countryCountMap,
+        peerIdMap,
         successfulConnections,
         failedConnections,
         dateRange: {
@@ -134,9 +157,41 @@ export const applyFilter = (logs, filter) => {
                 (log.peer_requester.geo_info.country_name === filter.CountryType2 && log.peer_responder.geo_info.country_name === filter.CountryType1)
     }
 
+    const isPeerIdIncluded = (log) => {
+        if (!filter.IncludePeerId.length) {
+            return true;
+        }
+        var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
+        var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
+        if (filter.IncludePeerId.includes(requesterPeerId) || filter.IncludePeerId.includes(responderPeerId)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    const isPeerIdExcluded = (log) => {
+        if (!filter.ExcludePeerId.length) {
+            return true;
+        }
+        var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
+        var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
+        if (filter.ExcludePeerId.includes(requesterPeerId) || filter.ExcludePeerId.includes(responderPeerId)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     return logs.filter(log => {
-        return isNatTypeMatching(log) && isOSMatching(log) && isProtocolMatching(log) && isCountryMatching(log);
+        return isNatTypeMatching(log) && isOSMatching(log) && isProtocolMatching(log) && isCountryMatching(log) && isPeerIdIncluded(log) && isPeerIdExcluded(log);
     });
+};
+
+export const generatePeerPublicInfo = (name, id) => {
+    return name + '(' + id + ')'
 };
 
 export const formatAreaChart = (logs) => {
