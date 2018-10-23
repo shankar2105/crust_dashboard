@@ -15,7 +15,7 @@ const initialState = {
     filter: { ...Filter }
 };
 
-const activityReducer = (state=initialState, action) => {
+const activityReducer = (state = initialState, action) => {
     let filter;
     switch (action.type) {
         // case Action.NEW_LOG:
@@ -57,7 +57,7 @@ const activityReducer = (state=initialState, action) => {
                 // filteredLogs: applyFilter(action.data, filter)
             };
             break;
-            
+
         case `${MOD_NAME}_${Action.FILTER_NAT_TYPE2}`:
             filter = {
                 ...state.filter,
@@ -112,7 +112,7 @@ const activityReducer = (state=initialState, action) => {
                 filter,
                 // filteredLogs: applyFilter(action.data, filter)
             };
-            break;            
+            break;
         case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
             filter = {
                 ...state.filter,
@@ -122,6 +122,26 @@ const activityReducer = (state=initialState, action) => {
                 ...state,
                 filter,
                 // filteredLogs: applyFilter(action.data, filter)
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_INCLUDE_PEER_ID}`:
+            filter = {
+                ...state.filter,
+                IncludePeerId: action.payload
+            };
+            state = {
+                ...state,
+                filter,
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_EXCLUDE_PEER_ID}`:
+            filter = {
+                ...state.filter,
+                ExcludePeerId: action.payload
+            };
+            state = {
+                ...state,
+                filter,
             };
             break;
     }
