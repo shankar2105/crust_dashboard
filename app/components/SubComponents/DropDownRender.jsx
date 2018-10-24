@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Row, Col, Icon, Menu, Dropdown, Button } from "antd";
-import { DropDownItems } from "./DropDownItems"
+import { DropDownItems } from "./DropDownItems";
 import { PROTOCOL, NatType, OS } from "../../redux/FilterTypes";
 import Action from '../../redux/ActionType';
-
+import TagButton from "../TagButton";
 const getCustomMenu = (menuOpts) => {
     return (
         <Menu className="_menu-item">{menuOpts}</Menu>
@@ -35,7 +35,7 @@ class DropDown extends Component {
             </Menu>
         )
     }
-    
+
     natMenu1() {
         let items = this.props.labels.natTypes
         let itemList = items.map((nat, k) => {
@@ -138,16 +138,28 @@ class DropDown extends Component {
                     <DropDownItems type={this.tabContent[0]} menu1={(getCustomMenu(natMenu1))} menu2={(getCustomMenu(natMenu2))}
                         selected1={this.props.selectedLabel.NatType1} selected2={this.props.selectedLabel.NatType2} />
 
-                    <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
-                        selected1={getProtocolDisplayName()} />
+                    <DropDownItems type={this.tabContent[2]} menu1={(getCustomMenu(osMenu1))} menu2={(getCustomMenu(osMenu2))}
+                        selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2} />
                 </Row>
 
                 <Row gutter={24}>
-                    <DropDownItems type={this.tabContent[2]} menu1={(getCustomMenu(osMenu1))} menu2={(getCustomMenu(osMenu2))}
-                        selected1={this.props.selectedLabel.OSType1} selected2={this.props.selectedLabel.OSType2} />
-
                     <DropDownItems type={this.tabContent[3]} menu1={(getCustomMenu(countryMenu1))} menu2={(getCustomMenu(countryMenu2))}
                         selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2} />
+
+                    {/* <DropDownItems type={this.tabContent[1]} menu1={this.protocolMenu()} menu2={""}
+                        selected1={getProtocolDisplayName()} /> */}
+                    <Col className="dropdown-render-i">
+                        <Col>
+                            <TagButton />
+                        </Col>
+                        <Col>
+                            <TagButton />
+                        </Col>
+                        <Col>
+                            <TagButton />
+                        </Col>
+                    </Col>
+
                 </Row>
             </div>
         )

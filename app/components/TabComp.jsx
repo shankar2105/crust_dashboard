@@ -6,6 +6,7 @@ import LineChart from "./LineChart";
 import PieCharts from "../components/PieCharts";
 import Tables from "../components/Tables";
 import AreaChart from "../components/AreaChart";
+import MultiDropDown from "./MultiDropDown"
 
 const { Meta } = Card;
 const TabPane = Tabs.TabPane;
@@ -25,20 +26,20 @@ export class RenderBarChart extends Component {
       {
         x: "Direct",
         y: data.direct
-      }  
+      }
     ];
     return (
       <div>
         <Card
-            style={{
-              background: "#fff",
-              borderRadius: 10,
-              minHeight: 500
-            }}
-            title="Protocol Success"
-            >
-            <Charts dataSource={chartData} interval={Math.round((data.tcp+data.udp+data.direct)/3)} />
-          </Card>
+          style={{
+            background: "#fff",
+            borderRadius: 10,
+            minHeight: 500
+          }}
+          title="Protocol Success"
+        >
+          <Charts dataSource={chartData} interval={Math.round((data.tcp + data.udp + data.direct) / 3)} />
+        </Card>
       </div>
     )
   }
@@ -57,21 +58,21 @@ export class RenderPieChart extends Component {
         value: data.success,
       }
     ];
-    const percent = Math.round(data.success/(data.success+data.failed)*100)
+    const percent = Math.round(data.success / (data.success + data.failed) * 100)
     return (
-      <div>      
-          <Card
-            style={{
-              background: "#fff",
-              borderRadius: 10,
-              minHeight: 500
-            }}
-            title="Connections"
-          >
-          <div>{data.success+ data.failed}</div>
+      <div>
+        <Card
+          style={{
+            background: "#fff",
+            borderRadius: 10,
+            minHeight: 500
+          }}
+          title="Connections"
+        >
+          <div>{data.success + data.failed}</div>
           <div>{"Total Successful Connections"}</div>
-            <PieCharts data={chartData} percent={percent} title="Success Rate" />
-          </Card>
+          <PieCharts data={chartData} percent={percent} title="Success Rate" />
+        </Card>
       </div>
     )
   }
@@ -167,6 +168,36 @@ export class RenderAreaChart extends Component {
     )
   }
 }
+export class RenderMultiDropDown extends Component {
+  render() {
+    const { data } = this.props;
+    return (
+      <Row gutter={24}>
+        <Col className="gutter-row" span={24}>
+          <Card
+            bordered={false}
+            style={{
+              background: "#fff",
+              borderRadius: 5,
+              minHeight: 150
+            }}
+            title="Filter By User"
+          >
+          <Row>
+          <Col className="gutter-row" span={12}>
+          <MultiDropDown items={data}/>
+          </Col>
+          <Col className="gutter-row" span={12}>
+          <MultiDropDown items={data}/>
+          </Col>
+            </Row>
+          </Card>
+        </Col>
+      </Row>
+    )
+  }
+}
+
 class TabComp extends Component {
   callback(key) {
     console.log(key);
@@ -178,14 +209,15 @@ class TabComp extends Component {
         <DropdownOptions contents={tabData.contents} data={tabData.data} mod={tabData.mod} filterAction={tabData.filterAction}
           labels={tabData.labels} selectedLabel={tabData.selectedLabel} />
         {/* <RenderAreaChart showFailedCount={this.props.showFailedCount} chartData={chartData} filteredLogs={filteredLogs} loading={loading}/> */}
+        <RenderMultiDropDown data={tabData.labels.peerIds}/>
         <Row gutter={24} style={{ margin: "24px 8px" }}>
           <Col className="gutter-row" span={12}>
-            <RenderPieChart data={pieChartData}/>
+            <RenderPieChart data={pieChartData} />
           </Col>
           <Col className="gutter-row" span={12
           }>
-            <RenderBarChart data={barChartData}/>
-          </Col> 
+            <RenderBarChart data={barChartData} />
+          </Col>
         </Row>
         <RenderTable tableData={tableData} loading={loading} tabData={tabData} />
       </TabPane>
