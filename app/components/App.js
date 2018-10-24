@@ -38,7 +38,7 @@ class App extends Component {
   componentDidMount() {
     this.props.fetchLogs(1, 400);
   }
-  
+
   fetchNewLogs() {
       if (this.props.store.logs.length !== 0) {
         this.props.fetchLogs(2, this.props.store.logs.length);
@@ -47,7 +47,7 @@ class App extends Component {
         this.props.fetchLogs(1, 400);
       }
   }
-    
+
   // componentWillUpdate(nextProps) {
   //   if (!nextProps.store.isFetching && this.props.store.isFetching) {
   //     this.fetchNewLogs()
@@ -194,7 +194,11 @@ class App extends Component {
                     format={dateFormat} disabled
                   />
                 </div> */}
-              <Button type="primary" onClick={() => this.fetchNewLogs()}>Refresh Data </Button>              
+                <Button
+                  type="primary"
+                  icon="reload"
+                  onClick={() => this.fetchNewLogs()}
+                >Refresh Data</Button>
               </div>
             </Header>
             {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
