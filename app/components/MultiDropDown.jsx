@@ -5,13 +5,13 @@ const Option = Select.Option;
 
 class MultiDropDown extends Component {
     handleChange(value) {
-        console.log(`selected ${value}`);
+        this.props.filterAction(this.props.mod, this.props.actionType, value)      
     }
     render() {
-        const { items } = this.props;
+        const { items, filterAction } = this.props;
         const children = [];
         items.forEach((item,k) => { 
-            children.push(<Option key={`publicId-${k}`}>{item}</Option>);            
+            children.push(<Option key={item}>{item}</Option>);            
         }); 
 
         {
@@ -22,7 +22,7 @@ class MultiDropDown extends Component {
                     mode="multiple"
                     style={{ width: '100%' }}
                     placeholder="Please select"
-                    onChange={this.handleChange()}
+                    onChange={(V) => this.handleChange(V)}
                 >
                     {children}
                 </Select>

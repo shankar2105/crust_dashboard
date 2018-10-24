@@ -39,18 +39,14 @@ class App extends Component {
     this.props.fetchLogs(1, 400);
   }
   
-  // fetchNewLogs() {
-  //   var self = this;
-  //   const timeoutId = setTimeout(function () {
-  //     if (self.props.store.logs.length !== 0) {
-  //       self.props.fetchLogs(2, self.props.store.logs.length);
-  //     }
-  //     else {
-  //       self.props.fetchLogs(1, 400);
-  //     }
-  //     clearTimeout(timeoutId);
-  //   }, 2 * 60 * 1000);
-  // }
+  fetchNewLogs() {
+      if (this.props.store.logs.length !== 0) {
+        this.props.fetchLogs(2, this.props.store.logs.length);
+      }
+      else {
+        this.props.fetchLogs(1, 400);
+      }
+  }
     
   // componentWillUpdate(nextProps) {
   //   if (!nextProps.store.isFetching && this.props.store.isFetching) {
@@ -198,7 +194,7 @@ class App extends Component {
                     format={dateFormat} disabled
                   />
                 </div> */}
-              <Button type="primary">Refresh Data </Button>              
+              <Button type="primary" onClick={() => this.fetchNewLogs()}>Refresh Data </Button>              
               </div>
             </Header>
             {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">

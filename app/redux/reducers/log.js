@@ -53,7 +53,11 @@ const logReducer = (state = initialState, action) => {
         case `${Action.FETCH_LOGS}_PENDING`:
             state = {
                 ...state,
-                isFetching: true
+                isFetching: true,
+                paging: {
+                    done: 0,
+                    completed: false
+                }
             };
             break;
         case `${Action.FETCH_LOGS}_FULFILLED`:

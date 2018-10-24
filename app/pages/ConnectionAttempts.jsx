@@ -42,8 +42,13 @@ class ConnectionAttempts extends Component {
       "selectedLabel": this.props.activity.filter
     }
     const pieChartData = {
-      "success": this.props.activity.successfulConnections.length,
+      "totalLogs": this.props.activity.filteredLogs.length,
       "failed": this.props.activity.failedConnections.length,
+      "success": {
+        tcpHpCount: this.props.activity.tcpHpCount,
+        udpHpCount: this.props.activity.udpHpCount,
+        directCount: this.props.activity.directCount  
+      }
     }
     const barChartData={
       "tcp" : this.props.activity.tcpHpCount,

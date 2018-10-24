@@ -7,27 +7,18 @@ import PieCharts from "../components/PieCharts";
 import Tables from "../components/Tables";
 import AreaChart from "../components/AreaChart";
 import MultiDropDown from "./MultiDropDown"
+import Action from '../redux/ActionType';
 
 const TabPane = Tabs.TabPane;
 
 export class RenderBarChart extends Component {
   render() {
-    const { data } = this.props;
+    const { data, loading, protocolFilter} = this.props;
     console.log('Bar', data);
-    const chartData = [
-      {
-        x: "TCP HP",
-        y: data.tcp
-      },
-      {
-        x: "UDP HP",
-        y: data.udp
-      },
-      {
-        x: "Direct",
-        y: data.direct
-      }
-    ];
+    const chartData=[]
+    protocolFilter.tcpHp? chartData.push({x: "TCP HP", y: data.tcp}) : null;
+    protocolFilter.udpHp? chartData.push({x: "UDP HP", y: data.udp}) : null;
+    protocolFilter.direct? chartData.push({x: "Direct", y: data.direct}) : null;
     return (
       <div>
         <Card
@@ -38,7 +29,9 @@ export class RenderBarChart extends Component {
           }}
           title="Protocol Success"
         >
-          <Charts dataSource={chartData} interval={Math.round((data.tcp + data.udp + data.direct) / 3)} />
+          <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
+            <Charts dataSource={chartData} interval={Math.round((data.tcp + data.udp + data.direct) / 3)} />
+          </Skeleton>
         </Card>
       </div>
     )
@@ -47,15 +40,24 @@ export class RenderBarChart extends Component {
 
 export class RenderPieChart extends Component {
   render() {
-    const { data } = this.props;
+    const { data, loading, protocolFilter } = this.props;
+    let success=0;
+    if(protocolFilter.tcpHp && protocolFilter.udpHp && protocolFilter.direct) {
+      success = data.totalLogs - data.failed ; 
+    }
+    else {
+      success+= (protocolFilter.tcpHp? data.success.tcpHpCount : 0) ;
+      success+= (protocolFilter.udpHp? data.success.udpHpCount : 0) ;
+      success+= (protocolFilter.direct? data.success.directCount : 0) ;  
+    }
     const chartData = [
       {
-        type: "Failed",
+        type: "Failed\t\t" + data.failed,
         value: data.failed,
       },
       {
-        type: "Successful",
-        value: data.success,
+        type: "Successful\t\t" + data.success,
+        value: success,
       }
     ];
     const percent = Math.round(data.success / (data.success + data.failed) * 100)
@@ -69,9 +71,11 @@ export class RenderPieChart extends Component {
           }}
           title="Connections"
         >
-          <div>{data.success + data.failed}</div>
-          <div>{"Total Successful Connections"}</div>
-          <PieCharts data={chartData} percent={percent} title="Success Rate" />
+          <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
+            <div>{success + data.failed}</div>
+            <div>{"Total Successful Connections"}</div>
+            <PieCharts data={chartData} percent={percent} title="Success Rate" />
+          </Skeleton>
         </Card>
       </div>
     )
@@ -170,7 +174,7 @@ export class RenderAreaChart extends Component {
 }
 export class RenderMultiDropDown extends Component {
   render() {
-    const { data } = this.props;
+    const { data, mod, filterAction } = this.props;
     return (
       <Row gutter={24}>
         <Col className="gutter-row" span={24}>
@@ -183,13 +187,13 @@ export class RenderMultiDropDown extends Component {
             }}
             title="Filter By User"
           >
-          <Row>
-          <Col className="gutter-row" span={12}>
-          <MultiDropDown items={data}/>
-          </Col>
-          <Col className="gutter-row" span={12}>
-          <MultiDropDown items={data}/>
-          </Col>
+            <Row>
+              <Col className="gutter-row" span={12}>
+                <MultiDropDown items={data} mod={mod} filterAction={filterAction} actionType={Action.FILTER_INCLUDE_PEER_ID} />
+              </Col>
+              <Col className="gutter-row" span={12}>
+                <MultiDropDown items={data} mod={mod} filterAction={filterAction} actionType={Action.FILTER_EXCLUDE_PEER_ID} />
+              </Col>
             </Row>
           </Card>
         </Col>
@@ -209,14 +213,14 @@ class TabComp extends Component {
         <DropdownOptions contents={tabData.contents} data={tabData.data} mod={tabData.mod} filterAction={tabData.filterAction}
           labels={tabData.labels} selectedLabel={tabData.selectedLabel} />
         {/* <RenderAreaChart showFailedCount={this.props.showFailedCount} chartData={chartData} filteredLogs={filteredLogs} loading={loading}/> */}
-        <RenderMultiDropDown data={tabData.labels.peerIds}/>
+        <RenderMultiDropDown data={tabData.labels.peerIds} mod={tabData.mod} filterAction={tabData.filterAction} />
         <Row gutter={24} style={{ margin: "24px 8px" }}>
           <Col className="gutter-row" span={12}>
-            <RenderPieChart data={pieChartData} />
+            <RenderPieChart data={pieChartData} loading={loading} protocolFilter={tabData.selectedLabel.protocolFilter}/>
           </Col>
           <Col className="gutter-row" span={12
           }>
-            <RenderBarChart data={barChartData} />
+            <RenderBarChart data={barChartData} loading={loading} protocolFilter={tabData.selectedLabel.protocolFilter}/>
           </Col>
         </Row>
         <RenderTable tableData={tableData} loading={loading} tabData={tabData} />

@@ -115,6 +115,7 @@ class DropDown extends Component {
     }
 
     render() {
+        const {filterAction, mod} = this.props;
         const countryMenu1 = this.countryMenu1();
         const countryMenu2 = this.countryMenu2();
         const osMenu1 = this.osMenu1();
@@ -150,13 +151,13 @@ class DropDown extends Component {
                         selected1={getProtocolDisplayName()} /> */}
                     <Col className="dropdown-render-i">
                         <Col>
-                            <TagButton />
+                            <TagButton name={"TCP HP"} filterAction={filterAction} mod={mod} actionType={Action.FILTER_PROTOCOL_TCP}/>
                         </Col>
                         <Col>
-                            <TagButton />
+                            <TagButton name={"UDP HP"} filterAction={filterAction} mod={mod} actionType={Action.FILTER_PROTOCOL_UDP}/>
                         </Col>
                         <Col>
-                            <TagButton />
+                            <TagButton name={"Direct"} filterAction={filterAction} mod={mod} actionType={Action.FILTER_PROTOCOL_DIRECT}/>
                         </Col>
                     </Col>
 

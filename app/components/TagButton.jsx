@@ -8,13 +8,15 @@ class TagButton extends Component {
 
     handleChange = (checked) => {
         this.setState({ checked });
+        this.props.filterAction(this.props.mod, this.props.actionType, checked)      
     }
 
     render() {
+        const {name}=this.props
         return (
             <div>
                 <CheckableTag  {...this.props} checked={this.state.checked} onChange={this.handleChange}>
-                    {"Button"}
+                    {name}
                 </CheckableTag>
             </div>
         )
