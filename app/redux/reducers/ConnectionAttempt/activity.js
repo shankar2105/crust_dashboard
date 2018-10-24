@@ -10,6 +10,11 @@ const initialState = {
     failedConnections: [],
     tcpHpCount: 0,
     directCount: 0,
+    pieChart: {
+        total: 0,
+        success: 0,
+        isComputing: false
+    },
     filter: { ...Filter },
 };
 
@@ -20,7 +25,12 @@ const activityReducer = (state = initialState, action) => {
             state = {
                 ...state,
                 isComputing: true,
-                filteredLogs: []
+                filteredLogs: [],
+                pieChart: {
+                    total: 0,
+                    success: 0,
+                    isComputing: true
+                }
             };
             break;
         case `${Action.REVALIDATE}_FULFILLED`:
@@ -32,7 +42,12 @@ const activityReducer = (state = initialState, action) => {
                 udpHpCount: action.payload.udpHpCount,
                 directCount: action.payload.directCount,
                 successfulConnections: action.payload.successfulConnections,
-                failedConnections: action.payload.failedConnections
+                failedConnections: action.payload.failedConnections,
+                pieChart: {
+                    total: action.payload.logs.length,
+                    success: action.payload.successfulConnections.length,
+                    isComputing: false
+                }
             };
             break;
 
@@ -127,44 +142,67 @@ const activityReducer = (state = initialState, action) => {
                 filter,
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_TCP}`:
+        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_TCP}_PENDING`:
             filter = {
                 ...state.filter,
-                protocolFilter: {
-                    ...state.filter.protocolFilter,
+                Protocol: {
+                    ...state.filter.Protocol,
                     tcpHp: action.payload
                 }
             };
             state = {
                 ...state,
                 filter,
+                pieChart: {
+                    ...pieChart,
+                    isComputing: true
+                }
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_UDP}`:
+        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_UDP}_PENDING`:
             filter = {
                 ...state.filter,
-                protocolFilter: {
-                    ...state.filter.protocolFilter,
+                Protocol: {
+                    ...state.filter.Protocol,
                     udpHp: action.payload
                 }
             };
             state = {
                 ...state,
                 filter,
+                pieChart: {
+                    ...pieChart,
+                    isComputing: true
+                }
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_DIRECT}`:
+        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_DIRECT}_PENDING`:
             filter = {
                 ...state.filter,
-                protocolFilter: {
-                    ...state.filter.protocolFilter,
+                Protocol: {
+                    ...state.filter.Protocol,
                     direct: action.payload
                 }
             };
             state = {
                 ...state,
                 filter,
+                pieChart: {
+                    ...pieChart,
+                    isComputing: true
+                }
             };
+            break;
+            case `${MOD_NAME}_${Action.FILTER_PROTOCOL_TCP}_FULFILLED`:
+            case `${MOD_NAME}_${Action.FILTER_PROTOCOL_UDP}_FULFILLED`:
+            case `${MOD_NAME}_${Action.FILTER_PROTOCOL_DIRECT}_FULFILLED`:
+            state = {
+                ...state,
+                pieChart: {
+                    ...action.payload,
+                    isComputing: false
+                }
+            }
             break;
     }
     return state;

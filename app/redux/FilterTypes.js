@@ -30,10 +30,9 @@ export const Filter = {
     OSType2: OS.ANY,
     CountryType1: OS.ANY,
     CountryType2: OS.ANY,
-    // Protocol: PROTOCOL.ANY,
     IncludePeerId: [],
     ExcludePeerId: [],
-    protocolFilter:{
+    Protocol:{
         tcpHp:true,
         udpHp:true,
         direct:true 

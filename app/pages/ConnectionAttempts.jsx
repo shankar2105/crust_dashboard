@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import "./Dashboard.css";
-import { revalidate, filterChange } from '../redux/dispatcher/logs_action';
+import { revalidate, filterChange, filterPieChart } from '../redux/dispatcher/logs_action';
 //import DropDown from "../components/SubComponents/DropDownRender";
 import TabComp from "../components/TabComp";
 import { isEquivalent } from "../redux/utils";
@@ -107,7 +107,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     revalidate,
-    filterChange
+    filterChange,
+    filterPieChart
   }, dispatch);
 };
 
