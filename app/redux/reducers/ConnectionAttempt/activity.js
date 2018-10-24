@@ -1,5 +1,5 @@
 import Action from '../../ActionType';
-import { Filter } from '../../FilterTypes';
+import { Filter, PROTOCOL } from '../../FilterTypes';
 
 export const MOD_NAME = 'CON_ACT';
 
@@ -10,10 +10,10 @@ const initialState = {
     failedConnections: [],
     tcpHpCount: 0,
     directCount: 0,
-    filter: { ...Filter }
+    filter: { ...Filter },
 };
 
-const activityReducer = (state=initialState, action) => {
+const activityReducer = (state = initialState, action) => {
     let filter;
     switch (action.type) {
         case `${Action.REVALIDATE}_PENDING`:
@@ -46,7 +46,7 @@ const activityReducer = (state=initialState, action) => {
                 filter
             };
             break;
-            
+
         case `${MOD_NAME}_${Action.FILTER_NAT_TYPE2}`:
             filter = {
                 ...state.filter,
@@ -96,15 +96,74 @@ const activityReducer = (state=initialState, action) => {
                 ...state,
                 filter
             };
-            break;            
-        case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
+            break;
+        // case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
+        //     filter = {
+        //         ...state.filter,
+        //         Protocol: action.payload
+        //     };
+        //     state = {
+        //         ...state,
+        //         filter
+        //     };
+        //     break;
+        case `${MOD_NAME}_${Action.FILTER_INCLUDE_PEER_ID}`:
             filter = {
                 ...state.filter,
-                Protocol: action.payload
+                IncludePeerId: action.payload
             };
             state = {
                 ...state,
-                filter
+                filter,
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_EXCLUDE_PEER_ID}`:
+            filter = {
+                ...state.filter,
+                ExcludePeerId: action.payload
+            };
+            state = {
+                ...state,
+                filter,
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_TCP}`:
+            filter = {
+                ...state.filter,
+                protocolFilter: {
+                    ...state.filter.protocolFilter,
+                    tcpHp: action.payload
+                }
+            };
+            state = {
+                ...state,
+                filter,
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_UDP}`:
+            filter = {
+                ...state.filter,
+                protocolFilter: {
+                    ...state.filter.protocolFilter,
+                    udpHp: action.payload
+                }
+            };
+            state = {
+                ...state,
+                filter,
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_DIRECT}`:
+            filter = {
+                ...state.filter,
+                protocolFilter: {
+                    ...state.filter.protocolFilter,
+                    direct: action.payload
+                }
+            };
+            state = {
+                ...state,
+                filter,
             };
             break;
     }

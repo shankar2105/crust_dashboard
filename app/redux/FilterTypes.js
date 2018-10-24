@@ -18,10 +18,9 @@ export const OS = {
 }
 
 export const PROTOCOL = {
-    ANY: 'Any',
-    // TCP_DIRECT: 'TCP_DIRECT',
+    TCP_DIRECT: 'TCP_DIRECT',
     UDP_HP: 'UDP_HP',
-    TCP_HP: 'TCP_HP'
+    TCP_HP: 'TCP_HP' 
 }
 
 export const Filter = {
@@ -31,7 +30,12 @@ export const Filter = {
     OSType2: OS.ANY,
     CountryType1: OS.ANY,
     CountryType2: OS.ANY,
-    Protocol: PROTOCOL.ANY,
+    // Protocol: PROTOCOL.ANY,
     IncludePeerId: [],
-    ExcludePeerId: []
+    ExcludePeerId: [],
+    protocolFilter:{
+        tcpHp:true,
+        udpHp:true,
+        direct:true 
+    }
 }

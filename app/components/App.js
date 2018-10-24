@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Layout, Menu, Icon, DatePicker, Progress, Alert } from "antd";
+import { Layout, Menu, Icon, DatePicker, Progress, Alert, Button } from "antd";
 import { Link, Route } from "react-router-dom";
 import moment from "moment";
 
@@ -39,18 +39,14 @@ class App extends Component {
     this.props.fetchLogs(1, 400);
   }
   
-  // fetchNewLogs() {
-  //   var self = this;
-  //   const timeoutId = setTimeout(function () {
-  //     if (self.props.store.logs.length !== 0) {
-  //       self.props.fetchLogs(2, self.props.store.logs.length);
-  //     }
-  //     else {
-  //       self.props.fetchLogs(1, 400);
-  //     }
-  //     clearTimeout(timeoutId);
-  //   }, 2 * 60 * 1000);
-  // }
+  fetchNewLogs() {
+      if (this.props.store.logs.length !== 0) {
+        this.props.fetchLogs(2, this.props.store.logs.length);
+      }
+      else {
+        this.props.fetchLogs(1, 400);
+      }
+  }
     
   // componentWillUpdate(nextProps) {
   //   if (!nextProps.store.isFetching && this.props.store.isFetching) {
@@ -184,7 +180,7 @@ class App extends Component {
               <a href="#" onClick={() => this.filterByHour()}>Hour</a>
               <a href="#" onClick={() => this.filterByDay()}>Day</a>
               <a href="#" onClick={() => this.filterByWeek()}>Week</a>
-              <a href="#" onClick={() => this.filterByMonth()}>Month</a>*/}
+              <a href="#" onClick={() => this.filterByMonth()}>Month</a>
                 <a>
                   All Time
               </a>
@@ -197,7 +193,8 @@ class App extends Component {
                     ]}
                     format={dateFormat} disabled
                   />
-                </div>
+                </div> */}
+              <Button type="primary" onClick={() => this.fetchNewLogs()}>Refresh Data </Button>              
               </div>
             </Header>
             {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
