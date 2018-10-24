@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Layout, Menu, Icon, DatePicker, Progress, Alert } from "antd";
+import { Layout, Menu, Icon, DatePicker, Progress, Alert, Button } from "antd";
 import { Link, Route } from "react-router-dom";
 import moment from "moment";
 
@@ -184,7 +184,7 @@ class App extends Component {
               <a href="#" onClick={() => this.filterByHour()}>Hour</a>
               <a href="#" onClick={() => this.filterByDay()}>Day</a>
               <a href="#" onClick={() => this.filterByWeek()}>Week</a>
-              <a href="#" onClick={() => this.filterByMonth()}>Month</a>*/}
+              <a href="#" onClick={() => this.filterByMonth()}>Month</a>
                 <a>
                   All Time
               </a>
@@ -197,7 +197,8 @@ class App extends Component {
                     ]}
                     format={dateFormat} disabled
                   />
-                </div>
+                </div> */}
+              <Button type="primary">Refresh Data </Button>              
               </div>
             </Header>
             {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
