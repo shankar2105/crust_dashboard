@@ -13,18 +13,18 @@ const TabPane = Tabs.TabPane;
 
 export class RenderBarChart extends Component {
   render() {
-    const { data, loading, protocolFilter} = this.props;
+    const { data, loading, protocolFilter } = this.props;
     console.log('Bar', data);
-    const chartData=[]
-    protocolFilter.tcpHp? chartData.push({x: "TCP HP", y: data.tcp}) : null;
-    protocolFilter.udpHp? chartData.push({x: "UDP HP", y: data.udp}) : null;
-    protocolFilter.direct? chartData.push({x: "Direct", y: data.direct}) : null;
+    const chartData = []
+    protocolFilter.tcpHp ? chartData.push({ x: "TCP HP", y: data.tcp }) : null;
+    protocolFilter.udpHp ? chartData.push({ x: "UDP HP", y: data.udp }) : null;
+    protocolFilter.direct ? chartData.push({ x: "Direct", y: data.direct }) : null;
     return (
       <div>
         <Card
           style={{
             background: "#fff",
-            borderRadius: 10,
+            borderRadius: 3,
             minHeight: 500
           }}
           title="Protocol Success"
@@ -41,23 +41,26 @@ export class RenderBarChart extends Component {
 export class RenderPieChart extends Component {
   render() {
     const { data, loading, protocolFilter } = this.props;
-    let success=0;
-    if(protocolFilter.tcpHp && protocolFilter.udpHp && protocolFilter.direct) {
-      success = data.totalLogs - data.failed ; 
+    data.success = 70;
+    data.failed = 30;
+
+    let success = 0;
+    if (protocolFilter.tcpHp && protocolFilter.udpHp && protocolFilter.direct) {
+      success = data.totalLogs - data.failed;
     }
     else {
-      success+= (protocolFilter.tcpHp? data.success.tcpHpCount : 0) ;
-      success+= (protocolFilter.udpHp? data.success.udpHpCount : 0) ;
-      success+= (protocolFilter.direct? data.success.directCount : 0) ;  
+      success += (protocolFilter.tcpHp ? data.success.tcpHpCount : 0);
+      success += (protocolFilter.udpHp ? data.success.udpHpCount : 0);
+      success += (protocolFilter.direct ? data.success.directCount : 0);
     }
     const chartData = [
       {
-        type: "Failed\t\t" + data.failed,
-        value: data.failed,
+        type: "Successful\t\t" + data.success,
+        value: data.success,
       },
       {
-        type: "Successful\t\t" + data.success,
-        value: success,
+        type: "Failed\t\t" + data.failed,
+        value: data.failed,
       }
     ];
     const percent = Math.round(data.success / (data.success + data.failed) * 100)
@@ -66,14 +69,16 @@ export class RenderPieChart extends Component {
         <Card
           style={{
             background: "#fff",
-            borderRadius: 10,
+            borderRadius: 3,
             minHeight: 500
           }}
           title="Connections"
         >
           <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
-            <div>{success + data.failed}</div>
-            <div>{"Total Successful Connections"}</div>
+            <div className="chart-1-meta">
+              <div className="chart-1-meta-val">{success + data.failed}</div>
+              <div className="chart-1-meta-desc">Total Successful Connections</div>
+            </div>
             <PieCharts data={chartData} percent={percent} title="Success Rate" />
           </Skeleton>
         </Card>
@@ -90,8 +95,7 @@ export class RenderLineChart extends Component {
         <Col className="gutter-row" span={24}>
           <Card
             style={{
-              background: "#fff",
-              borderRadius: 10,
+              borderRadius: 3,
               minHeight: 500
             }}>
             <LineChart data={data} height={400} titleMap={{ y1: 'Total', y2: 'Successful', y3: 'Failed' }} />
@@ -187,13 +191,9 @@ export class RenderMultiDropDown extends Component {
             }}
             title="Filter By User"
           >
-            <Row>
-              <Col className="gutter-row" span={12}>
-                <MultiDropDown items={data} mod={mod} filterAction={filterAction} actionType={Action.FILTER_INCLUDE_PEER_ID} />
-              </Col>
-              <Col className="gutter-row" span={12}>
-                <MultiDropDown items={data} mod={mod} filterAction={filterAction} actionType={Action.FILTER_EXCLUDE_PEER_ID} />
-              </Col>
+            <Row gutter={24} className="filters-2" type="flex">
+              <MultiDropDown type="Include" items={data} mod={mod} filterAction={filterAction} actionType={Action.FILTER_INCLUDE_PEER_ID} />
+              <MultiDropDown type="Exclude" items={data} mod={mod} filterAction={filterAction} actionType={Action.FILTER_EXCLUDE_PEER_ID} />
             </Row>
           </Card>
         </Col>
@@ -214,13 +214,12 @@ class TabComp extends Component {
           labels={tabData.labels} selectedLabel={tabData.selectedLabel} />
         {/* <RenderAreaChart showFailedCount={this.props.showFailedCount} chartData={chartData} filteredLogs={filteredLogs} loading={loading}/> */}
         <RenderMultiDropDown data={tabData.labels.peerIds} mod={tabData.mod} filterAction={tabData.filterAction} />
-        <Row gutter={24} style={{ margin: "24px 8px" }}>
+        <Row gutter={24} className="chart-wrapper">
           <Col className="gutter-row" span={12}>
-            <RenderPieChart data={pieChartData} loading={loading} protocolFilter={tabData.selectedLabel.protocolFilter}/>
+            <RenderPieChart data={pieChartData} loading={loading} protocolFilter={tabData.selectedLabel.protocolFilter} />
           </Col>
-          <Col className="gutter-row" span={12
-          }>
-            <RenderBarChart data={barChartData} loading={loading} protocolFilter={tabData.selectedLabel.protocolFilter}/>
+          <Col className="gutter-row" span={12}>
+            <RenderBarChart data={barChartData} loading={loading} protocolFilter={tabData.selectedLabel.protocolFilter} />
           </Col>
         </Row>
         <RenderTable tableData={tableData} loading={loading} tabData={tabData} />
