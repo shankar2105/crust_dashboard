@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs, Row, Col, Dropdown, Button, Icon, Menu, Card, Skeleton } from "antd";
+import { Tabs, Row, Col, Card, Skeleton } from "antd";
 import DropdownOptions from "./SubComponents/DropDownRender";
 import Charts from "./Charts";
 import LineChart from "./LineChart";
@@ -7,8 +7,6 @@ import PieCharts from "../components/PieCharts";
 import Tables from "../components/Tables";
 import AreaChart from "../components/AreaChart";
 
-import {globalNetworkActivity,protocolData} from "../assets/data";
-const { Meta } = Card;
 const TabPane = Tabs.TabPane;
 
 export class RenderBarChart extends Component {

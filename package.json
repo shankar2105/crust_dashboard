@@ -21,6 +21,7 @@
     "bizcharts": "^3.2.4",
     "less": "2.7.3",
     "node-sass": "^4.9.0",
+    "promise-worker": "^2.0.0",
     "prop-types": "^15.6.2",
     "raf": "^3.4.0",
     "react": "^16.5.2",

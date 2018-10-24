@@ -1,5 +1,8 @@
 import Action from '../ActionType';
-import { applyFilter } from '../utils';
+import PromiseWorker from 'promise-worker';
+
+const worker = new Worker('./worker.js');
+const promiseWorker = new PromiseWorker(worker);
 
 const PROGRESS_COMPLETED_TIMEOUT = 1000;
 
@@ -8,31 +11,26 @@ const fetchAllLogs = (dispatcher, from, limit, oldLogs) => {
     const fetchData = (from, limit, oldLogs) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const dataFetched = await fetch(`/api/stats?pageNo=${from}&size=${limit}`);
+                const dataFetched = await fetch(`http://192.168.0.104:8080/api/stats?pageNo=${from}&size=${limit}`);
                 const jsonData = await dataFetched.json();
-                await addLogData(jsonData.logs);
+                const fetchedLogs = jsonData.logs;
+                result = fetchedLogs.reverse().concat(result);
                 const donePercentage = Math.ceil(from / (jsonData.totalPages) * 100)
                 if (from < jsonData.totalPages) {
                     return resolve(await fetchData(from + 1, limit, oldLogs));
                 }
+                result = oldLogs.concat(result)
+                const preparedLogs = await promiseWorker.postMessage({
+                    type: 'PREPARE_LOGS',
+                    payload: result
+                });
                 dispatcher({
                     type: `${Action.FETCH_LOGS}_FULFILLED`,
                     payload: {
-                        logs: oldLogs.concat(result),
+                        logs: preparedLogs,
                         done: donePercentage
                     }
                 });
-                return resolve();
-            } catch (err) {
-                return reject(err);
-            }
-        });
-    };
-
-    const addLogData = (logs) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                result = logs.reverse().concat(result);
                 return resolve();
             } catch (err) {
                 return reject(err);
@@ -62,31 +60,35 @@ const fetchAllLogs = (dispatcher, from, limit, oldLogs) => {
         }
     });
 }
+
 export const fetchLogs = (from, limit) => {
     return (dispatcher, getState) => {
         return fetchAllLogs(dispatcher, from, limit, getState().logReducer.logs);
     }
 }
 
-export const filterByConnectionResult = (action) => {
-    return {
-        type: action
-    }
-}
-
 export const revalidate = (logs, filter) => {
     return {
         type: Action.REVALIDATE,
-        payload: new Promise((resolve) => {
-            resolve(applyFilter(logs, filter))
+        payload: promiseWorker.postMessage({
+            type: Action.REVALIDATE,
+            payload: {
+                filter,
+                logs
+            }
         })
     }
 }
 
-export const filterChange = (data, mod, action, value) => {
+export const filterChange = (mod, action, value) => {
     return {
         type: `${mod}_${action}`,
-        payload: value,
-        data: data
+        payload: value
     }
 }
+
+// export const filterByConnectionResult = (action) => {
+//     return {
+//         type: action
+//     }
+// }

@@ -1,30 +1,22 @@
 import Action from '../../ActionType';
 import { Filter } from '../../FilterTypes';
-import { applyFilter, prepareLogs } from '../../utils';
 
 export const MOD_NAME = 'CON_ACT';
 
 const initialState = {
     filteredLogs: [],
     isComputing: false,
-    failedConnections: [],
     successfulConnections: [],
+    failedConnections: [],
     tcpHpCount: 0,
-    udpHpCount: 0,
     directCount: 0,
+    udpHpCount: 0,
     filter: { ...Filter }
 };
 
-const activityReducer = (state = initialState, action) => {
+const activityReducer = (state=initialState, action) => {
     let filter;
     switch (action.type) {
-        // case Action.NEW_LOG:
-        // const logs = state.filteredLogs.concat(action.payload)
-        // state = {
-        //     ...state,
-        //     filteredLogs: applyFilter(logs, state.filter)
-        // };
-        // break;
         case `${Action.REVALIDATE}_PENDING`:
             state = {
                 ...state,
@@ -33,16 +25,10 @@ const activityReducer = (state = initialState, action) => {
             };
             break;
         case `${Action.REVALIDATE}_FULFILLED`:
-        const preparedLogs = prepareLogs(action.payload);
             state = {
                 ...state,
                 isComputing: false,
-                filteredLogs: preparedLogs.logs ,
-                failedConnections: preparedLogs.failedConnections,
-                successfulConnections: preparedLogs.successfulConnections,
-                tcpHpCount: preparedLogs.tcpHpCount,
-                udpHpCount: preparedLogs.udpHpCount,
-                directCount: preparedLogs.directCount            
+                filteredLogs: action.payload
             };
             break;
 
@@ -53,11 +39,10 @@ const activityReducer = (state = initialState, action) => {
             };
             state = {
                 ...state,
-                filter,
-                // filteredLogs: applyFilter(action.data, filter)
+                filter
             };
             break;
-
+            
         case `${MOD_NAME}_${Action.FILTER_NAT_TYPE2}`:
             filter = {
                 ...state.filter,
@@ -65,8 +50,7 @@ const activityReducer = (state = initialState, action) => {
             };
             state = {
                 ...state,
-                filter,
-                // filteredLogs: applyFilter(action.data, filter)
+                filter
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_OS_TYPE1}`:
@@ -76,8 +60,7 @@ const activityReducer = (state = initialState, action) => {
             };
             state = {
                 ...state,
-                filter,
-                // filteredLogs: applyFilter(action.data, filter)
+                filter
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_OS_TYPE2}`:
@@ -87,8 +70,7 @@ const activityReducer = (state = initialState, action) => {
             };
             state = {
                 ...state,
-                filter,
-                // filteredLogs: applyFilter(action.data, filter)
+                filter
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_COUNTRY_TYPE1}`:
@@ -98,8 +80,7 @@ const activityReducer = (state = initialState, action) => {
             };
             state = {
                 ...state,
-                filter,
-                // filteredLogs: applyFilter(action.data, filter)
+                filter
             };
             break;
         case `${MOD_NAME}_${Action.FILTER_COUNTRY_TYPE2}`:
@@ -109,10 +90,9 @@ const activityReducer = (state = initialState, action) => {
             };
             state = {
                 ...state,
-                filter,
-                // filteredLogs: applyFilter(action.data, filter)
+                filter
             };
-            break;
+            break;            
         case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
             filter = {
                 ...state.filter,
@@ -120,28 +100,7 @@ const activityReducer = (state = initialState, action) => {
             };
             state = {
                 ...state,
-                filter,
-                // filteredLogs: applyFilter(action.data, filter)
-            };
-            break;
-        case `${MOD_NAME}_${Action.FILTER_INCLUDE_PEER_ID}`:
-            filter = {
-                ...state.filter,
-                IncludePeerId: action.payload
-            };
-            state = {
-                ...state,
-                filter,
-            };
-            break;
-        case `${MOD_NAME}_${Action.FILTER_EXCLUDE_PEER_ID}`:
-            filter = {
-                ...state.filter,
-                ExcludePeerId: action.payload
-            };
-            state = {
-                ...state,
-                filter,
+                filter
             };
             break;
     }
