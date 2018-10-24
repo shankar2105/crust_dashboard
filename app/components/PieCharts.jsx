@@ -11,7 +11,6 @@ export default class PieCharts extends Component {
 				type: '',
 			  percent: 100}
 	}
-
   percent(e) {
     const value = this.props.data.map(val => val.value);
     let num = value.reduce((a, b) => a + b);
@@ -31,7 +30,6 @@ export default class PieCharts extends Component {
       >
         <Coord type="theta" radius={0.7} innerRadius={0.8} />
         <Legend
-        
           position="right"
           offsetY={-window.innerHeight / 4 + 50 }
           offsetX={-50}
@@ -39,7 +37,7 @@ export default class PieCharts extends Component {
         <Guide>
           <Html
             position={["50%", "50%"]}
-            html={`<div style="color:#8c8c8c;font-size:1.16em;text-align: center;width: 10em;">${this.state.type}<br><span style="color:#262626;font-size:2.5em">${this.props.percent}</span>%</div>`}
+            html={`<div style="color:#8c8c8c;font-size:1.16em;text-align: center;width: 10em;">${'Success Rate'}<br><span style="color:#262626;font-size:2.5em">${this.props.percent}</span>%</div>`}
             alignX="middle"
             alignY="middle"
           />
@@ -58,4 +56,3 @@ export default class PieCharts extends Component {
     );
   }
 }
-

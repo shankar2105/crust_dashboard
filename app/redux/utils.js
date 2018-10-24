@@ -43,10 +43,10 @@ export const prepareLogs = (logs) => {
 
         var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
         var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
-        if (!peerIdMap.includes(requesterPeerId)) {
+        if (!peerIdMap.indexOf(requesterPeerId) > -1) {
             peerIdMap.push(requesterPeerId);
         }
-        if (!peerIdMap.includes(responderPeerId)) {
+        if (!peerIdMap.indexOf(responderPeerId) > -1) {
             peerIdMap.push(responderPeerId)
         }
 
@@ -163,7 +163,7 @@ export const applyFilter = (logs, filter) => {
         }
         var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
         var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
-        if (filter.IncludePeerId.includes(requesterPeerId) || filter.IncludePeerId.includes(responderPeerId)) {
+        if (filter.IncludePeerId.indexOf(requesterPeerId) > -1 || filter.IncludePeerId.indexOf(responderPeerId) > -1) {
             return true;
         }
         else {
@@ -177,7 +177,7 @@ export const applyFilter = (logs, filter) => {
         }
         var requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
         var responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
-        if (filter.ExcludePeerId.includes(requesterPeerId) || filter.ExcludePeerId.includes(responderPeerId)) {
+        if (filter.ExcludePeerId.indexOf(requesterPeerId) > -1 || filter.ExcludePeerId.indexOf(responderPeerId) > -1) {
             return false;
         }
         else {
