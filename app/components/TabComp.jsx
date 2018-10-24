@@ -7,7 +7,6 @@ import PieCharts from "../components/PieCharts";
 import Tables from "../components/Tables";
 import AreaChart from "../components/AreaChart";
 
-import {globalNetworkActivity,protocolData} from "../assets/data";
 const { Meta } = Card;
 const TabPane = Tabs.TabPane;
 
@@ -29,16 +28,18 @@ export class RenderBarChart extends Component {
       }  
     ];
     return (
+      <div>
         <Card
             style={{
               background: "#fff",
-              borderRadius: 5,
+              borderRadius: 10,
               minHeight: 500
             }}
             title="Protocol Success"
             >
             <Charts dataSource={chartData} interval={Math.round((data.tcp+data.udp+data.direct)/3)} />
           </Card>
+      </div>
     )
   }
 }
@@ -48,12 +49,12 @@ export class RenderPieChart extends Component {
     const { data } = this.props;
     const chartData = [
       {
-        type: "Successful",
-        value: data.success
+        type: "Failed",
+        value: data.failed,
       },
       {
-        type: "Failed",
-        value: data.failed
+        type: "Successful",
+        value: data.success,
       }
     ];
     const percent = Math.round(data.success/(data.success+data.failed)*100)

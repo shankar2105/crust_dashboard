@@ -1,9 +1,9 @@
 .direct {
-    border-left: #eee 2px solid;
+    border-right: #eee 2px solid;
 }
 
-.utp {
-    border-right: #eee 2px solid;
+.tcp {
+    border-left: #eee 2px solid;
 }
 
 hr {
