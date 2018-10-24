@@ -7,7 +7,6 @@ class Charts extends Component {
     const { dataSource, interval} = this.props;
     return (
       <Row gutter={24} style={{ margin: "24px 8px" }}>
-          <Col span={18}>
             <Chart
               height={400}
               data={dataSource}
@@ -19,7 +18,6 @@ class Charts extends Component {
               <Tooltip crosshairs={{ type: "y" }} />
               <Geom type="interval" position="x*y" />
             </Chart>
-         </Col>
           {/* <Col span={6}>
             <ol>
               {this.props.values}

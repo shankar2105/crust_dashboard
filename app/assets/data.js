@@ -1,59 +1,59 @@
 export const AreaChartArray = [
   {
-      year: "1986",
-      ACME: 162,
-      Compitor: 42,
-      TCP: 25,
-      UDP: 35
+    year: "1986",
+    ACME: 162,
+    Compitor: 42,
+    TCP: 25,
+    UDP: 35
   },
   {
-      year: "1987",
-      ACME: 134,
-      Compitor: 54,
-      TCP: 42,
-      UDP: 24
+    year: "1987",
+    ACME: 134,
+    Compitor: 54,
+    TCP: 42,
+    UDP: 24
   },
   {
-      year: "1988",
-      ACME: 116,
-      Compitor: 26,
-      TCP: 14,
-      UDP: 42
+    year: "1988",
+    ACME: 116,
+    Compitor: 26,
+    TCP: 14,
+    UDP: 42
   },
   {
-      year: "1989",
-      ACME: 122,
-      Compitor: 32,
-      TCP: 31,
-      UDP: 24
+    year: "1989",
+    ACME: 122,
+    Compitor: 32,
+    TCP: 31,
+    UDP: 24
   },
   {
-      year: "1990",
-      ACME: 178,
-      Compitor: 68,
-      TCP: 42,
-      UDP: 24
+    year: "1990",
+    ACME: 178,
+    Compitor: 68,
+    TCP: 42,
+    UDP: 24
   },
   {
-      year: "1991",
-      ACME: 144,
-      Compitor: 54,
-      TCP: 14,
-      UDP: 53
+    year: "1991",
+    ACME: 144,
+    Compitor: 54,
+    TCP: 14,
+    UDP: 53
   },
   {
-      year: "1992",
-      ACME: 125,
-      Compitor: 35,
-      TCP: 63,
-      UDP: 24
+    year: "1992",
+    ACME: 125,
+    Compitor: 35,
+    TCP: 63,
+    UDP: 24
   },
   {
-      year: "1993",
-      ACME: 176,
-      Compitor: 66,
-      TCP: 42,
-      UDP: 52
+    year: "1993",
+    ACME: 176,
+    Compitor: 66,
+    TCP: 42,
+    UDP: 52
   },
 ];
 
@@ -100,11 +100,11 @@ export const natData = [
 ];
 
 export const LineChartArray = [
-  { x: 1538414930276, y1: 50, y2: 40, y3: 10},
-  { x: 1538415062278, y1: 31, y2: 20, y3: 11},
-  { x: 1538415149420, y1: 25, y2: 10, y3: 15},
-  { x: 1538415164928, y1: 30, y2: 15, y3: 15},
-  { x: 1538417574996, y1: 15, y2: 10, y3: 25}
+  { x: 1538414930276, y1: 50, y2: 40, y3: 10 },
+  { x: 1538415062278, y1: 31, y2: 20, y3: 11 },
+  { x: 1538415149420, y1: 25, y2: 10, y3: 15 },
+  { x: 1538415164928, y1: 30, y2: 15, y3: 15 },
+  { x: 1538417574996, y1: 15, y2: 10, y3: 25 }
 ];
 
 const globalNetworkActivity = [
@@ -158,144 +158,92 @@ const globalNetworkActivity = [
   }
 ];
 
-const logs = [
-    {
-      createdAt: "2018-09-28T05:27:27.242Z",
-      peer_requester: {
-        ip: "182.74.140.194",
-        nat_type: "EIM",
-        os: "Windows",
-        geo_info: {
-          region: "Karnataka",
-          region_code: "KA",
-          country: "IN",
-          country_name: "India"
-        }
-      },
-      peer_responder: {
-        ip: "84.160.11.231",
-        nat_type: "EDM",
-        os: "Windows",
-        geo_info: {
-          region: "Baden-Württemberg Region",
-          region_code: "BW",
-          country: "DE",
-          country_name: "Germany"
-        }
-      },
-      is_direct_successful: true,
-      utp_hole_punch_result: {
-        Succeeded: {
-          time_spent: {
-            secs: 1,
-            nanos: 14
-          }
-        }
-      },
-      tcp_hole_punch_result: "success"
+//sample logs for testing
+export const logs = [
+  {
+    "createdAt": "2018-10-22T07:41:39.949Z",
+    "peer_requester": {
+      "id": "a35bfd",
+      "name": "ashwin",
+      "nat_type": "EDM",
+      "os": "linux",
+      "geo_info": {
+        "country_name": "Japan"
+      }
     },
-    {
-      createdAt: "2018-09-28T05:27:27.242Z",
-      peer_requester: {
-        ip: "182.74.140.194",
-        nat_type: "EIM",
-        os: "Windows",
-        geo_info: {
-          region: "Karnataka",
-          region_code: "KA",
-          country: "IN",
-          country_name: "Scotland"
-        }
-      },
-      peer_responder: {
-        ip: "84.160.11.231",
-        nat_type: "EIM",
-        os: "Mac OS",
-        geo_info: {
-          region: "Baden-Württemberg Region",
-          region_code: "BW",
-          country: "DE",
-          country_name: "UK"
-        }
-      },
-      is_direct_successful: false,
-      utp_hole_punch_result: {
+    "peer_responder": {
+      "id": "4hd26f",
+      "name": "drake",
+      "nat_type": "EDM_RANDOM",
+      "os": "Windows",
+      "geo_info": {
+        "country_name": "United States"
+      }
+    },
+    "udp_hole_punch_result": "Failed",
+    "tcp_hole_punch_result": "Succeeded",
+    "logDataHash": "45fffa1",
+    "isHairpinned": false,
+    "is_direct_successful": false
+  },
+  {
+    "createdAt": "2018-10-22T07:41:39.949Z",
+    "peer_requester": {
+      "id": "gh45f3",
+      "name": "tod",
+      "nat_type": "EDM",
+      "os": "linux",
+      "geo_info": {
+        "country_name": "Iceland"
+      }
+    },
+    "peer_responder": {
+      "id": "gdd52s",
+      "name": "",
+      "nat_type": "EDM_RANDOM",
+      "os": "macos",
+      "geo_info": {
+        "country_name": "United States"
+      }
+    },
+    "udp_hole_punch_result": "Failed",
+    "tcp_hole_punch_result": "Succeeded",
+    "logDataHash": "45fsqa",
+    "isHairpinned": false,
+    "is_direct_successful": true
+  },
+  {
+    "createdAt": "2018-10-22T07:41:39.949Z",
+    "peer_requester": {
+      "id": "gh45f3",
+      "name": "",
+      "nat_type": "EDM",
+      "os": "linux",
+      "geo_info": {
+        "country_name": "Germany"
+      }
+    },
+    "peer_responder": {
+      "id": "g42ds2",
+      "name": "",
+      "nat_type": "EDM_RANDOM",
+      "os": "macos",
+      "geo_info": {
+        "country_name": "United States"
+      }
+    },
+    "udp_hole_punch_result": "Succeeded",
+    "tcp_hole_punch_result": "Succeeded",
+    "logDataHash": "4f43fa",
+    "isHairpinned": false,
+    "is_direct_successful": false
+  },
+];
 
-      },
-      tcp_hole_punch_result: "failure"
-    },
-    {
-      createdAt: "2018-09-28T05:27:27.242Z",
-      peer_requester: {
-        ip: "182.74.140.194",
-        nat_type: "EDM",
-        os: "Mac OS",
-        geo_info: {
-          region: "Karnataka",
-          region_code: "KA",
-          country: "IN",
-          country_name: "Scotland"
-        }
-      },
-      peer_responder: {
-        ip: "84.160.11.231",
-        nat_type: "EIM",
-        os: "Linux",
-        geo_info: {
-          region: "Baden-Württemberg Region",
-          region_code: "BW",
-          country: "DE",
-          country_name: "France"
-        }
-      },
-      is_direct_successful: true,
-      utp_hole_punch_result: {
+const filtered_logs = [];
 
-      },
-      tcp_hole_punch_result: "success"
-    },
-    {
-      createdAt: "2018-09-28T05:27:27.242Z",
-      peer_requester: {
-        ip: "182.74.140.194",
-        nat_type: "EDM",
-        os: "Linux",
-        geo_info: {
-          region: "Karnataka",
-          region_code: "KA",
-          country: "IN",
-          country_name: "USA"
-        }
-      },
-      peer_responder: {
-        ip: "84.160.11.231",
-        nat_type: "EDM",
-        os: "Mac OS",
-        geo_info: {
-          region: "Baden-Württemberg Region",
-          region_code: "BW",
-          country: "DE",
-          country_name: "India"
-        }
-      },
-      is_direct_successful: true,
-      utp_hole_punch_result: {
-        Succeeded: {
-          time_spent: {
-            secs: 0,
-            nanos: 36
-          }
-        }
-      },
-      tcp_hole_punch_result: "failure"
-    }
-  ];
-  
-  const filtered_logs = [];
-  
-  export default {
-    globalNetworkActivity,
-    logs,
-    filtered_logs
-  };
-  
+export default {
+  globalNetworkActivity,
+  logs,
+  filtered_logs
+};

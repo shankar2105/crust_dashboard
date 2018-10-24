@@ -158,8 +158,12 @@ const customWorker = (msg) => {
                     (log.peer_requester.geo_info.country_name === filter.CountryType2 && log.peer_responder.geo_info.country_name === filter.CountryType1)
         }
     
-        const isPeerIdValid = (arr, requesterPeerId, responderPeerId) => {
-            arr.length === 0 ? true : (arr.includes(requesterPeerId) || arr.includes(responderPeerId));
+        const isPeerIncluded = (arr, requesterPeerId, responderPeerId) => {
+            return arr.length === 0 ? true : (arr.indexOf(requesterPeerId) > -1 || arr.indexOf(responderPeerId) > -1);
+        }
+
+        const isPeerExcluded = (arr, requesterPeerId, responderPeerId) => {
+            return arr.length === 0 ? false : (arr.indexOf(requesterPeerId) > -1 || arr.indexOf(responderPeerId) > -1);
         }
 
         return logs.filter(log => {
@@ -167,8 +171,9 @@ const customWorker = (msg) => {
             const responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
             
             return isNatTypeMatching(log) && isOSMatching(log) && isProtocolMatching(log) 
-                && isCountryMatching(log) && isPeerIdValid(filter.IncludePeerId, requesterPeerId, responderPeerId) 
-                && isPeerIdValid(filter.ExcludePeerId, requesterPeerId, responderPeerId);
+                && isCountryMatching(log)
+                && isPeerIncluded(filter.IncludePeerId, requesterPeerId, responderPeerId)
+                && !isPeerExcluded(filter.ExcludePeerId, requesterPeerId, responderPeerId);
         });
     };
 
@@ -179,6 +184,7 @@ const customWorker = (msg) => {
 
         case 'REVALIDATE':
             const filteredLogs = applyFilter(payload.logs, payload.filter);
+            console.log('Filtered', filteredLogs);
             return prepareLogs(filteredLogs);
         default:
         return;

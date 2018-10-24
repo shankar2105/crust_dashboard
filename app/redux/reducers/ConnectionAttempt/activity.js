@@ -10,7 +10,6 @@ const initialState = {
     failedConnections: [],
     tcpHpCount: 0,
     directCount: 0,
-    udpHpCount: 0,
     filter: { ...Filter }
 };
 
@@ -28,7 +27,12 @@ const activityReducer = (state=initialState, action) => {
             state = {
                 ...state,
                 isComputing: false,
-                filteredLogs: action.payload
+                filteredLogs: action.payload.logs,
+                tcpHpCount: action.payload.tcpHpCount,
+                udpHpCount: action.payload.udpHpCount,
+                directCount: action.payload.directCount,
+                successfulConnections: action.payload.successfulConnections,
+                failedConnections: action.payload.failedConnections
             };
             break;
 
