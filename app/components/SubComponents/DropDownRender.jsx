@@ -21,16 +21,16 @@ class DropDown extends Component {
         return (
             <Menu className="_menu-item">
                 <Menu.Item key="menu-proto1">
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.ANY)}>{PROTOCOL.ANY}</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.ANY)}>{PROTOCOL.ANY}</a>
                 </Menu.Item>
                 {/* <Menu.Item key="menu-proto2">
                     <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_DIRECT)}>TCP Direct</a>
                 </Menu.Item> */}
                 <Menu.Item key="menu-proto3">
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.UDP_HP)}>UDP Holepunch</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.UDP_HP)}>UDP Holepunch</a>
                 </Menu.Item>
                 <Menu.Item key="menu-proto4">
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_HP)}>TCP Holepunch</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_BY_PROTOCOL, PROTOCOL.TCP_HP)}>TCP Holepunch</a>
                 </Menu.Item>
             </Menu>
         )
@@ -42,7 +42,7 @@ class DropDown extends Component {
             return (
 
                 <Menu.Item key={`menu-nat1-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_NAT_TYPE1, nat)}>{nat === NatType.EDM_RANDOM ? 'EDM Random' : nat}</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_NAT_TYPE1, nat)}>{nat === NatType.EDM_RANDOM ? 'EDM Random' : nat}</a>
                 </Menu.Item>
             )
         });
@@ -54,7 +54,7 @@ class DropDown extends Component {
         let itemList = items.map((nat, k) => {
             return (
                 <Menu.Item key={`menu-nat2-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_NAT_TYPE2, nat)}>{nat === NatType.EDM_RANDOM ? 'EDM Random' : nat}</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_NAT_TYPE2, nat)}>{nat === NatType.EDM_RANDOM ? 'EDM Random' : nat}</a>
                 </Menu.Item>
             )
         });
@@ -78,7 +78,7 @@ class DropDown extends Component {
         let itemList = items.map((os, k) => {
             return (
                 <Menu.Item key={`menu-os2-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_OS_TYPE2, os)}>{os}</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_OS_TYPE2, os)}>{os}</a>
                 </Menu.Item>
             )
         });
@@ -92,7 +92,7 @@ class DropDown extends Component {
         let countryList = countries.map((country, k) => {
             return (
                 <Menu.Item key={`menu-country1-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE1, country)}>{country}</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_COUNTRY_TYPE1, country)}>{country}</a>
                 </Menu.Item>
             )
         });
@@ -107,7 +107,7 @@ class DropDown extends Component {
         let countryList = countries.map((country, k) => {
             return (
                 <Menu.Item key={`menu-country2-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_COUNTRY_TYPE2, country)}>{country}</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_COUNTRY_TYPE2, country)}>{country}</a>
                 </Menu.Item>
             )
         });

@@ -7,8 +7,7 @@ export const ConnectionResult = {
 export const NatType = {
     ANY: 'Any',
     EDM: 'EDM',
-    EIM: 'EIM',
-    EDM_RANDOM: 'EDM_RANDOM'
+    EIM: 'EIM'
 }
 
 export const OS = {

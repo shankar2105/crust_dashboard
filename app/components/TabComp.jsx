@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs, Row, Col, Dropdown, Button, Icon, Menu, Card, Skeleton } from "antd";
+import { Tabs, Row, Col, Card, Skeleton } from "antd";
 import DropdownOptions from "./SubComponents/DropDownRender";
 import Charts from "./Charts";
 import LineChart from "./LineChart";
@@ -8,12 +8,12 @@ import Tables from "../components/Tables";
 import AreaChart from "../components/AreaChart";
 import MultiDropDown from "./MultiDropDown"
 
-const { Meta } = Card;
 const TabPane = Tabs.TabPane;
 
 export class RenderBarChart extends Component {
   render() {
     const { data } = this.props;
+    console.log('Bar', data);
     const chartData = [
       {
         x: "TCP HP",
@@ -203,7 +203,7 @@ class TabComp extends Component {
     console.log(key);
   }
 
-  TabContent(key, tabName, tabData, tableData, filteredLogs, loading, pieChartData, barChartData) {
+  TabContent(key, tabName, tabData, tableData, loading, pieChartData, barChartData) {
     return (
       <TabPane tab={tabName} key={key} className="tab-1-panel">
         <DropdownOptions contents={tabData.contents} data={tabData.data} mod={tabData.mod} filterAction={tabData.filterAction}
@@ -225,11 +225,11 @@ class TabComp extends Component {
   }
 
   render() {
-    const { loading, tabData, tableData, filteredLogs, pieChartData, barChartData } = this.props;
+    const { loading, tabData, tableData, pieChartData, barChartData } = this.props;
     return (
       <div className="tab-1">
         <Tabs defaultActiveKey="1" onChange={this.callback} size="large">
-          {this.TabContent(1, "All Activity", tabData, tableData, filteredLogs, loading, pieChartData, barChartData)}
+          {this.TabContent(1, "All Activity", tabData, tableData, loading, pieChartData, barChartData)}
         </Tabs>
       </div>
     );
