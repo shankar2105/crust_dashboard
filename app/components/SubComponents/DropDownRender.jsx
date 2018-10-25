@@ -66,7 +66,7 @@ class DropDown extends Component {
         let itemList = items.map((os, k) => {
             return (
                 <Menu.Item key={`menu-os1-${k}`}>
-                    <a onClick={() => this.props.filterAction(this.props.data, this.props.mod, Action.FILTER_OS_TYPE1, os)}>{os}</a>
+                    <a onClick={() => this.props.filterAction(this.props.mod, Action.FILTER_OS_TYPE1, os)}>{os}</a>
                 </Menu.Item>
             )
         });
