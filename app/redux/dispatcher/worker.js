@@ -13,12 +13,12 @@ const customWorker = (msg) => {
         LINUX: 'Linux'
     }
 
-    const PROTOCOL = {
-        ANY: 'Any',
-        // TCP_DIRECT: 'TCP_DIRECT',
-        UDP_HP: 'UDP_HP',
-        TCP_HP: 'TCP_HP'
-    }
+    // const PROTOCOL = {
+    //     ANY: 'Any',
+    //     // TCP_DIRECT: 'TCP_DIRECT',
+    //     UDP_HP: 'UDP_HP',
+    //     TCP_HP: 'TCP_HP'
+    // }
 
     const tranformOSName = (osName) => {
         switch (osName.toLowerCase()) {
@@ -49,7 +49,7 @@ const customWorker = (msg) => {
         let from = new Date;
     
         logs.forEach((log, i) => {
-            log.index = log.index || i+1;
+            log.index = log.index || logs.length - i;
             log.tcp_hole_punch_result === 'Succeeded' ? tcpHpCount++ : null;
             log.udp_hole_punch_result === 'Succeeded' ? udpHpCount++ : null;
             log.is_direct_successful === 'Succeeded' ? directCount++ : null;
@@ -136,14 +136,15 @@ const customWorker = (msg) => {
             return matches;
         }
     
-        const isProtocolMatching = (log) => {
-            if (filter.Protocol === PROTOCOL.ANY) {
-                return true;
-            }
-            return (filter.Protocol === PROTOCOL.TCP_DIRECT && log.is_direct_successful) ||
-                (filter.Protocol === PROTOCOL.TCP_HP && log.tcp_hole_punch_result === 'Succeeded') ||
-                (filter.Protocol === PROTOCOL.UDP_HP && log.udp_hole_punch_result === 'Succeeded');
-        }
+        // const isProtocolMatching = (log) => {
+        //     const { tcpHp, udpHp, direct } = filter.Protocol;
+        //     if (tcpHp && udpHp && direct) {
+        //         return true;
+        //     }
+        //     return (direct && log.is_direct_successful) ||
+        //         (tcpHp && log.tcp_hole_punch_result === 'Succeeded') ||
+        //         (udpHp && log.udp_hole_punch_result === 'Succeeded');
+        // }
     
         const isCountryMatching = (log) => {
             const ANY = OS.ANY;
@@ -170,12 +171,35 @@ const customWorker = (msg) => {
             const requesterPeerId = generatePeerPublicInfo(log.peer_requester.name, log.peer_requester.id);
             const responderPeerId = generatePeerPublicInfo(log.peer_responder.name, log.peer_responder.id);
             
-            return isNatTypeMatching(log) && isOSMatching(log) && isProtocolMatching(log) 
+            return isNatTypeMatching(log) 
+                && isOSMatching(log) 
+                // && isProtocolMatching(log) 
                 && isCountryMatching(log)
                 && isPeerIncluded(filter.IncludePeerId, requesterPeerId, responderPeerId)
                 && !isPeerExcluded(filter.ExcludePeerId, requesterPeerId, responderPeerId);
         });
     };
+
+    const filterPieData = (logs, filter) => {
+        let total = 0
+        let success = 0
+        logs.filter(log => {
+            total++;
+            const tcpResult = filter.tcpHp ? log.tcp_hole_punch_result === 'Succeeded' : false;
+            const udpResult = filter.udpHp ? log.udp_hole_punch_result === 'Succeeded' : false;
+            const directResult = filter.direct ? log.is_direct_successful : false;
+            if (tcpResult || udpResult || directResult) {
+                success++;
+            }
+        })
+        return {
+            data: {
+                total,
+                success
+            },
+            filter
+        };
+    }
 
     const {type, payload} = msg;
     switch(type) {
@@ -184,8 +208,10 @@ const customWorker = (msg) => {
 
         case 'REVALIDATE':
             const filteredLogs = applyFilter(payload.logs, payload.filter);
-            console.log('Filtered', filteredLogs);
             return prepareLogs(filteredLogs);
+        
+        case 'FILTER_PIE_CHART':
+            return filterPieData(payload.logs, payload.filter);
         default:
         return;
     }

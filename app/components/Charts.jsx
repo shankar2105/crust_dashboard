@@ -6,9 +6,10 @@ class Charts extends Component {
   render() {
     const { dataSource, interval} = this.props;
     return (
-      <Row gutter={24} style={{ margin: "24px 8px" }}>
+      <Col gutter={24} className="bar-chart-1">
             <Chart
-              height={400}
+              height={300}
+              padding="auto"
               data={dataSource}
               scale={{y: { tickInterval: interval }}}
               forceFit
@@ -23,7 +24,7 @@ class Charts extends Component {
               {this.props.values}
             </ol>
           </Col>  */}
-      </Row>
+      </Col>
     );
   }
 }

@@ -10,17 +10,27 @@ const initialState = {
     failedConnections: [],
     tcpHpCount: 0,
     directCount: 0,
-    filter: { ...Filter }
+    pieChart: {
+        total: 0,
+        success: 0,
+        isComputing: false
+    },
+    filter: { ...Filter },
 };
 
-const activityReducer = (state=initialState, action) => {
+const activityReducer = (state = initialState, action) => {
     let filter;
     switch (action.type) {
         case `${Action.REVALIDATE}_PENDING`:
             state = {
                 ...state,
                 isComputing: true,
-                filteredLogs: []
+                filteredLogs: [],
+                pieChart: {
+                    total: 0,
+                    success: 0,
+                    isComputing: true
+                }
             };
             break;
         case `${Action.REVALIDATE}_FULFILLED`:
@@ -32,7 +42,12 @@ const activityReducer = (state=initialState, action) => {
                 udpHpCount: action.payload.udpHpCount,
                 directCount: action.payload.directCount,
                 successfulConnections: action.payload.successfulConnections,
-                failedConnections: action.payload.failedConnections
+                failedConnections: action.payload.failedConnections,
+                pieChart: {
+                    total: action.payload.logs.length,
+                    success: action.payload.successfulConnections.length,
+                    isComputing: false
+                }
             };
             break;
 
@@ -46,7 +61,7 @@ const activityReducer = (state=initialState, action) => {
                 filter
             };
             break;
-            
+
         case `${MOD_NAME}_${Action.FILTER_NAT_TYPE2}`:
             filter = {
                 ...state.filter,
@@ -96,16 +111,62 @@ const activityReducer = (state=initialState, action) => {
                 ...state,
                 filter
             };
-            break;            
-        case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
+            break;
+        // case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}`:
+        //     filter = {
+        //         ...state.filter,
+        //         Protocol: action.payload
+        //     };
+        //     state = {
+        //         ...state,
+        //         filter
+        //     };
+        //     break;
+        case `${MOD_NAME}_${Action.FILTER_INCLUDE_PEER_ID}`:
+            filter = {
+                ...state.filter,
+                IncludePeerId: action.payload
+            };
+            state = {
+                ...state,
+                filter,
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_EXCLUDE_PEER_ID}`:
+            filter = {
+                ...state.filter,
+                ExcludePeerId: action.payload
+            };
+            state = {
+                ...state,
+                filter,
+            };
+            break;
+        case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}_PENDING`:
             filter = {
                 ...state.filter,
                 Protocol: action.payload
             };
             state = {
                 ...state,
-                filter
+                pieChart: {
+                    ...state.pieChart,
+                    isComputing: true
+                }
             };
+            break;
+            case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}_FULFILLED`:
+            state = {
+                ...state,
+                pieChart: {
+                    ...action.payload.data,
+                    isComputing: false
+                },
+                filter: {
+                    ...state.filter,
+                    Protocol: action.payload.filter
+                }
+            }
             break;
     }
     return state;

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import "./Dashboard.css";
-import { revalidate, filterChange } from '../redux/dispatcher/logs_action';
+import { revalidate, filterChange, filterPieChart } from '../redux/dispatcher/logs_action';
 //import DropDown from "../components/SubComponents/DropDownRender";
 import TabComp from "../components/TabComp";
 import { isEquivalent } from "../redux/utils";
@@ -21,7 +21,8 @@ class ConnectionAttempts extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    const hasFilterChanged = !isEquivalent(this.props.activity.filter, nextProps.activity.filter);
+    const hasFilterChanged = !isEquivalent(this.props.activity.filter, nextProps.activity.filter, ['Protocol']);
+    console.log('FILTER CHANGED', hasFilterChanged);
     const hasNewLogs = !isEquivalent(this.props.store.filteredConnectionResults, nextProps.store.filteredConnectionResults)
     if (hasFilterChanged) {
       this.props.revalidate(this.props.store.filteredConnectionResults, nextProps.activity.filter);
@@ -34,22 +35,22 @@ class ConnectionAttempts extends Component {
 
   render() {
     const tabData = {
-      "contents": ["NAT Type", "Protocol", "O.S.", "Country"],
-      "data": this.props.store.filteredConnectionResults,
-      "mod": MOD_NAME,
-      "filterAction": this.props.filterChange,
-      "labels": this.props.store.filteredLogs,
-      "selectedLabel": this.props.activity.filter
-    }
-    const pieChartData = {
-      "success": this.props.activity.successfulConnections.length,
-      "failed": this.props.activity.failedConnections.length,
-    }
-    const barChartData={
-      "tcp" : this.props.activity.tcpHpCount,
-      "udp" : this.props.activity.udpHpCount,
-      "direct" : this.props.activity.directCount
-    }
+      contents: ["NAT Type", "Protocol", "O.S.", "Country"],
+      data: this.props.store.filteredConnectionResults,
+      mod: MOD_NAME,
+      filterAction: this.props.filterChange,
+      labels: this.props.store.filteredLogs,
+      selectedLabel: this.props.activity.filter
+    };
+    const pieChartData = { 
+      total: this.props.activity.pieChart.total,
+      success: this.props.activity.pieChart.success 
+    };
+    const barChartData = {
+      tcp : this.props.activity.tcpHpCount,
+      udp : this.props.activity.udpHpCount,
+      direct : this.props.activity.directCount
+    };
     return (
       <div className="page-1">
         <span className="page-1-head">
@@ -82,7 +83,7 @@ class ConnectionAttempts extends Component {
                 <TabComp loading={!this.props.store.paging.completed || this.props.activity.isComputing} 
                   showFailedCount={this.props.activity.filter.Protocol === PROTOCOL.ANY} 
                   filteredLogs={this.props.activity.filteredLogs} tabData={tabData} 
-                  pieChartData={pieChartData} barChartData={barChartData} 
+                  pieChartData={pieChartData}  barChartData={barChartData} 
                   tableData={this.props.activity.filteredLogs} />
             </Card>
           </Col>
@@ -102,7 +103,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     revalidate,
-    filterChange
+    filterChange,
+    filterPieChart
   }, dispatch);
 };
 
