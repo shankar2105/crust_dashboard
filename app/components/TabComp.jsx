@@ -37,7 +37,7 @@ export class RenderBarChart extends Component {
           style={{
             background: "#fff",
             borderRadius: 3,
-            minHeight: 500
+            minHeight: 550
           }}
           title="Protocol Success"
         >
@@ -57,7 +57,7 @@ export class RenderPieChart extends Component {
     const total = data.total;
     const success = data.success;
     const failed = data.total - data.success;
-    const percent = Math.round(success / (total) * 100)
+    const percent = total === 0 ? 0 : Math.round(success / (total) * 100);
     const chartData = [
       {
         type: "Successful\t\t" + success,
@@ -74,7 +74,7 @@ export class RenderPieChart extends Component {
           style={{
             background: "#fff",
             borderRadius: 3,
-            minHeight: 500
+            minHeight: 550
           }}
           title="Connections"
         >
@@ -84,14 +84,14 @@ export class RenderPieChart extends Component {
               <div className="chart-1-meta-desc">Total Successful Connections</div>
             </div>
             <PieCharts data={chartData} percent={percent} title="Success Rate" />
-            <div className="pieChart-buttons">
-              <Col className="pieChart-buttons-title" span={6}>Toggle Protocol</Col>
-              <Col>
+            <Row type="flex" className="pieChart-buttons">
+              <Col className="pieChart-buttons-title" span={6}>Toggle Protocol:</Col>
+              <Col className="pieChart-buttons-opt">
                 <TagButton name={PROTOCOL.TCP_HP} />
                 <TagButton name={PROTOCOL.UDP_HP} />
                 <TagButton name={PROTOCOL.DIRECT} />
               </Col>
-            </div>
+            </Row>
           </Skeleton>
         </Card>
       </div>
