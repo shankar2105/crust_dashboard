@@ -212,6 +212,9 @@ const customWorker = (msg) => {
         
         case 'FILTER_PIE_CHART':
             return filterPieData(payload.logs, payload.filter);
+        
+        case 'FILTER_NAME':
+            return payload.data.filter(item => item.toLowerCase().indexOf(payload.search) !== -1)
         default:
         return;
     }
