@@ -149,11 +149,11 @@ const columns = [
         <table>
           <tbody style={{ padding: 10, color: '#ccc' }}>
             <tr>
-              <td>{text[0]}</td>
+            <td title={text[0]} className="truncate-public-id">{text[0]}</td>
             </tr>
             <hr />
             <tr>
-              <td>{text[1]}</td>
+            <td title={text[1]} className="truncate-public-id">{text[1]}</td>
             </tr>
           </tbody>
         </table>
