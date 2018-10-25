@@ -86,9 +86,9 @@ export class RenderPieChart extends Component {
             <PieCharts data={chartData} percent={percent} title="Success Rate" />
             <Col className="dropdown-render-i-name" span={6}>Protocol</Col>
               <Col className="tag-btns">
-                <TagButton name={PROTOCOL.TCP_HP} mod={buttonData.mod} />
-                <TagButton name={PROTOCOL.UDP_HP} mod={buttonData.mod} />
-                <TagButton name={PROTOCOL.DIRECT} mod={buttonData.mod} />
+                <TagButton name={PROTOCOL.TCP_HP} />
+                <TagButton name={PROTOCOL.UDP_HP} />
+                <TagButton name={PROTOCOL.DIRECT} />
               </Col>
           </Skeleton>
         </Card>

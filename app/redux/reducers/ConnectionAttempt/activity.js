@@ -1,5 +1,5 @@
 import Action from '../../ActionType';
-import { Filter, PROTOCOL } from '../../FilterTypes';
+import { Filter } from '../../FilterTypes';
 
 export const MOD_NAME = 'CON_ACT';
 
@@ -149,7 +149,6 @@ const activityReducer = (state = initialState, action) => {
             };
             state = {
                 ...state,
-                filter,
                 pieChart: {
                     ...state.pieChart,
                     isComputing: true
@@ -160,8 +159,12 @@ const activityReducer = (state = initialState, action) => {
             state = {
                 ...state,
                 pieChart: {
-                    ...action.payload,
+                    ...action.payload.data,
                     isComputing: false
+                },
+                filter: {
+                    ...state.filter,
+                    Protocol: action.payload.filter
                 }
             }
             break;

@@ -21,7 +21,8 @@ class ConnectionAttempts extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    const hasFilterChanged = !isEquivalent(this.props.activity.filter, nextProps.activity.filter);
+    const hasFilterChanged = !isEquivalent(this.props.activity.filter, nextProps.activity.filter, ['Protocol']);
+    console.log('FILTER CHANGED', hasFilterChanged);
     const hasNewLogs = !isEquivalent(this.props.store.filteredConnectionResults, nextProps.store.filteredConnectionResults)
     if (hasFilterChanged) {
       this.props.revalidate(this.props.store.filteredConnectionResults, nextProps.activity.filter);

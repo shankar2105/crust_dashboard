@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import Action from '../redux/ActionType';
 import { PROTOCOL } from '../redux/FilterTypes';
+import { MOD_NAME } from '../redux/reducers/ConnectionAttempt/activity';
+import {filterPieChart} from '../redux/dispatcher/logs_action';
 
 const { CheckableTag } = Tag;
 
@@ -12,41 +14,37 @@ class TagButton extends Component {
     state = { checked: true };
 
     componentDidMount() {
-        const filter = {...this.props.activity.filter.Protcol};
+        const filter = {...this.props.activity.filter.Protocol};
         let checked = false;
-        if (checked) {
-            switch(this.props.name) {
-                case PROTOCOL.TCP_HP:
-                    checked = filter.tcpHp;
-                    break;
-                case PROTOCOL.UDP_HP:
-                    checked = filter.udpHp;
-                    break;
-                case PROTOCOL.DIRECT:
-                    checked = filter.direct;
-                    break;
-            }
+        switch(this.props.name) {
+            case PROTOCOL.TCP_HP:
+                checked = filter.tcpHp;
+                break;
+            case PROTOCOL.UDP_HP:
+                checked = filter.udpHp;
+                break;
+            case PROTOCOL.DIRECT:
+                checked = filter.direct;
+                break;
         }
         this.setState({ checked });
     }
 
     handleChange = (checked) => {
-        const filter = {...this.props.activity.filter.Protcol}
-        if (checked) {
-            switch(this.props.name) {
-                case PROTOCOL.TCP_HP:
-                    filter.tcpHp = checked;
-                    break;
-                case PROTOCOL.UDP_HP:
-                    filter.udpHp = checked;
-                    break;
-                case PROTOCOL.DIRECT:
-                    filter.direct = checked;
-                    break;
-            }
+        const filter = {...this.props.activity.filter.Protocol}
+        switch(this.props.name) {
+            case PROTOCOL.TCP_HP:
+                filter.tcpHp = checked;
+                break;
+            case PROTOCOL.UDP_HP:
+                filter.udpHp = checked;
+                break;
+            case PROTOCOL.DIRECT:
+                filter.direct = checked;
+                break;
         }
         this.setState({ checked });
-        this.props.filterPieChart(this.props.mod, Action.FILTER_BY_PROTOCOL, this.props.activity.filteredLogs, filter);
+        this.props.filterPieChart(MOD_NAME, Action.FILTER_BY_PROTOCOL, this.props.activity.filteredLogs, filter);
     }
 
     render() {

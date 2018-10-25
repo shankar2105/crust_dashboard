@@ -193,8 +193,11 @@ const customWorker = (msg) => {
             }
         })
         return {
-            total,
-            success
+            data: {
+                total,
+                success
+            },
+            filter
         };
     }
 
