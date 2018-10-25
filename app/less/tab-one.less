@@ -121,3 +121,24 @@
 .pie-chart-1 {
   padding: 0 40px 0 !important;
 }
+
+.pieChart-buttons {
+  padding-bottom: 25px;
+  justify-content: flex-end;
+  padding-right: 12px;
+  .pieChart-buttons-title {
+    font-size: 14px;
+    max-width: 120px;
+  }
+  .ant-tag-checkable {
+    &-checked {
+      background-color: @green;
+    }
+    &:active {
+      background-color: @green;
+    }
+  }
+}
+.ant-tag-checkable:not(.ant-tag-checkable-checked):hover {
+  color: @green !important;
+}
