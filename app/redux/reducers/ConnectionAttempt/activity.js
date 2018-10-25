@@ -142,60 +142,21 @@ const activityReducer = (state = initialState, action) => {
                 filter,
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_TCP}_PENDING`:
+        case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}_PENDING`:
             filter = {
                 ...state.filter,
-                Protocol: {
-                    ...state.filter.Protocol,
-                    tcpHp: action.payload
-                }
+                Protocol: action.payload
             };
             state = {
                 ...state,
                 filter,
                 pieChart: {
-                    ...pieChart,
+                    ...state.pieChart,
                     isComputing: true
                 }
             };
             break;
-        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_UDP}_PENDING`:
-            filter = {
-                ...state.filter,
-                Protocol: {
-                    ...state.filter.Protocol,
-                    udpHp: action.payload
-                }
-            };
-            state = {
-                ...state,
-                filter,
-                pieChart: {
-                    ...pieChart,
-                    isComputing: true
-                }
-            };
-            break;
-        case `${MOD_NAME}_${Action.FILTER_PROTOCOL_DIRECT}_PENDING`:
-            filter = {
-                ...state.filter,
-                Protocol: {
-                    ...state.filter.Protocol,
-                    direct: action.payload
-                }
-            };
-            state = {
-                ...state,
-                filter,
-                pieChart: {
-                    ...pieChart,
-                    isComputing: true
-                }
-            };
-            break;
-            case `${MOD_NAME}_${Action.FILTER_PROTOCOL_TCP}_FULFILLED`:
-            case `${MOD_NAME}_${Action.FILTER_PROTOCOL_UDP}_FULFILLED`:
-            case `${MOD_NAME}_${Action.FILTER_PROTOCOL_DIRECT}_FULFILLED`:
+            case `${MOD_NAME}_${Action.FILTER_BY_PROTOCOL}_FULFILLED`:
             state = {
                 ...state,
                 pieChart: {

@@ -67,9 +67,9 @@ export const fetchLogs = (from, limit) => {
     }
 }
 
-export const filterPieChart = (action, logs, filter = {tcpHp: true, udpHp: true, direct: true}) => {
+export const filterPieChart = (mod, action, logs, filter = {tcpHp: true, udpHp: true, direct: true}) => {
     return {
-        type: action,
+        type: `${mod}_${action}`,
         payload: promiseWorker.postMessage({
             type: 'FILTER_PIE_CHART',
             payload: {

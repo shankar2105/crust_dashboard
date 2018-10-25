@@ -34,27 +34,22 @@ class ConnectionAttempts extends Component {
 
   render() {
     const tabData = {
-      "contents": ["NAT Type", "Protocol", "O.S.", "Country"],
-      "data": this.props.store.filteredConnectionResults,
-      "mod": MOD_NAME,
-      "filterAction": this.props.filterChange,
-      "labels": this.props.store.filteredLogs,
-      "selectedLabel": this.props.activity.filter
-    }
-    const pieChartData = {
-      "totalLogs": this.props.activity.filteredLogs.length,
-      "failed": this.props.activity.failedConnections.length,
-      "success": {
-        tcpHpCount: this.props.activity.tcpHpCount,
-        udpHpCount: this.props.activity.udpHpCount,
-        directCount: this.props.activity.directCount  
-      }
-    }
-    const barChartData={
-      "tcp" : this.props.activity.tcpHpCount,
-      "udp" : this.props.activity.udpHpCount,
-      "direct" : this.props.activity.directCount
-    }
+      contents: ["NAT Type", "Protocol", "O.S.", "Country"],
+      data: this.props.store.filteredConnectionResults,
+      mod: MOD_NAME,
+      filterAction: this.props.filterChange,
+      labels: this.props.store.filteredLogs,
+      selectedLabel: this.props.activity.filter
+    };
+    const pieChartData = { 
+      total: this.props.activity.pieChart.total,
+      success: this.props.activity.pieChart.success 
+    };
+    const barChartData = {
+      tcp : this.props.activity.tcpHpCount,
+      udp : this.props.activity.udpHpCount,
+      direct : this.props.activity.directCount
+    };
     return (
       <div className="page-1">
         <span className="page-1-head">
@@ -87,7 +82,7 @@ class ConnectionAttempts extends Component {
                 <TabComp loading={!this.props.store.paging.completed || this.props.activity.isComputing} 
                   showFailedCount={this.props.activity.filter.Protocol === PROTOCOL.ANY} 
                   filteredLogs={this.props.activity.filteredLogs} tabData={tabData} 
-                  pieChartData={pieChartData} barChartData={barChartData} 
+                  pieChartData={pieChartData}  barChartData={barChartData} 
                   tableData={this.props.activity.filteredLogs} />
             </Card>
           </Col>

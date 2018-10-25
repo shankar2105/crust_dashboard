@@ -8,17 +8,29 @@ import Tables from "../components/Tables";
 import AreaChart from "../components/AreaChart";
 import MultiDropDown from "./MultiDropDown"
 import Action from '../redux/ActionType';
+import TagButton from "../components/TagButton";
+
+import { PROTOCOL } from '../redux/FilterTypes';
 
 const TabPane = Tabs.TabPane;
 
 export class RenderBarChart extends Component {
   render() {
-    const { data, loading, protocolFilter } = this.props;
-    console.log('Bar', data);
-    const chartData = []
-    protocolFilter.tcpHp ? chartData.push({ x: "TCP HP", y: data.tcp }) : null;
-    protocolFilter.udpHp ? chartData.push({ x: "UDP HP", y: data.udp }) : null;
-    protocolFilter.direct ? chartData.push({ x: "Direct", y: data.direct }) : null;
+    const { data, loading } = this.props;
+    const chartData = [
+      {
+        x: PROTOCOL.TCP_HP,
+        y: data.tcp
+      },
+      {
+        x: PROTOCOL.UDP_HP,
+        y: data.udp
+      },
+      {
+        x: PROTOCOL.DIRECT,
+        y: data.direct
+      }
+    ];
     return (
       <div>
         <Card
@@ -40,30 +52,22 @@ export class RenderBarChart extends Component {
 
 export class RenderPieChart extends Component {
   render() {
-    const { data, loading, protocolFilter } = this.props;
-    data.success = 70;
-    data.failed = 30;
-
-    let success = 0;
-    if (protocolFilter.tcpHp && protocolFilter.udpHp && protocolFilter.direct) {
-      success = data.totalLogs - data.failed;
-    }
-    else {
-      success += (protocolFilter.tcpHp ? data.success.tcpHpCount : 0);
-      success += (protocolFilter.udpHp ? data.success.udpHpCount : 0);
-      success += (protocolFilter.direct ? data.success.directCount : 0);
-    }
+    const { data, loading } = this.props;
+    
+    const total = data.total;
+    const success = data.success;
+    const failed = data.total - data.success;
+    const percent = Math.round(success / (total) * 100)
     const chartData = [
       {
-        type: "Successful\t\t" + data.success,
-        value: data.success,
+        type: "Successful\t\t" + success,
+        value: success,
       },
       {
-        type: "Failed\t\t" + data.failed,
-        value: data.failed,
+        type: "Failed\t\t" + failed,
+        value: failed,
       }
     ];
-    const percent = Math.round(data.success / (data.success + data.failed) * 100)
     return (
       <div>
         <Card
@@ -76,10 +80,16 @@ export class RenderPieChart extends Component {
         >
           <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
             <div className="chart-1-meta">
-              <div className="chart-1-meta-val">{success + data.failed}</div>
+              <div className="chart-1-meta-val">{total}</div>
               <div className="chart-1-meta-desc">Total Successful Connections</div>
             </div>
             <PieCharts data={chartData} percent={percent} title="Success Rate" />
+            <Col className="dropdown-render-i-name" span={6}>Protocol</Col>
+              <Col className="tag-btns">
+                <TagButton name={PROTOCOL.TCP_HP} mod={buttonData.mod} />
+                <TagButton name={PROTOCOL.UDP_HP} mod={buttonData.mod} />
+                <TagButton name={PROTOCOL.DIRECT} mod={buttonData.mod} />
+              </Col>
           </Skeleton>
         </Card>
       </div>

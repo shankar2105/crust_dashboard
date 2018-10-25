@@ -18,7 +18,7 @@ export const OS = {
 }
 
 export const PROTOCOL = {
-    TCP_DIRECT: 'TCP_DIRECT',
+    DIRECT: 'DIRECT',
     UDP_HP: 'UDP_HP',
     TCP_HP: 'TCP_HP' 
 }

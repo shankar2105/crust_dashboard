@@ -181,9 +181,20 @@ const customWorker = (msg) => {
     };
 
     const filterPieData = (logs, filter) => {
+        let total = 0
+        let success = 0
+        logs.filter(log => {
+            total++;
+            const tcpResult = filter.tcpHp ? log.tcp_hole_punch_result === 'Succeeded' : false;
+            const udpResult = filter.udpHp ? log.udp_hole_punch_result === 'Succeeded' : false;
+            const directResult = filter.direct ? log.is_direct_successful : false;
+            if (tcpResult || udpResult || directResult) {
+                success++;
+            }
+        })
         return {
-            total: 100,
-            success: 80
+            total,
+            success
         };
     }
 

@@ -1,21 +1,72 @@
 import React, { Component } from "react";
-import { Tag, Row } from "antd";
+import { Tag } from "antd";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import Action from '../redux/ActionType';
+import { PROTOCOL } from '../redux/FilterTypes';
 
 const { CheckableTag } = Tag;
 
 class TagButton extends Component {
     state = { checked: true };
 
-    handleChange = (checked) => {
+    componentDidMount() {
+        const filter = {...this.props.activity.filter.Protcol};
+        let checked = false;
+        if (checked) {
+            switch(this.props.name) {
+                case PROTOCOL.TCP_HP:
+                    checked = filter.tcpHp;
+                    break;
+                case PROTOCOL.UDP_HP:
+                    checked = filter.udpHp;
+                    break;
+                case PROTOCOL.DIRECT:
+                    checked = filter.direct;
+                    break;
+            }
+        }
         this.setState({ checked });
-        this.props.filterAction(this.props.mod, this.props.actionType, checked)
+    }
+
+    handleChange = (checked) => {
+        const filter = {...this.props.activity.filter.Protcol}
+        if (checked) {
+            switch(this.props.name) {
+                case PROTOCOL.TCP_HP:
+                    filter.tcpHp = checked;
+                    break;
+                case PROTOCOL.UDP_HP:
+                    filter.udpHp = checked;
+                    break;
+                case PROTOCOL.DIRECT:
+                    filter.direct = checked;
+                    break;
+            }
+        }
+        this.setState({ checked });
+        this.props.filterPieChart(this.props.mod, Action.FILTER_BY_PROTOCOL, this.props.activity.filteredLogs, filter);
     }
 
     render() {
         const { name } = this.props
         return (
-            <CheckableTag  {...this.props} checked={this.state.checked} onChange={this.handleChange}>{name}</CheckableTag>
+            <CheckableTag  checked={this.state.checked} onChange={(c) => this.handleChange(c)}>{name}</CheckableTag>
         )
     }
 }
-export default TagButton;
+
+const mapStateToProps = (store) => {
+    return {
+      activity: store.connectionAttemptActivity
+    }
+  };
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+      filterPieChart
+    }, dispatch);
+};
+  
+export default connect(mapStateToProps, mapDispatchToProps)(TagButton);

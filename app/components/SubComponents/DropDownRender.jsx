@@ -146,14 +146,14 @@ class DropDown extends Component {
                 <Row gutter={24}>
                     <DropDownItems type={this.tabContent[3]} menu1={(getCustomMenu(countryMenu1))} menu2={(getCustomMenu(countryMenu2))}
                         selected1={this.props.selectedLabel.CountryType1} selected2={this.props.selectedLabel.CountryType2} />
-                    <Col className="dropdown-render-i">
+                    {/* <Col className="dropdown-render-i">
                         <Col className="dropdown-render-i-name" span={6}>Protocol</Col>
                         <Col className="tag-btns">
                             <TagButton name={"TCP HP"} filterAction={filterAction} mod={mod} actionType={Action.FILTER_PROTOCOL_TCP} />
                             <TagButton name={"UDP HP"} filterAction={filterAction} mod={mod} actionType={Action.FILTER_PROTOCOL_UDP} />
                             <TagButton name={"Direct"} filterAction={filterAction} mod={mod} actionType={Action.FILTER_PROTOCOL_DIRECT} />
                         </Col>
-                    </Col>
+                    </Col> */}
 
                 </Row>
             </div>
