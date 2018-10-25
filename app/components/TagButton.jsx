@@ -43,8 +43,10 @@ class TagButton extends Component {
                 filter.direct = checked;
                 break;
         }
-        this.setState({ checked });
-        this.props.filterPieChart(MOD_NAME, Action.FILTER_BY_PROTOCOL, this.props.activity.filteredLogs, filter);
+        if(filter.tcpHp || filter.udpHp || filter.direct) {
+            this.setState({ checked });
+            this.props.filterPieChart(MOD_NAME, Action.FILTER_BY_PROTOCOL, this.props.activity.filteredLogs, filter);        
+        } 
     }
 
     render() {

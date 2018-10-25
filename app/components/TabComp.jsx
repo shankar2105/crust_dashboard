@@ -19,15 +19,15 @@ export class RenderBarChart extends Component {
     const { data, loading } = this.props;
     const chartData = [
       {
-        x: PROTOCOL.TCP_HP,
+        x: "TCP HP",
         y: data.tcp
       },
       {
-        x: PROTOCOL.UDP_HP,
+        x: "UDP HP",
         y: data.udp
       },
       {
-        x: PROTOCOL.DIRECT,
+        x: "Direct",
         y: data.direct
       }
     ];
@@ -42,7 +42,7 @@ export class RenderBarChart extends Component {
           title="Protocol Success"
         >
           <Skeleton loading={loading} paragraph={{ rows: 15 }} active animate>
-            <Charts dataSource={chartData} interval={Math.round((data.tcp + data.udp + data.direct) / 3)} />
+            <Charts dataSource={chartData} maxInterval={data.max} />
           </Skeleton>
         </Card>
       </div>
@@ -53,7 +53,7 @@ export class RenderBarChart extends Component {
 export class RenderPieChart extends Component {
   render() {
     const { data, loading } = this.props;
-    
+
     const total = data.total;
     const success = data.success;
     const failed = data.total - data.success;
@@ -84,12 +84,14 @@ export class RenderPieChart extends Component {
               <div className="chart-1-meta-desc">Total Successful Connections</div>
             </div>
             <PieCharts data={chartData} percent={percent} title="Success Rate" />
-            <Col className="dropdown-render-i-name" span={6}>Protocol</Col>
-              <Col className="tag-btns">
+            <div className="pieChart-buttons">
+              <Col className="pieChart-buttons-title" span={6}>Toggle Protocol</Col>
+              <Col>
                 <TagButton name={PROTOCOL.TCP_HP} />
                 <TagButton name={PROTOCOL.UDP_HP} />
                 <TagButton name={PROTOCOL.DIRECT} />
               </Col>
+            </div>
           </Skeleton>
         </Card>
       </div>

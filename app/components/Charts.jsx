@@ -4,14 +4,14 @@ import { Row, Col } from "antd";
 
 class Charts extends Component {
   render() {
-    const { dataSource, interval} = this.props;
+    const { dataSource, maxInterval} = this.props;
     return (
       <Col gutter={24} className="bar-chart-1">
             <Chart
               height={300}
               padding="auto"
               data={dataSource}
-              scale={{y: { tickInterval: interval }}}
+              scale={{y: { tickInterval: Math.round(maxInterval/5), max:maxInterval }}}
               forceFit
             >
               <Axis name="x" />
