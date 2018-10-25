@@ -52,7 +52,7 @@ const customWorker = (msg) => {
             log.index = log.index || logs.length - i;
             log.tcp_hole_punch_result === 'Succeeded' ? tcpHpCount++ : null;
             log.udp_hole_punch_result === 'Succeeded' ? udpHpCount++ : null;
-            log.is_direct_successful === 'Succeeded' ? directCount++ : null;
+            log.is_direct_successful? directCount++ : null;
 
             const isSuccess = log.udp_hole_punch_result === 'Succeeded' || log.tcp_hole_punch_result === 'Succeeded' || log.is_direct_successful;
             log.isSuccessful = isSuccess;

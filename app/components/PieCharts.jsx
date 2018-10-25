@@ -13,12 +13,12 @@ export default class PieCharts extends Component {
       percent: 100
     }
   }
-  percent(e) {
-    const value = this.props.data.map(val => val.value);
-    let num = value.reduce((a, b) => a + b);
-    let percentage = ((e.data._origin.value / num) * 100).toFixed(0);
-    this.setState({ type: e.data._origin.type, percent: percentage })
-  }
+  // percent(e) {
+  //   const value = this.props.data.map(val => val.value);
+  //   let num = value.reduce((a, b) => a + b);
+  //   let percentage = ((e.data._origin.value / num) * 100).toFixed(0);
+  //   this.setState({ type: e.data._origin.type, percent: percentage })
+  // }
 
   render() {
     return (
@@ -28,7 +28,7 @@ export default class PieCharts extends Component {
           height={350}
           padding="auto"
           data={this.props.data}
-          onPlotClick={this.percent}
+          //onPlotClick={this.percent}
         >
           <Coord type="theta" radius={0.7} innerRadius={0.8} />
           <Legend
