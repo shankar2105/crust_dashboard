@@ -8,13 +8,15 @@ class Charts extends Component {
     const x = "connectionType";
     const y = "Success"
     const position = x + "*" + y
+    const interval = Math.round(maxRange / 5) <= 0 ? 1 : Math.round(maxRange / 5);
+
     return (
       <Col gutter={24} className="bar-chart-1">
         <Chart
           height={300}
           padding="auto"
           data={dataSource}
-          scale={{ [y]: { tickInterval: Math.round(maxInterval / 5), max: maxInterval } }}
+          scale={{ [y]: { tickInterval: interval, max: maxRange } }}
           forceFit
         >
           <Axis name={x} />

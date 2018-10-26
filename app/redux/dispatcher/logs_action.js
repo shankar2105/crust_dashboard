@@ -11,7 +11,7 @@ const fetchAllLogs = (dispatcher, from, limit, oldLogs=[]) => {
     const fetchData = (from, limit, oldLogs) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const dataFetched = await fetch(`http://192.168.0.104:8080/api/stats?offset=${from}&size=${limit}`);
+                const dataFetched = await fetch(`/api/stats?offset=${from}&size=${limit}`);
                 const jsonData = await dataFetched.json();
                 const fetchedLogs = jsonData.logs;
                 result = fetchedLogs.reverse().concat(result);
