@@ -36,15 +36,15 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchLogs(1, 400);
+    this.props.fetchLogs(0, 400);
   }
 
   fetchNewLogs() {
       if (this.props.store.logs.length !== 0) {
-        this.props.fetchLogs(2, this.props.store.logs.length);
+        this.props.fetchLogs(this.props.store.logs.length, 400);
       }
       else {
-        this.props.fetchLogs(1, 400);
+        this.props.fetchLogs(0, 400);
       }
   }
 
@@ -201,7 +201,7 @@ class App extends Component {
                 >Refresh Data</Button>
               </div>
             </Header>
-            {this.props.store.logs.length === 0 ? <div className="main-layout-content">No data available</div> : (<Content className="main-layout-content">
+            <Content className="main-layout-content">
               <div className="main-progress" style={{ display: (!this.props.store.paging.completed || this.props.activity.isComputing) ? 'block' : 'none' }}>
                 {
                   (this.props.store.paging.done <= 100) || this.props.activity.isComputing ? (
@@ -220,7 +220,7 @@ class App extends Component {
               {/* <Route path="/nat" component={NatType} />
             <Route path="/protocol" component={Protocol} />
             <Route path="/connect" component={ConnectionAttempts} /> */}
-            </Content>)}
+            </Content>
           </Layout>
         </Layout>
       </div>

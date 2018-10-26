@@ -5,7 +5,7 @@ export const MOD_NAME = 'CON_ACT';
 
 const initialState = {
     filteredLogs: [],
-    isComputing: false,
+    isComputing: true,
     successfulConnections: [],
     failedConnections: [],
     tcpHpCount: 0,

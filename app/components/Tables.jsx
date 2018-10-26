@@ -9,7 +9,7 @@ function filterLogs(rawData) {
   const dataSource = [];
   rawData.forEach(log => {
     dataSource.push({
-      key: log.index,
+      key: log.logDataHash,
       num: log.index,
       tcp_hp: log.tcp_hole_punch_result === "Succeeded" ? "Yes" : "Fail",
       udp_hp: log.udp_hole_punch_result === "Succeeded" ? "Yes" : "Fail",
@@ -55,6 +55,7 @@ class Tables extends Component {
     return (
       <div>
         <Table
+          rowKey="key"
           dataSource={filterData}
           columns={columns}
           rowClassName={(record) => record.color}
