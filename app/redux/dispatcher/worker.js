@@ -214,7 +214,7 @@ const customWorker = (msg) => {
             return filterPieData(payload.logs, payload.filter);
         
         case 'FILTER_NAME':
-            return payload.data.filter(item => item.toLowerCase().indexOf(payload.search) !== -1)
+            return payload.data.filter(item => item.search(new RegExp(payload.search,"i")) !== -1)
         default:
         return;
     }

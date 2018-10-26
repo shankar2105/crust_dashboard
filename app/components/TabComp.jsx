@@ -19,16 +19,16 @@ export class RenderBarChart extends Component {
     const { data, loading } = this.props;
     const chartData = [
       {
-        x: "TCP HP",
-        y: data.tcp
+        connectionType: "TCP HP",
+        Success: data.tcp
       },
       {
-        x: "UDP HP",
-        y: data.udp
+        connectionType: "UDP HP",
+        Success: data.udp
       },
       {
-        x: "Direct",
-        y: data.direct
+        connectionType: "Direct",
+        Success: data.direct
       }
     ];
     return (

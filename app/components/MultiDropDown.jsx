@@ -19,17 +19,15 @@ class MultiDropDown extends Component {
         }
     }
 
-    shouldComponentUpdate(nextProps,nextState) {
-        console.log('before data change', nextState);
+    shouldComponentUpdate(nextProps, nextState) {
         if (nextState.fetching) {
-            console.log('before data change', nextState);
             promiseWorker.postMessage({
                 type: 'FILTER_NAME',
                 payload: {
                     data: nextState.items,
                     search: nextState.value
                 }
-            }).then((res) => {    console.log("res",res)
+            }).then((res) => {
                 this.setState({
                     data: res,
                     fetching: false
@@ -40,14 +38,23 @@ class MultiDropDown extends Component {
     }
 
     fetchUser = (value) => {
+        if (value.length !== 0) {
+            this.setState({
+                fetching: true,
+            });
+        }
         this.setState({
-            fetching: true,
             data: [],
             value: value
         });
-
     }
-
+    
+    clear = () => {
+        this.setState({
+            data: [],
+            value: []
+        });
+    }
 
     handleChange(value) {
         this.props.filterAction(this.props.mod, this.props.actionType, value)
@@ -70,6 +77,7 @@ class MultiDropDown extends Component {
                     filterOption={false}
                     onSearch={(value) => this.fetchUser(value)}
                     onChange={(item) => this.handleChange(item)}
+                    onBlur={() => this.clear()}
                 >
                     {data.map(d => <Option key={d}>{d}</Option>)}
                 </Select>
