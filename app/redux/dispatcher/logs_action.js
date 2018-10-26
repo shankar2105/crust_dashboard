@@ -6,32 +6,32 @@ const promiseWorker = new PromiseWorker(worker);
 
 const PROGRESS_COMPLETED_TIMEOUT = 1000;
 
-const fetchAllLogs = (dispatcher, from, limit, oldLogs) => {
+const fetchAllLogs = (dispatcher, from, limit, oldLogs=[]) => {
     let result = [];
     const fetchData = (from, limit, oldLogs) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const dataFetched = await fetch(`http://localhost:8080/api/stats?pageNo=${from}&size=${limit}`);
+                const dataFetched = await fetch(`http://192.168.0.104:8080/api/stats?offset=${from}&size=${limit}`);
                 const jsonData = await dataFetched.json();
                 const fetchedLogs = jsonData.logs;
                 result = fetchedLogs.reverse().concat(result);
-                const donePercentage = Math.ceil(from / (jsonData.totalPages) * 100)
-                if (from < jsonData.totalPages) {
-                    return resolve(await fetchData(from + 1, limit, oldLogs));
+                const fetchedLength = result.length + oldLogs.length;
+                const donePercentage = Math.ceil(fetchedLength / (jsonData.total) * 100);
+                dispatcher({
+                    type: Action.UPDATE_PROGRESS,
+                    payload: {
+                        done: donePercentage
+                    }
+                });
+                if (fetchedLength !== jsonData.total) {
+                    return resolve(await fetchData(fetchedLength, limit, oldLogs));
                 }
-                result = oldLogs.concat(result)
+                result = result.concat(oldLogs)
                 const preparedLogs = await promiseWorker.postMessage({
                     type: 'PREPARE_LOGS',
                     payload: result
                 });
-                dispatcher({
-                    type: `${Action.FETCH_LOGS}_FULFILLED`,
-                    payload: {
-                        logs: preparedLogs,
-                        done: donePercentage
-                    }
-                });
-                return resolve();
+                return resolve(preparedLogs);
             } catch (err) {
                 return reject(err);
             }
@@ -39,18 +39,15 @@ const fetchAllLogs = (dispatcher, from, limit, oldLogs) => {
     };
 
     return new Promise(async (resolve, reject) => {
-        dispatcher({
-            type: `${Action.FETCH_LOGS}_PENDING`
-        });
         try {
-            await fetchData(from, limit, oldLogs);
+            const logs = await fetchData(from, limit, oldLogs);
             const timeout = setTimeout(() => {
                 dispatcher({
                     type: Action.PROGRESS_COMPLETED
                 });
                 clearTimeout(timeout);
             }, PROGRESS_COMPLETED_TIMEOUT);
-            return resolve(result);
+            return resolve({logs});
         } catch (e) {
             dispatcher({
                 type: Action.ERROR,
@@ -63,7 +60,10 @@ const fetchAllLogs = (dispatcher, from, limit, oldLogs) => {
 
 export const fetchLogs = (from, limit) => {
     return (dispatcher, getState) => {
-        return fetchAllLogs(dispatcher, from, limit, getState().logReducer.logs);
+        dispatcher({
+            type: Action.FETCH_LOGS,
+            payload: fetchAllLogs(dispatcher, from, limit, getState().logReducer.logs)
+        })
     }
 }
 

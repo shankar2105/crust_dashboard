@@ -49,7 +49,7 @@ const customWorker = (msg) => {
         let from = new Date;
     
         logs.forEach((log, i) => {
-            log.index = log.index || logs.length - i;
+            log.index = log.hasOwnProperty("index") ? log.index : logs.length - i;
             log.tcp_hole_punch_result === 'Succeeded' ? tcpHpCount++ : null;
             log.udp_hole_punch_result === 'Succeeded' ? udpHpCount++ : null;
             log.is_direct_successful? directCount++ : null;

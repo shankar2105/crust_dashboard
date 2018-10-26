@@ -50,6 +50,15 @@ const logReducer = (state = initialState, action) => {
                 error: action.payload
             };
             break;
+        case Action.UPDATE_PROGRESS:
+            state = {
+                ...state,
+                paging: {
+                    done: state.paging.done,
+                    completed: false
+                }
+            };
+            break;
         case `${Action.FETCH_LOGS}_PENDING`:
             state = {
                 ...state,
@@ -97,8 +106,6 @@ const logReducer = (state = initialState, action) => {
                         completed: false
                     }
                 };
-
-                console.log(state, preparedLogs, preparedLogs.dateRange)
             }
             break;
             case Action.PROGRESS_COMPLETED:

@@ -12,19 +12,18 @@ class MultiDropDown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: this.props.items,
             data: [],
             value: [],
             fetching: false,
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps, nextState) {
         if (nextState.fetching) {
-            promiseWorker.postMessage({
+           promiseWorker.postMessage({
                 type: 'FILTER_NAME',
                 payload: {
-                    data: nextState.items,
+                    data: this.props.items,
                     search: nextState.value
                 }
             }).then((res) => {
@@ -34,11 +33,11 @@ class MultiDropDown extends Component {
                 });
             })
         }
-        return true;
     }
 
     fetchUser = (value) => {
-        if (value.length !== 0) {
+        value = value.trim();
+        if (value.length > 2) {
             this.setState({
                 fetching: true,
             });
